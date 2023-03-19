@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -29,9 +30,9 @@ namespace SvpTradingPanel
 				{
 					positionSize = -positionSize;
 				}
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.6, 1, 1);
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.3, 1, 1.2);
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.1, 1, 1.4);
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.6, 1, GetTpDistanceByOrderSize(60));
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.3, 1, GetTpDistanceByOrderSize(30));
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.1, 1, GetTpDistanceByOrderSize(10));
 				JoinSl();
 			}
 		}
@@ -46,13 +47,18 @@ namespace SvpTradingPanel
 				{
 					positionSize = -positionSize;
 				}
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.6, 1, 1);
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.4, 1, 1.2);
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.6, 1, GetTpDistanceByOrderSize(100));
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.4, 1, GetTpDistanceByOrderSize(40));
 				JoinSl();
 			}
 		}
 
-		private void BuySellPercent(bool buy, double percent)
+		private double GetTpDistanceByOrderSize(int percent)
+		{
+			return 0.7 + Math.Abs((double)percent - 100) / 100;
+		}
+
+		private void BuySellPercent(bool buy, int percent)
 		{
 			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
 				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
@@ -62,7 +68,7 @@ namespace SvpTradingPanel
 				{
 					positionSize = -positionSize;
 				}
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * percent / 100, 1, 1);
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * percent / 100, 1, GetTpDistanceByOrderSize(percent));
 				JoinSl();
 			}
 		}
