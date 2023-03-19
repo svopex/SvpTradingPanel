@@ -102,9 +102,9 @@
 			// 
 			// buttonJoinSl
 			// 
-			this.buttonJoinSl.Location = new System.Drawing.Point(483, 882);
+			this.buttonJoinSl.Location = new System.Drawing.Point(405, 912);
 			this.buttonJoinSl.Name = "buttonJoinSl";
-			this.buttonJoinSl.Size = new System.Drawing.Size(205, 105);
+			this.buttonJoinSl.Size = new System.Drawing.Size(256, 75);
 			this.buttonJoinSl.TabIndex = 24;
 			this.buttonJoinSl.Text = "Join SL";
 			this.buttonJoinSl.UseVisualStyleBackColor = true;
