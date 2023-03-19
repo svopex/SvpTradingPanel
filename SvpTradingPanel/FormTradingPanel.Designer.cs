@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.buttonOrderBuy1 = new System.Windows.Forms.Button();
 			this.textBoxPositionSize = new System.Windows.Forms.TextBox();
 			this.LabelPositionSize = new System.Windows.Forms.Label();
@@ -52,6 +53,8 @@
 			this.buttonCloseAll = new System.Windows.Forms.Button();
 			this.buttonSlDownMax = new System.Windows.Forms.Button();
 			this.buttonSlUpMax = new System.Windows.Forms.Button();
+			this.labelRrr = new System.Windows.Forms.Label();
+			this.timerRefreshLabels = new System.Windows.Forms.Timer(this.components);
 			this.SuspendLayout();
 			// 
 			// buttonOrderBuy1
@@ -292,11 +295,27 @@
 			this.buttonSlUpMax.UseVisualStyleBackColor = true;
 			this.buttonSlUpMax.Click += new System.EventHandler(this.buttonSlUpMax_Click);
 			// 
+			// labelRrr
+			// 
+			this.labelRrr.AutoSize = true;
+			this.labelRrr.Location = new System.Drawing.Point(523, 66);
+			this.labelRrr.Name = "labelRrr";
+			this.labelRrr.Size = new System.Drawing.Size(51, 25);
+			this.labelRrr.TabIndex = 33;
+			this.labelRrr.Text = "RRR";
+			// 
+			// timerRefreshLabels
+			// 
+			this.timerRefreshLabels.Enabled = true;
+			this.timerRefreshLabels.Interval = 1000;
+			this.timerRefreshLabels.Tick += new System.EventHandler(this.timerRefreshLabels_Tick);
+			// 
 			// FormTradingPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(712, 1013);
+			this.Controls.Add(this.labelRrr);
 			this.Controls.Add(this.buttonSlDownMax);
 			this.Controls.Add(this.buttonSlUpMax);
 			this.Controls.Add(this.buttonCloseAll);
@@ -358,6 +377,8 @@
 		private System.Windows.Forms.Button buttonCloseAll;
 		private System.Windows.Forms.Button buttonSlDownMax;
 		private System.Windows.Forms.Button buttonSlUpMax;
+		private System.Windows.Forms.Label labelRrr;
+		private System.Windows.Forms.Timer timerRefreshLabels;
 	}
 }
 

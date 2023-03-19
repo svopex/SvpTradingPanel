@@ -70,15 +70,15 @@ namespace Mt5Api
 			{
 				return symbol;
 			}
-			if (symbol.ToLower() == "#bfb")
+			if (symbol.ToLower() == "bfb")
 			{
-				symbol = "#BF-B";
+				symbol = "BF-B";
 			}
-			if (symbol.ToLower() == "#brkb")
+			if (symbol.ToLower() == "brkb")
 			{
-				symbol = "#BRK-B";
+				symbol = "BRK-B";
 			}
-			return symbol.TrimStart('#');
+			return symbol;
 		}
 
 		public bool SymbolSelect(string instrument, bool selected)

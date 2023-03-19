@@ -19,6 +19,13 @@ namespace SvpTradingPanel
 			InitializeComponent();
 		}
 
+		private void RefreshData(Orders orders)
+		{
+			var sumOfUnits = Math.Abs(orders.Select(x => x.Units).Sum());
+			var rrr = orders.Select(x => ((Math.Abs(x.Price - x.PT)) / (Math.Abs(x.Price - x.SL))) / sumOfUnits * Math.Abs(x.Units)).Sum();
+			labelRrr.Text = "RRR: " + Math.Round(rrr, 2);
+		}
+
 		private void BuySell603010(bool buy)
 		{
 			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
@@ -115,6 +122,7 @@ namespace SvpTradingPanel
 				order.SL = idealSl + (idealSl * movement);
 				SvpMT5.Instance.SetPositionSlAndPt(order);
 			}
+			RefreshData(orders);
 		}
 
 		private void SlDown(double movement)
@@ -126,6 +134,7 @@ namespace SvpTradingPanel
 				order.SL = idealSl - (idealSl * movement);
 				SvpMT5.Instance.SetPositionSlAndPt(order);
 			}
+			RefreshData(orders);
 		}
 
 		private double SlPriceAfterJoin(Orders orders)
@@ -173,6 +182,7 @@ namespace SvpTradingPanel
 				}
 				SvpMT5.Instance.SetPositionSlAndPt(order);
 			}
+			RefreshData(orders);
 		}
 
 		private void buttonSlUpMax_Click(object sender, EventArgs e)
@@ -291,6 +301,9 @@ namespace SvpTradingPanel
 			textBoxPositionSize.Text = "0.5";
 			checkBoxAlwaysOnTop.Checked = true;
 			this.TopMost = true;
+
+			Orders orders = SvpMT5.Instance.GetMarketOrders();
+			RefreshData(orders);
 		}
 
 		private void buttonCloseAll_Click(object sender, EventArgs e)
@@ -300,6 +313,12 @@ namespace SvpTradingPanel
 			{
 				SvpMT5.Instance.CloseOrder(order.Id);
 			}
+		}
+
+		private void timerRefreshLabels_Tick(object sender, EventArgs e)
+		{
+			//Orders orders = SvpMT5.Instance.GetMarketOrders();
+			//ShowRrr(orders);
 		}
 	}
 }
