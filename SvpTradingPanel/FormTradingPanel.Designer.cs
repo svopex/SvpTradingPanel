@@ -99,7 +99,7 @@
 			this.buttonJoinSl.Location = new System.Drawing.Point(439, 602);
 			this.buttonJoinSl.Name = "buttonJoinSl";
 			this.buttonJoinSl.Size = new System.Drawing.Size(205, 105);
-			this.buttonJoinSl.TabIndex = 22;
+			this.buttonJoinSl.TabIndex = 24;
 			this.buttonJoinSl.Text = "Join SL";
 			this.buttonJoinSl.UseVisualStyleBackColor = true;
 			this.buttonJoinSl.Click += new System.EventHandler(this.buttonJoinSl_Click);
@@ -109,7 +109,7 @@
 			this.buttonSlUpMini.Location = new System.Drawing.Point(228, 491);
 			this.buttonSlUpMini.Name = "buttonSlUpMini";
 			this.buttonSlUpMini.Size = new System.Drawing.Size(205, 105);
-			this.buttonSlUpMini.TabIndex = 23;
+			this.buttonSlUpMini.TabIndex = 22;
 			this.buttonSlUpMini.Text = "SL up mini";
 			this.buttonSlUpMini.UseVisualStyleBackColor = true;
 			this.buttonSlUpMini.Click += new System.EventHandler(this.buttonSlUpMini_Click);
@@ -119,7 +119,7 @@
 			this.buttonSlDownMini.Location = new System.Drawing.Point(228, 602);
 			this.buttonSlDownMini.Name = "buttonSlDownMini";
 			this.buttonSlDownMini.Size = new System.Drawing.Size(205, 105);
-			this.buttonSlDownMini.TabIndex = 24;
+			this.buttonSlDownMini.TabIndex = 23;
 			this.buttonSlDownMini.Text = "SL down mini";
 			this.buttonSlDownMini.UseVisualStyleBackColor = true;
 			this.buttonSlDownMini.Click += new System.EventHandler(this.buttonSlDownMini_Click);
