@@ -33,6 +33,20 @@ namespace SvpTradingPanel
 			}
 		}
 
+		private void BuySell6040(bool buy)
+		{
+			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) && (positionSize * 0.1 > 0))
+			{
+				if (!buy)
+				{
+					positionSize = -positionSize;
+				}
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.6, 1, 1);
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.4, 1, 1.2);
+				JoinSl();
+			}
+		}
+
 		private void BuySellPercent(bool buy, double percent)
 		{
 			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) && (positionSize * percent / 100 > 0))
@@ -44,11 +58,6 @@ namespace SvpTradingPanel
 				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * percent / 100, 1, 1);
 				JoinSl();
 			}
-		}
-
-		private void buttonOrder1_Click(object sender, EventArgs e)
-		{
-			BuySell603010(true);
 		}
 
 		private bool Buy(Orders orders)
@@ -136,9 +145,24 @@ namespace SvpTradingPanel
 			this.TopMost = checkBoxAlwaysOnTop.Checked;
 		}
 
-		private void buttonOrder2_Click(object sender, EventArgs e)
+		private void buttonOrderBuy1_Click(object sender, EventArgs e)
+		{
+			BuySell603010(true);
+		}
+
+		private void buttonOrderSell1_Click(object sender, EventArgs e)
 		{
 			BuySell603010(false);
+		}
+
+		private void buttonOrderBuy2_Click(object sender, EventArgs e)
+		{
+			BuySell6040(true);
+		}
+
+		private void buttonOrderSell2_Click(object sender, EventArgs e)
+		{
+			BuySell6040(false);
 		}
 
 		private void buttonBuy100_Click(object sender, EventArgs e)
@@ -197,6 +221,16 @@ namespace SvpTradingPanel
 			textBoxPositionSize.Text = "0.5";
 			checkBoxAlwaysOnTop.Checked = true;
 			this.TopMost = true;
+		}
+
+		private void buttonCloseAll_Click(object sender, EventArgs e)
+		{
+			Orders orders = SvpMT5.Instance.GetMarketOrders();
+			double idealSl = IdealSlPrice(orders);
+			foreach (var order in orders)
+			{
+				SvpMT5.Instance.CloseOrder(order.Id);
+			}
 		}
 	}
 }

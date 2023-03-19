@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.buttonOrder1 = new System.Windows.Forms.Button();
+			this.buttonOrderBuy1 = new System.Windows.Forms.Button();
 			this.textBoxPositionSize = new System.Windows.Forms.TextBox();
 			this.LabelPositionSize = new System.Windows.Forms.Label();
 			this.buttonSlUp = new System.Windows.Forms.Button();
@@ -37,7 +37,7 @@
 			this.buttonSlUpMini = new System.Windows.Forms.Button();
 			this.buttonSlDownMini = new System.Windows.Forms.Button();
 			this.checkBoxAlwaysOnTop = new System.Windows.Forms.CheckBox();
-			this.buttonOrder2 = new System.Windows.Forms.Button();
+			this.buttonOrderSell1 = new System.Windows.Forms.Button();
 			this.buttonBuy60 = new System.Windows.Forms.Button();
 			this.buttonBuy30 = new System.Windows.Forms.Button();
 			this.buttonBuy10 = new System.Windows.Forms.Button();
@@ -47,23 +47,26 @@
 			this.buttonSell30 = new System.Windows.Forms.Button();
 			this.buttonSell10 = new System.Windows.Forms.Button();
 			this.labelConnected = new System.Windows.Forms.Label();
+			this.buttonOrderBuy2 = new System.Windows.Forms.Button();
+			this.buttonOrderSell2 = new System.Windows.Forms.Button();
+			this.buttonCloseAll = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// buttonOrder1
+			// buttonOrderBuy1
 			// 
-			this.buttonOrder1.Location = new System.Drawing.Point(34, 448);
-			this.buttonOrder1.Name = "buttonOrder1";
-			this.buttonOrder1.Size = new System.Drawing.Size(256, 75);
-			this.buttonOrder1.TabIndex = 11;
-			this.buttonOrder1.Text = "Buy 60% 30% 10%";
-			this.buttonOrder1.UseVisualStyleBackColor = true;
-			this.buttonOrder1.Click += new System.EventHandler(this.buttonOrder1_Click);
+			this.buttonOrderBuy1.Location = new System.Drawing.Point(34, 472);
+			this.buttonOrderBuy1.Name = "buttonOrderBuy1";
+			this.buttonOrderBuy1.Size = new System.Drawing.Size(256, 75);
+			this.buttonOrderBuy1.TabIndex = 11;
+			this.buttonOrderBuy1.Text = "Buy 60% 30% 10%";
+			this.buttonOrderBuy1.UseVisualStyleBackColor = true;
+			this.buttonOrderBuy1.Click += new System.EventHandler(this.buttonOrderBuy1_Click);
 			// 
 			// textBoxPositionSize
 			// 
-			this.textBoxPositionSize.Location = new System.Drawing.Point(156, 69);
+			this.textBoxPositionSize.Location = new System.Drawing.Point(156, 66);
 			this.textBoxPositionSize.Name = "textBoxPositionSize";
-			this.textBoxPositionSize.Size = new System.Drawing.Size(244, 29);
+			this.textBoxPositionSize.Size = new System.Drawing.Size(134, 29);
 			this.textBoxPositionSize.TabIndex = 1;
 			// 
 			// LabelPositionSize
@@ -77,7 +80,7 @@
 			// 
 			// buttonSlUp
 			// 
-			this.buttonSlUp.Location = new System.Drawing.Point(34, 529);
+			this.buttonSlUp.Location = new System.Drawing.Point(34, 665);
 			this.buttonSlUp.Name = "buttonSlUp";
 			this.buttonSlUp.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlUp.TabIndex = 20;
@@ -87,7 +90,7 @@
 			// 
 			// buttonSlDown
 			// 
-			this.buttonSlDown.Location = new System.Drawing.Point(34, 640);
+			this.buttonSlDown.Location = new System.Drawing.Point(34, 776);
 			this.buttonSlDown.Name = "buttonSlDown";
 			this.buttonSlDown.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlDown.TabIndex = 21;
@@ -97,7 +100,7 @@
 			// 
 			// buttonJoinSl
 			// 
-			this.buttonJoinSl.Location = new System.Drawing.Point(456, 640);
+			this.buttonJoinSl.Location = new System.Drawing.Point(456, 776);
 			this.buttonJoinSl.Name = "buttonJoinSl";
 			this.buttonJoinSl.Size = new System.Drawing.Size(205, 105);
 			this.buttonJoinSl.TabIndex = 24;
@@ -107,7 +110,7 @@
 			// 
 			// buttonSlUpMini
 			// 
-			this.buttonSlUpMini.Location = new System.Drawing.Point(245, 529);
+			this.buttonSlUpMini.Location = new System.Drawing.Point(245, 665);
 			this.buttonSlUpMini.Name = "buttonSlUpMini";
 			this.buttonSlUpMini.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlUpMini.TabIndex = 22;
@@ -117,7 +120,7 @@
 			// 
 			// buttonSlDownMini
 			// 
-			this.buttonSlDownMini.Location = new System.Drawing.Point(245, 640);
+			this.buttonSlDownMini.Location = new System.Drawing.Point(245, 776);
 			this.buttonSlDownMini.Name = "buttonSlDownMini";
 			this.buttonSlDownMini.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlDownMini.TabIndex = 23;
@@ -128,7 +131,7 @@
 			// checkBoxAlwaysOnTop
 			// 
 			this.checkBoxAlwaysOnTop.AutoSize = true;
-			this.checkBoxAlwaysOnTop.Location = new System.Drawing.Point(700, 14);
+			this.checkBoxAlwaysOnTop.Location = new System.Drawing.Point(528, 9);
 			this.checkBoxAlwaysOnTop.Name = "checkBoxAlwaysOnTop";
 			this.checkBoxAlwaysOnTop.Size = new System.Drawing.Size(160, 29);
 			this.checkBoxAlwaysOnTop.TabIndex = 2;
@@ -136,15 +139,15 @@
 			this.checkBoxAlwaysOnTop.UseVisualStyleBackColor = true;
 			this.checkBoxAlwaysOnTop.CheckedChanged += new System.EventHandler(this.checkBoxAlwaysOnTop_CheckedChanged);
 			// 
-			// buttonOrder2
+			// buttonOrderSell1
 			// 
-			this.buttonOrder2.Location = new System.Drawing.Point(296, 448);
-			this.buttonOrder2.Name = "buttonOrder2";
-			this.buttonOrder2.Size = new System.Drawing.Size(256, 75);
-			this.buttonOrder2.TabIndex = 12;
-			this.buttonOrder2.Text = "Sell 60% 30% 10%";
-			this.buttonOrder2.UseVisualStyleBackColor = true;
-			this.buttonOrder2.Click += new System.EventHandler(this.buttonOrder2_Click);
+			this.buttonOrderSell1.Location = new System.Drawing.Point(296, 472);
+			this.buttonOrderSell1.Name = "buttonOrderSell1";
+			this.buttonOrderSell1.Size = new System.Drawing.Size(256, 75);
+			this.buttonOrderSell1.TabIndex = 12;
+			this.buttonOrderSell1.Text = "Sell 60% 30% 10%";
+			this.buttonOrderSell1.UseVisualStyleBackColor = true;
+			this.buttonOrderSell1.Click += new System.EventHandler(this.buttonOrderSell1_Click);
 			// 
 			// buttonBuy60
 			// 
@@ -237,11 +240,44 @@
 			this.labelConnected.Text = "Connected";
 			this.labelConnected.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
+			// buttonOrderBuy2
+			// 
+			this.buttonOrderBuy2.Location = new System.Drawing.Point(34, 553);
+			this.buttonOrderBuy2.Name = "buttonOrderBuy2";
+			this.buttonOrderBuy2.Size = new System.Drawing.Size(256, 75);
+			this.buttonOrderBuy2.TabIndex = 13;
+			this.buttonOrderBuy2.Text = "Buy 60% 40%";
+			this.buttonOrderBuy2.UseVisualStyleBackColor = true;
+			this.buttonOrderBuy2.Click += new System.EventHandler(this.buttonOrderBuy2_Click);
+			// 
+			// buttonOrderSell2
+			// 
+			this.buttonOrderSell2.Location = new System.Drawing.Point(296, 553);
+			this.buttonOrderSell2.Name = "buttonOrderSell2";
+			this.buttonOrderSell2.Size = new System.Drawing.Size(256, 75);
+			this.buttonOrderSell2.TabIndex = 14;
+			this.buttonOrderSell2.Text = "Sell 60% 40%";
+			this.buttonOrderSell2.UseVisualStyleBackColor = true;
+			this.buttonOrderSell2.Click += new System.EventHandler(this.buttonOrderSell2_Click);
+			// 
+			// buttonCloseAll
+			// 
+			this.buttonCloseAll.Location = new System.Drawing.Point(34, 912);
+			this.buttonCloseAll.Name = "buttonCloseAll";
+			this.buttonCloseAll.Size = new System.Drawing.Size(256, 75);
+			this.buttonCloseAll.TabIndex = 30;
+			this.buttonCloseAll.Text = "Close All";
+			this.buttonCloseAll.UseVisualStyleBackColor = true;
+			this.buttonCloseAll.Click += new System.EventHandler(this.buttonCloseAll_Click);
+			// 
 			// FormTradingPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(872, 820);
+			this.ClientSize = new System.Drawing.Size(712, 1013);
+			this.Controls.Add(this.buttonCloseAll);
+			this.Controls.Add(this.buttonOrderSell2);
+			this.Controls.Add(this.buttonOrderBuy2);
 			this.Controls.Add(this.labelConnected);
 			this.Controls.Add(this.buttonSell10);
 			this.Controls.Add(this.buttonSell30);
@@ -251,7 +287,7 @@
 			this.Controls.Add(this.buttonBuy10);
 			this.Controls.Add(this.buttonBuy30);
 			this.Controls.Add(this.buttonBuy60);
-			this.Controls.Add(this.buttonOrder2);
+			this.Controls.Add(this.buttonOrderSell1);
 			this.Controls.Add(this.checkBoxAlwaysOnTop);
 			this.Controls.Add(this.buttonSlDownMini);
 			this.Controls.Add(this.buttonSlUpMini);
@@ -260,7 +296,10 @@
 			this.Controls.Add(this.buttonSlUp);
 			this.Controls.Add(this.LabelPositionSize);
 			this.Controls.Add(this.textBoxPositionSize);
-			this.Controls.Add(this.buttonOrder1);
+			this.Controls.Add(this.buttonOrderBuy1);
+			this.Cursor = System.Windows.Forms.Cursors.Default;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.MaximizeBox = false;
 			this.Name = "FormTradingPanel";
 			this.Text = "TradePanel";
 			this.Load += new System.EventHandler(this.FormTradingPanel_Load);
@@ -271,7 +310,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button buttonOrder1;
+		private System.Windows.Forms.Button buttonOrderBuy1;
 		private System.Windows.Forms.TextBox textBoxPositionSize;
 		private System.Windows.Forms.Label LabelPositionSize;
 		private System.Windows.Forms.Button buttonSlUp;
@@ -280,7 +319,7 @@
 		private System.Windows.Forms.Button buttonSlUpMini;
 		private System.Windows.Forms.Button buttonSlDownMini;
 		private System.Windows.Forms.CheckBox checkBoxAlwaysOnTop;
-		private System.Windows.Forms.Button buttonOrder2;
+		private System.Windows.Forms.Button buttonOrderSell1;
 		private System.Windows.Forms.Button buttonBuy60;
 		private System.Windows.Forms.Button buttonBuy30;
 		private System.Windows.Forms.Button buttonBuy10;
@@ -290,6 +329,9 @@
 		private System.Windows.Forms.Button buttonSell30;
 		private System.Windows.Forms.Button buttonSell10;
 		private System.Windows.Forms.Label labelConnected;
+		private System.Windows.Forms.Button buttonOrderBuy2;
+		private System.Windows.Forms.Button buttonOrderSell2;
+		private System.Windows.Forms.Button buttonCloseAll;
 	}
 }
 
