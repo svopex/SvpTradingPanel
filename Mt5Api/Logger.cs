@@ -15,7 +15,7 @@ namespace Mt5Api
 
             lock (o)
             {
-                File.AppendAllText("AdmiralMarketsMT5.log", s + "\n");
+                File.AppendAllText("SvpTradingPanel.log", s + "\n");
             }
         }
 
@@ -27,7 +27,7 @@ namespace Mt5Api
 
             lock (o)
             {
-                File.AppendAllText("AdmiralMarketsMT5.log", "!!! " + s + "\n");
+                File.AppendAllText("SvpTradingPanel.log", "!!! " + s + "\n");
             }
         }
     }

@@ -20,7 +20,10 @@ namespace SvpTradingPanel
 
 		private void BuySell603010(bool buy)
 		{
-			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) && (positionSize * 0.1 > 0))
+			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
+				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
+				&& ((IsExistingPositionBuy() && buy) || (IsExistingPositionSell() && !buy)) // pokud je jiz otevrena pozice, nova pozice musi byt stejnejo typu (buy/sell).
+				)
 			{
 				if (!buy)
 				{
@@ -35,7 +38,9 @@ namespace SvpTradingPanel
 
 		private void BuySell6040(bool buy)
 		{
-			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) && (positionSize * 0.1 > 0))
+			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
+				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
+				&& ((IsExistingPositionBuy() && buy) || (IsExistingPositionSell() && !buy))) // pokud je jiz otevrena pozice, nova pozice musi byt stejnejo typu (buy/sell).
 			{
 				if (!buy)
 				{
@@ -49,7 +54,9 @@ namespace SvpTradingPanel
 
 		private void BuySellPercent(bool buy, double percent)
 		{
-			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) && (positionSize * percent / 100 > 0))
+			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
+				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
+				&& ((IsExistingPositionBuy() && buy) || (IsExistingPositionSell() && !buy))) // pokud je jiz otevrena pozice, nova pozice musi byt stejnejo typu (buy/sell).
 			{
 				if (!buy)
 				{
@@ -60,16 +67,28 @@ namespace SvpTradingPanel
 			}
 		}
 
-		private bool Buy(Orders orders)
+		private bool IsExistingPositionBuy()
 		{
-			return orders.Any() && orders[0].SL < orders[0].Price;
+			Orders orders = SvpMT5.Instance.GetMarketOrders();
+			return IsExistingPositionBuy(orders);
 		}
 
-		private double IdealSlPrice(Orders orders)
+		private bool IsExistingPositionSell()
+		{
+			Orders orders = SvpMT5.Instance.GetMarketOrders();
+			return !orders.Any() || (orders.Any() && orders[0].Units <= 0);
+		}
+
+		private bool IsExistingPositionBuy(Orders orders)
+		{
+			return !orders.Any() || (orders.Any() && orders[0].Units >= 0);
+		}
+
+		private double IdealMaximumSlPrice(Orders orders)
 		{
 			if (orders.Any())
 			{
-				if (Buy(orders))
+				if (IsExistingPositionBuy(orders))
 				{
 					return orders.Min(x => x.SL);
 				}
@@ -84,7 +103,7 @@ namespace SvpTradingPanel
 		private void SlUp(double movement)
 		{
 			Orders orders = SvpMT5.Instance.GetMarketOrders();
-			double idealSl = IdealSlPrice(orders);
+			double idealSl = IdealMaximumSlPrice(orders);
 			foreach (var order in orders)
 			{
 				order.SL = idealSl + (idealSl * movement);
@@ -95,7 +114,7 @@ namespace SvpTradingPanel
 		private void SlDown(double movement)
 		{
 			Orders orders = SvpMT5.Instance.GetMarketOrders();
-			double idealSl = IdealSlPrice(orders);
+			double idealSl = IdealMaximumSlPrice(orders);
 			foreach (var order in orders)
 			{
 				order.SL = idealSl - (idealSl * movement);
@@ -103,17 +122,62 @@ namespace SvpTradingPanel
 			}
 		}
 
+		private double SlPriceAfterJoin(Orders orders)
+		{
+			if (orders.Any())
+			{
+				if (orders.Count() == 2)
+				{
+					// Pokud jsou jenom dva obchody, dej SL k tomu prvnimu z nich (podle order id).
+					return orders.OrderBy(x => x.Id).First().SL;
+				}
+				else
+				{
+					// Dej SL na misto, kde jsou jiz minimalne dva obchody spolu (predpokladam, ze jsou po joinu).
+					for (int i = 0; i < orders.Count; i++)
+					{
+						double sameValue = orders[i].SL;
+						for (int j = 1; j < orders.Count; j++)
+						{
+							if (i != j && sameValue == orders[j].SL)
+							{
+								return orders[i].SL;
+							}
+						}
+					}
+				}
+			}
+			return 0;
+		}
+
 		private void JoinSl()
 		{
 			Orders orders = SvpMT5.Instance.GetMarketOrders();
-			double idealSl = IdealSlPrice(orders);
+			double idealMinimumSl = IdealMaximumSlPrice(orders); // Minimalni SL (je nejdale od ceny).
+			double slPriceAfterJoin = SlPriceAfterJoin(orders); // Pokud SL jsou vsechny stejne, vrati se hodnota tohoto stejneho SL, jinak se vraci nula.
 			foreach (var order in orders)
 			{
-				order.SL = idealSl;
+				if (slPriceAfterJoin == 0)
+				{
+					order.SL = idealMinimumSl;
+				}
+				else
+				{
+					order.SL = slPriceAfterJoin;
+				}
 				SvpMT5.Instance.SetPositionSlAndPt(order);
 			}
 		}
 
+		private void buttonSlUpMax_Click(object sender, EventArgs e)
+		{
+			SlUp(0.0025);
+		}
+
+		private void buttonSlDownMax_Click(object sender, EventArgs e)
+		{
+			SlDown(0.0025);
+		}
 
 		private void buttonSlUp_Click(object sender, EventArgs e)
 		{
@@ -225,8 +289,7 @@ namespace SvpTradingPanel
 
 		private void buttonCloseAll_Click(object sender, EventArgs e)
 		{
-			Orders orders = SvpMT5.Instance.GetMarketOrders();
-			double idealSl = IdealSlPrice(orders);
+			Orders orders = SvpMT5.Instance.GetMarketOrders();			
 			foreach (var order in orders)
 			{
 				SvpMT5.Instance.CloseOrder(order.Id);

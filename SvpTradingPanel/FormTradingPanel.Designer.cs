@@ -50,6 +50,8 @@
 			this.buttonOrderBuy2 = new System.Windows.Forms.Button();
 			this.buttonOrderSell2 = new System.Windows.Forms.Button();
 			this.buttonCloseAll = new System.Windows.Forms.Button();
+			this.buttonSlDownMax = new System.Windows.Forms.Button();
+			this.buttonSlUpMax = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// buttonOrderBuy1
@@ -80,7 +82,7 @@
 			// 
 			// buttonSlUp
 			// 
-			this.buttonSlUp.Location = new System.Drawing.Point(34, 665);
+			this.buttonSlUp.Location = new System.Drawing.Point(245, 660);
 			this.buttonSlUp.Name = "buttonSlUp";
 			this.buttonSlUp.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlUp.TabIndex = 20;
@@ -90,7 +92,7 @@
 			// 
 			// buttonSlDown
 			// 
-			this.buttonSlDown.Location = new System.Drawing.Point(34, 776);
+			this.buttonSlDown.Location = new System.Drawing.Point(245, 771);
 			this.buttonSlDown.Name = "buttonSlDown";
 			this.buttonSlDown.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlDown.TabIndex = 21;
@@ -100,7 +102,7 @@
 			// 
 			// buttonJoinSl
 			// 
-			this.buttonJoinSl.Location = new System.Drawing.Point(456, 776);
+			this.buttonJoinSl.Location = new System.Drawing.Point(483, 882);
 			this.buttonJoinSl.Name = "buttonJoinSl";
 			this.buttonJoinSl.Size = new System.Drawing.Size(205, 105);
 			this.buttonJoinSl.TabIndex = 24;
@@ -110,7 +112,7 @@
 			// 
 			// buttonSlUpMini
 			// 
-			this.buttonSlUpMini.Location = new System.Drawing.Point(245, 665);
+			this.buttonSlUpMini.Location = new System.Drawing.Point(456, 660);
 			this.buttonSlUpMini.Name = "buttonSlUpMini";
 			this.buttonSlUpMini.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlUpMini.TabIndex = 22;
@@ -120,7 +122,7 @@
 			// 
 			// buttonSlDownMini
 			// 
-			this.buttonSlDownMini.Location = new System.Drawing.Point(245, 776);
+			this.buttonSlDownMini.Location = new System.Drawing.Point(456, 771);
 			this.buttonSlDownMini.Name = "buttonSlDownMini";
 			this.buttonSlDownMini.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlDownMini.TabIndex = 23;
@@ -270,11 +272,33 @@
 			this.buttonCloseAll.UseVisualStyleBackColor = true;
 			this.buttonCloseAll.Click += new System.EventHandler(this.buttonCloseAll_Click);
 			// 
+			// buttonSlDownMax
+			// 
+			this.buttonSlDownMax.Location = new System.Drawing.Point(34, 771);
+			this.buttonSlDownMax.Name = "buttonSlDownMax";
+			this.buttonSlDownMax.Size = new System.Drawing.Size(205, 105);
+			this.buttonSlDownMax.TabIndex = 32;
+			this.buttonSlDownMax.Text = "SL down max";
+			this.buttonSlDownMax.UseVisualStyleBackColor = true;
+			this.buttonSlDownMax.Click += new System.EventHandler(this.buttonSlDownMax_Click);
+			// 
+			// buttonSlUpMax
+			// 
+			this.buttonSlUpMax.Location = new System.Drawing.Point(34, 660);
+			this.buttonSlUpMax.Name = "buttonSlUpMax";
+			this.buttonSlUpMax.Size = new System.Drawing.Size(205, 105);
+			this.buttonSlUpMax.TabIndex = 31;
+			this.buttonSlUpMax.Text = "SL up max";
+			this.buttonSlUpMax.UseVisualStyleBackColor = true;
+			this.buttonSlUpMax.Click += new System.EventHandler(this.buttonSlUpMax_Click);
+			// 
 			// FormTradingPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(712, 1013);
+			this.Controls.Add(this.buttonSlDownMax);
+			this.Controls.Add(this.buttonSlUpMax);
 			this.Controls.Add(this.buttonCloseAll);
 			this.Controls.Add(this.buttonOrderSell2);
 			this.Controls.Add(this.buttonOrderBuy2);
@@ -332,6 +356,8 @@
 		private System.Windows.Forms.Button buttonOrderBuy2;
 		private System.Windows.Forms.Button buttonOrderSell2;
 		private System.Windows.Forms.Button buttonCloseAll;
+		private System.Windows.Forms.Button buttonSlDownMax;
+		private System.Windows.Forms.Button buttonSlUpMax;
 	}
 }
 

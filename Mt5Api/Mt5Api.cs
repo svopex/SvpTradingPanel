@@ -30,7 +30,7 @@ namespace Mt5Api
 
 		public bool Connect()
 		{
-			int counter = 5;
+			int counter = 10;
 			instance.apiClient.BeginConnect(Utilities.Host, Utilities.Port);
 			while (instance.apiClient.ConnectionState != Mt5ConnectionState.Connected)
 			{
@@ -43,7 +43,7 @@ namespace Mt5Api
 					return false;
 				}
 			}
-			Logger.WriteLine("Connected to MT5 for strategy " + Utilities.StrategyName + ".");
+			Logger.WriteLine("SvpTradingPanel not connected to MT5.");
 			return true;
 		}
 
