@@ -344,7 +344,7 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.Name = "FormTradingPanel";
-			this.Text = "TradePanel";
+			this.Text = "SvpTradePanel";
 			this.Load += new System.EventHandler(this.FormTradingPanel_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
