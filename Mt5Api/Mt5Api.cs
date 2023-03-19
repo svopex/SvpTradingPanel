@@ -30,7 +30,7 @@ namespace Mt5Api
 
 		public bool Connect()
 		{
-			int counter = 10 * 60;
+			int counter = 5;
 			instance.apiClient.BeginConnect(Utilities.Host, Utilities.Port);
 			while (instance.apiClient.ConnectionState != Mt5ConnectionState.Connected)
 			{

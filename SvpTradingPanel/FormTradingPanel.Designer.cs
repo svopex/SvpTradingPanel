@@ -46,11 +46,12 @@
 			this.buttonSell60 = new System.Windows.Forms.Button();
 			this.buttonSell30 = new System.Windows.Forms.Button();
 			this.buttonSell10 = new System.Windows.Forms.Button();
+			this.labelConnected = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// buttonOrder1
 			// 
-			this.buttonOrder1.Location = new System.Drawing.Point(17, 410);
+			this.buttonOrder1.Location = new System.Drawing.Point(34, 448);
 			this.buttonOrder1.Name = "buttonOrder1";
 			this.buttonOrder1.Size = new System.Drawing.Size(256, 75);
 			this.buttonOrder1.TabIndex = 11;
@@ -60,7 +61,7 @@
 			// 
 			// textBoxPositionSize
 			// 
-			this.textBoxPositionSize.Location = new System.Drawing.Point(139, 31);
+			this.textBoxPositionSize.Location = new System.Drawing.Point(156, 69);
 			this.textBoxPositionSize.Name = "textBoxPositionSize";
 			this.textBoxPositionSize.Size = new System.Drawing.Size(244, 29);
 			this.textBoxPositionSize.TabIndex = 1;
@@ -68,7 +69,7 @@
 			// LabelPositionSize
 			// 
 			this.LabelPositionSize.AutoSize = true;
-			this.LabelPositionSize.Location = new System.Drawing.Point(12, 31);
+			this.LabelPositionSize.Location = new System.Drawing.Point(29, 69);
 			this.LabelPositionSize.Name = "LabelPositionSize";
 			this.LabelPositionSize.Size = new System.Drawing.Size(121, 25);
 			this.LabelPositionSize.TabIndex = 0;
@@ -76,7 +77,7 @@
 			// 
 			// buttonSlUp
 			// 
-			this.buttonSlUp.Location = new System.Drawing.Point(17, 491);
+			this.buttonSlUp.Location = new System.Drawing.Point(34, 529);
 			this.buttonSlUp.Name = "buttonSlUp";
 			this.buttonSlUp.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlUp.TabIndex = 20;
@@ -86,7 +87,7 @@
 			// 
 			// buttonSlDown
 			// 
-			this.buttonSlDown.Location = new System.Drawing.Point(17, 602);
+			this.buttonSlDown.Location = new System.Drawing.Point(34, 640);
 			this.buttonSlDown.Name = "buttonSlDown";
 			this.buttonSlDown.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlDown.TabIndex = 21;
@@ -96,7 +97,7 @@
 			// 
 			// buttonJoinSl
 			// 
-			this.buttonJoinSl.Location = new System.Drawing.Point(439, 602);
+			this.buttonJoinSl.Location = new System.Drawing.Point(456, 640);
 			this.buttonJoinSl.Name = "buttonJoinSl";
 			this.buttonJoinSl.Size = new System.Drawing.Size(205, 105);
 			this.buttonJoinSl.TabIndex = 24;
@@ -106,7 +107,7 @@
 			// 
 			// buttonSlUpMini
 			// 
-			this.buttonSlUpMini.Location = new System.Drawing.Point(228, 491);
+			this.buttonSlUpMini.Location = new System.Drawing.Point(245, 529);
 			this.buttonSlUpMini.Name = "buttonSlUpMini";
 			this.buttonSlUpMini.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlUpMini.TabIndex = 22;
@@ -116,7 +117,7 @@
 			// 
 			// buttonSlDownMini
 			// 
-			this.buttonSlDownMini.Location = new System.Drawing.Point(228, 602);
+			this.buttonSlDownMini.Location = new System.Drawing.Point(245, 640);
 			this.buttonSlDownMini.Name = "buttonSlDownMini";
 			this.buttonSlDownMini.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlDownMini.TabIndex = 23;
@@ -127,7 +128,7 @@
 			// checkBoxAlwaysOnTop
 			// 
 			this.checkBoxAlwaysOnTop.AutoSize = true;
-			this.checkBoxAlwaysOnTop.Location = new System.Drawing.Point(619, 12);
+			this.checkBoxAlwaysOnTop.Location = new System.Drawing.Point(700, 14);
 			this.checkBoxAlwaysOnTop.Name = "checkBoxAlwaysOnTop";
 			this.checkBoxAlwaysOnTop.Size = new System.Drawing.Size(160, 29);
 			this.checkBoxAlwaysOnTop.TabIndex = 2;
@@ -137,7 +138,7 @@
 			// 
 			// buttonOrder2
 			// 
-			this.buttonOrder2.Location = new System.Drawing.Point(279, 410);
+			this.buttonOrder2.Location = new System.Drawing.Point(296, 448);
 			this.buttonOrder2.Name = "buttonOrder2";
 			this.buttonOrder2.Size = new System.Drawing.Size(256, 75);
 			this.buttonOrder2.TabIndex = 12;
@@ -147,7 +148,7 @@
 			// 
 			// buttonBuy60
 			// 
-			this.buttonBuy60.Location = new System.Drawing.Point(17, 167);
+			this.buttonBuy60.Location = new System.Drawing.Point(34, 205);
 			this.buttonBuy60.Name = "buttonBuy60";
 			this.buttonBuy60.Size = new System.Drawing.Size(256, 75);
 			this.buttonBuy60.TabIndex = 4;
@@ -157,7 +158,7 @@
 			// 
 			// buttonBuy30
 			// 
-			this.buttonBuy30.Location = new System.Drawing.Point(17, 248);
+			this.buttonBuy30.Location = new System.Drawing.Point(34, 286);
 			this.buttonBuy30.Name = "buttonBuy30";
 			this.buttonBuy30.Size = new System.Drawing.Size(256, 75);
 			this.buttonBuy30.TabIndex = 5;
@@ -167,7 +168,7 @@
 			// 
 			// buttonBuy10
 			// 
-			this.buttonBuy10.Location = new System.Drawing.Point(17, 329);
+			this.buttonBuy10.Location = new System.Drawing.Point(34, 367);
 			this.buttonBuy10.Name = "buttonBuy10";
 			this.buttonBuy10.Size = new System.Drawing.Size(256, 75);
 			this.buttonBuy10.TabIndex = 6;
@@ -177,7 +178,7 @@
 			// 
 			// buttonBuy100
 			// 
-			this.buttonBuy100.Location = new System.Drawing.Point(17, 85);
+			this.buttonBuy100.Location = new System.Drawing.Point(34, 123);
 			this.buttonBuy100.Name = "buttonBuy100";
 			this.buttonBuy100.Size = new System.Drawing.Size(256, 75);
 			this.buttonBuy100.TabIndex = 3;
@@ -187,7 +188,7 @@
 			// 
 			// buttonSell100
 			// 
-			this.buttonSell100.Location = new System.Drawing.Point(279, 85);
+			this.buttonSell100.Location = new System.Drawing.Point(296, 123);
 			this.buttonSell100.Name = "buttonSell100";
 			this.buttonSell100.Size = new System.Drawing.Size(256, 75);
 			this.buttonSell100.TabIndex = 7;
@@ -197,7 +198,7 @@
 			// 
 			// buttonSell60
 			// 
-			this.buttonSell60.Location = new System.Drawing.Point(279, 167);
+			this.buttonSell60.Location = new System.Drawing.Point(296, 205);
 			this.buttonSell60.Name = "buttonSell60";
 			this.buttonSell60.Size = new System.Drawing.Size(256, 75);
 			this.buttonSell60.TabIndex = 8;
@@ -207,7 +208,7 @@
 			// 
 			// buttonSell30
 			// 
-			this.buttonSell30.Location = new System.Drawing.Point(279, 248);
+			this.buttonSell30.Location = new System.Drawing.Point(296, 286);
 			this.buttonSell30.Name = "buttonSell30";
 			this.buttonSell30.Size = new System.Drawing.Size(256, 75);
 			this.buttonSell30.TabIndex = 9;
@@ -217,7 +218,7 @@
 			// 
 			// buttonSell10
 			// 
-			this.buttonSell10.Location = new System.Drawing.Point(279, 329);
+			this.buttonSell10.Location = new System.Drawing.Point(296, 367);
 			this.buttonSell10.Name = "buttonSell10";
 			this.buttonSell10.Size = new System.Drawing.Size(256, 75);
 			this.buttonSell10.TabIndex = 10;
@@ -225,11 +226,23 @@
 			this.buttonSell10.UseVisualStyleBackColor = true;
 			this.buttonSell10.Click += new System.EventHandler(this.buttonSell10_Click);
 			// 
+			// labelConnected
+			// 
+			this.labelConnected.AutoSize = true;
+			this.labelConnected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labelConnected.Location = new System.Drawing.Point(29, 9);
+			this.labelConnected.Name = "labelConnected";
+			this.labelConnected.Size = new System.Drawing.Size(145, 30);
+			this.labelConnected.TabIndex = 25;
+			this.labelConnected.Text = "Connected";
+			this.labelConnected.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
 			// FormTradingPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(803, 721);
+			this.ClientSize = new System.Drawing.Size(872, 820);
+			this.Controls.Add(this.labelConnected);
 			this.Controls.Add(this.buttonSell10);
 			this.Controls.Add(this.buttonSell30);
 			this.Controls.Add(this.buttonSell60);
@@ -250,6 +263,7 @@
 			this.Controls.Add(this.buttonOrder1);
 			this.Name = "FormTradingPanel";
 			this.Text = "TradePanel";
+			this.Load += new System.EventHandler(this.FormTradingPanel_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -275,6 +289,7 @@
 		private System.Windows.Forms.Button buttonSell60;
 		private System.Windows.Forms.Button buttonSell30;
 		private System.Windows.Forms.Button buttonSell10;
+		private System.Windows.Forms.Label labelConnected;
 	}
 }
 

@@ -16,12 +16,6 @@ namespace SvpTradingPanel
 		public FormTradingPanel()
 		{
 			InitializeComponent();
-			
-			SvpMT5.Instance.Connect();
-
-			textBoxPositionSize.Text = "0.5";
-			checkBoxAlwaysOnTop.Checked = true;
-			this.TopMost = true;
 		}
 
 		private void BuySell603010(bool buy)
@@ -64,14 +58,18 @@ namespace SvpTradingPanel
 
 		private double IdealSlPrice(Orders orders)
 		{
-			if (Buy(orders))
+			if (orders.Any())
 			{
-				return orders.Min(x => x.SL);
+				if (Buy(orders))
+				{
+					return orders.Min(x => x.SL);
+				}
+				else
+				{
+					return orders.Max(x => x.SL);
+				}
 			}
-			else
-			{
-				return orders.Max(x => x.SL);
-			}
+			return 0;
 		}
 
 		private void SlUp(double movement)
@@ -108,7 +106,7 @@ namespace SvpTradingPanel
 		}
 
 
-	private void buttonSlUp_Click(object sender, EventArgs e)
+		private void buttonSlUp_Click(object sender, EventArgs e)
 		{
 			SlUp(0.001);
 		}
@@ -181,6 +179,24 @@ namespace SvpTradingPanel
 		private void buttonSell10_Click(object sender, EventArgs e)
 		{
 			BuySellPercent(false, 10);
+		}
+
+		private void FormTradingPanel_Load(object sender, EventArgs e)
+		{
+			if (SvpMT5.Instance.Connect())
+			{
+				labelConnected.Text = "Connected!";
+				labelConnected.ForeColor = Color.Green;
+			}
+			else
+			{
+				labelConnected.Text = "Not connected!";
+				labelConnected.ForeColor = Color.Red;
+			}
+
+			textBoxPositionSize.Text = "0.5";
+			checkBoxAlwaysOnTop.Checked = true;
+			this.TopMost = true;
 		}
 	}
 }
