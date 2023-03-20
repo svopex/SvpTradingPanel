@@ -22,8 +22,12 @@ namespace SvpTradingPanel
 		private void RefreshData(Orders orders)
 		{
 			var sumOfUnits = Math.Abs(orders.Select(x => x.Units).Sum());
-			var rrr = orders.Select(x => ((Math.Abs(x.Price - x.PT)) / (Math.Abs(x.Price - x.SL))) / sumOfUnits * Math.Abs(x.Units)).Sum();
+			var rrr = orders.Select(x => ((Math.Abs(x.OpenPrice - x.PT)) / (Math.Abs(x.OpenPrice - x.SL))) / sumOfUnits * Math.Abs(x.Units)).Sum();
+			var loss = orders.Select(x => Math.Abs(x.OpenPrice - x.SL) * Math.Abs(x.Units)).Sum();
+			var profit = orders.Select(x => Math.Abs(x.OpenPrice - x.PT) * Math.Abs(x.Units)).Sum();
 			labelRrr.Text = "RRR: " + Math.Round(rrr, 2);
+			labelLoss.Text = "Loss:" + +Math.Round(loss, 2);
+			labelProfit.Text = "Profit:" + +Math.Round(profit, 2);
 		}
 
 		private void BuySell603010(bool buy)
@@ -243,6 +247,8 @@ namespace SvpTradingPanel
 
 		private void buttonJoinSl_Click(object sender, EventArgs e)
 		{
+			Orders orders = SvpMT5.Instance.GetMarketOrders();
+			RefreshData(orders);
 			JoinSl();
 		}
 

@@ -111,7 +111,7 @@ namespace Mt5Api
 			mqlTradeRequest.Magic = order.Magic;
 			mqlTradeRequest.Sl = order.SL;
 			mqlTradeRequest.Tp = order.PT;
-			mqlTradeRequest.Price = order.Price;
+			mqlTradeRequest.Price = order.OpenPrice;
 			//mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
 			MqlTradeResult mqlTradeResult;
 			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
@@ -234,7 +234,8 @@ namespace Mt5Api
 			Order Order = new Order();
 
 			Order.Id = (long)ticket;
-			Order.Price = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_PRICE_OPEN);
+			Order.OpenPrice = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_PRICE_OPEN);
+			Order.CurrentPrice = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_PRICE_CURRENT);
 			Order.SL = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_SL);
 			Order.PT = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_TP);
 			Order.Units = (long)(apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_VOLUME_CURRENT));
@@ -276,22 +277,22 @@ namespace Mt5Api
 			{
 				if (order.Units > 0)
 				{
-					order.SL = NormalizeDouble(order.Instrument, order.Price - SlRelative);
+					order.SL = NormalizeDouble(order.Instrument, order.OpenPrice - SlRelative);
 				}
 				else
 				{
-					order.SL = NormalizeDouble(order.Instrument, order.Price + SlRelative);
+					order.SL = NormalizeDouble(order.Instrument, order.OpenPrice + SlRelative);
 				}
 			}
 			if (PtRelative != 0)
 			{
 				if (order.Units > 0)
 				{
-					order.PT = NormalizeDouble(order.Instrument, order.Price + PtRelative);
+					order.PT = NormalizeDouble(order.Instrument, order.OpenPrice + PtRelative);
 				}
 				else
 				{
-					order.PT = NormalizeDouble(order.Instrument, order.Price - PtRelative);
+					order.PT = NormalizeDouble(order.Instrument, order.OpenPrice - PtRelative);
 				}
 			}
 		}
@@ -313,11 +314,11 @@ namespace Mt5Api
 				double ptRelative = 0;
 				if (slPercent != 0)
 				{
-					slRelative = order.Price * slPercent / 100;
+					slRelative = order.OpenPrice * slPercent / 100;
 				}
 				if (ptPercent != 0)
 				{
-					ptRelative = order.Price * ptPercent / 100;
+					ptRelative = order.OpenPrice * ptPercent / 100;
 				}
 				FillSlPt(order, slRelative, ptRelative);
 				SetPositionSlAndPt(order);
@@ -360,7 +361,8 @@ namespace Mt5Api
 			Order Order = new Order();
 
 			Order.Id = (long)ticket;
-			Order.Price = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_PRICE_OPEN);
+			Order.OpenPrice = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_PRICE_OPEN);
+			Order.CurrentPrice = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_PRICE_CURRENT);
 			Order.SL = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_SL);
 			Order.PT = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_TP);
 			Order.Units = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_VOLUME);

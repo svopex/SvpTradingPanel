@@ -5,8 +5,10 @@ namespace Mt5Api
     public class Order
     {
         public long Id { get; set; }
-        public double Price { get; set; }
-        public double SL { get; set; }
+        public double OpenPrice { get; set; }
+
+		public double CurrentPrice { get; set; }
+		public double SL { get; set; }
         public double PT { get; set; }
         public string Instrument { get; set; }
         public double Units { get; set; }
