@@ -327,25 +327,34 @@ namespace SvpTradingPanel
 			BuySellPercent(false, 10);
 		}
 
-		private void FormTradingPanel_Load(object sender, EventArgs e)
+		public void ShowLabelConnected(bool connected)
 		{
-			if (SvpMT5.Instance.Connect())
+			if (connected)
 			{
 				labelConnected.Text = "Connected!";
 				labelConnected.ForeColor = Color.Green;
 			}
 			else
 			{
-				labelConnected.Text = "Not connected!";
+				labelConnected.Text = "Disconnected!";
 				labelConnected.ForeColor = Color.Red;
 			}
+		}
+
+		private void FormTradingPanel_Load(object sender, EventArgs e)
+		{
+			bool connected = SvpMT5.Instance.Connect();
+			ShowLabelConnected(connected);
 
 			textBoxPositionSize.Text = "0.5";
 			checkBoxAlwaysOnTop.Checked = true;
 			this.TopMost = true;
 
-			Orders orders = SvpMT5.Instance.GetMarketOrders();
-			RefreshData(orders);
+			if (connected)
+			{
+				Orders orders = SvpMT5.Instance.GetMarketOrders();
+				RefreshData(orders);
+			}
 		}
 
 		private void buttonCloseAll_Click(object sender, EventArgs e)
@@ -360,8 +369,13 @@ namespace SvpTradingPanel
 
 		private void timerRefreshLabels_Tick(object sender, EventArgs e)
 		{
-			//Orders orders = SvpMT5.Instance.GetMarketOrders();
-			//ShowRrr(orders);
+			bool connected = SvpMT5.Instance.isConnected();
+			ShowLabelConnected(connected);
+			if (!connected)
+			{
+				SvpMT5.Instance.Disconnect();
+				ShowLabelConnected(SvpMT5.Instance.Connect());
+			}
 		}
 	}
 }

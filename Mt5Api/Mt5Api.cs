@@ -28,6 +28,16 @@ namespace Mt5Api
 
 		private static SvpMT5 instance;
 
+		public bool isConnected()
+		{
+			return instance.apiClient.ConnectionState == Mt5ConnectionState.Connected;
+		}
+
+		public void Disconnect()
+		{
+			instance.apiClient.BeginDisconnect();
+		}
+
 		public bool Connect()
 		{
 			int counter = 10;

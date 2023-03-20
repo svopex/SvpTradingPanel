@@ -62,7 +62,7 @@
 			// buttonOrderBuy1
 			// 
 			this.buttonOrderBuy1.Location = new System.Drawing.Point(29, 484);
-			this.buttonOrderBuy1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonOrderBuy1.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonOrderBuy1.Name = "buttonOrderBuy1";
 			this.buttonOrderBuy1.Size = new System.Drawing.Size(257, 76);
 			this.buttonOrderBuy1.TabIndex = 11;
@@ -73,7 +73,7 @@
 			// textBoxPositionSize
 			// 
 			this.textBoxPositionSize.Location = new System.Drawing.Point(150, 78);
-			this.textBoxPositionSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBoxPositionSize.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxPositionSize.Name = "textBoxPositionSize";
 			this.textBoxPositionSize.Size = new System.Drawing.Size(134, 29);
 			this.textBoxPositionSize.TabIndex = 1;
@@ -91,7 +91,7 @@
 			// buttonSlUp
 			// 
 			this.buttonSlUp.Location = new System.Drawing.Point(240, 672);
-			this.buttonSlUp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonSlUp.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlUp.Name = "buttonSlUp";
 			this.buttonSlUp.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlUp.TabIndex = 20;
@@ -102,7 +102,7 @@
 			// buttonSlDown
 			// 
 			this.buttonSlDown.Location = new System.Drawing.Point(240, 783);
-			this.buttonSlDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonSlDown.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlDown.Name = "buttonSlDown";
 			this.buttonSlDown.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlDown.TabIndex = 21;
@@ -113,7 +113,7 @@
 			// buttonJoinSl
 			// 
 			this.buttonJoinSl.Location = new System.Drawing.Point(400, 923);
-			this.buttonJoinSl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonJoinSl.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonJoinSl.Name = "buttonJoinSl";
 			this.buttonJoinSl.Size = new System.Drawing.Size(257, 76);
 			this.buttonJoinSl.TabIndex = 24;
@@ -124,7 +124,7 @@
 			// buttonSlUpMini
 			// 
 			this.buttonSlUpMini.Location = new System.Drawing.Point(451, 672);
-			this.buttonSlUpMini.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonSlUpMini.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlUpMini.Name = "buttonSlUpMini";
 			this.buttonSlUpMini.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlUpMini.TabIndex = 22;
@@ -135,7 +135,7 @@
 			// buttonSlDownMini
 			// 
 			this.buttonSlDownMini.Location = new System.Drawing.Point(451, 783);
-			this.buttonSlDownMini.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonSlDownMini.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlDownMini.Name = "buttonSlDownMini";
 			this.buttonSlDownMini.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlDownMini.TabIndex = 23;
@@ -146,8 +146,8 @@
 			// checkBoxAlwaysOnTop
 			// 
 			this.checkBoxAlwaysOnTop.AutoSize = true;
-			this.checkBoxAlwaysOnTop.Location = new System.Drawing.Point(496, 80);
-			this.checkBoxAlwaysOnTop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.checkBoxAlwaysOnTop.Location = new System.Drawing.Point(451, 78);
+			this.checkBoxAlwaysOnTop.Margin = new System.Windows.Forms.Padding(4);
 			this.checkBoxAlwaysOnTop.Name = "checkBoxAlwaysOnTop";
 			this.checkBoxAlwaysOnTop.Size = new System.Drawing.Size(160, 29);
 			this.checkBoxAlwaysOnTop.TabIndex = 2;
@@ -158,7 +158,7 @@
 			// buttonOrderSell1
 			// 
 			this.buttonOrderSell1.Location = new System.Drawing.Point(290, 484);
-			this.buttonOrderSell1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonOrderSell1.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonOrderSell1.Name = "buttonOrderSell1";
 			this.buttonOrderSell1.Size = new System.Drawing.Size(257, 76);
 			this.buttonOrderSell1.TabIndex = 12;
@@ -169,7 +169,7 @@
 			// buttonBuy60
 			// 
 			this.buttonBuy60.Location = new System.Drawing.Point(29, 216);
-			this.buttonBuy60.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonBuy60.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonBuy60.Name = "buttonBuy60";
 			this.buttonBuy60.Size = new System.Drawing.Size(257, 76);
 			this.buttonBuy60.TabIndex = 4;
@@ -180,7 +180,7 @@
 			// buttonBuy30
 			// 
 			this.buttonBuy30.Location = new System.Drawing.Point(29, 297);
-			this.buttonBuy30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonBuy30.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonBuy30.Name = "buttonBuy30";
 			this.buttonBuy30.Size = new System.Drawing.Size(257, 76);
 			this.buttonBuy30.TabIndex = 5;
@@ -191,7 +191,7 @@
 			// buttonBuy10
 			// 
 			this.buttonBuy10.Location = new System.Drawing.Point(29, 378);
-			this.buttonBuy10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonBuy10.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonBuy10.Name = "buttonBuy10";
 			this.buttonBuy10.Size = new System.Drawing.Size(257, 76);
 			this.buttonBuy10.TabIndex = 6;
@@ -202,7 +202,7 @@
 			// buttonBuy100
 			// 
 			this.buttonBuy100.Location = new System.Drawing.Point(29, 135);
-			this.buttonBuy100.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonBuy100.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonBuy100.Name = "buttonBuy100";
 			this.buttonBuy100.Size = new System.Drawing.Size(257, 76);
 			this.buttonBuy100.TabIndex = 3;
@@ -213,7 +213,7 @@
 			// buttonSell100
 			// 
 			this.buttonSell100.Location = new System.Drawing.Point(290, 135);
-			this.buttonSell100.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonSell100.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSell100.Name = "buttonSell100";
 			this.buttonSell100.Size = new System.Drawing.Size(257, 76);
 			this.buttonSell100.TabIndex = 7;
@@ -224,7 +224,7 @@
 			// buttonSell60
 			// 
 			this.buttonSell60.Location = new System.Drawing.Point(290, 216);
-			this.buttonSell60.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonSell60.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSell60.Name = "buttonSell60";
 			this.buttonSell60.Size = new System.Drawing.Size(257, 76);
 			this.buttonSell60.TabIndex = 8;
@@ -235,7 +235,7 @@
 			// buttonSell30
 			// 
 			this.buttonSell30.Location = new System.Drawing.Point(290, 297);
-			this.buttonSell30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonSell30.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSell30.Name = "buttonSell30";
 			this.buttonSell30.Size = new System.Drawing.Size(257, 76);
 			this.buttonSell30.TabIndex = 9;
@@ -246,7 +246,7 @@
 			// buttonSell10
 			// 
 			this.buttonSell10.Location = new System.Drawing.Point(290, 378);
-			this.buttonSell10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonSell10.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSell10.Name = "buttonSell10";
 			this.buttonSell10.Size = new System.Drawing.Size(257, 76);
 			this.buttonSell10.TabIndex = 10;
@@ -258,7 +258,7 @@
 			// 
 			this.labelConnected.AutoSize = true;
 			this.labelConnected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labelConnected.Location = new System.Drawing.Point(491, 14);
+			this.labelConnected.Location = new System.Drawing.Point(446, 15);
 			this.labelConnected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelConnected.Name = "labelConnected";
 			this.labelConnected.Size = new System.Drawing.Size(145, 30);
@@ -269,7 +269,7 @@
 			// buttonOrderBuy2
 			// 
 			this.buttonOrderBuy2.Location = new System.Drawing.Point(29, 565);
-			this.buttonOrderBuy2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonOrderBuy2.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonOrderBuy2.Name = "buttonOrderBuy2";
 			this.buttonOrderBuy2.Size = new System.Drawing.Size(257, 76);
 			this.buttonOrderBuy2.TabIndex = 13;
@@ -280,7 +280,7 @@
 			// buttonOrderSell2
 			// 
 			this.buttonOrderSell2.Location = new System.Drawing.Point(290, 565);
-			this.buttonOrderSell2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonOrderSell2.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonOrderSell2.Name = "buttonOrderSell2";
 			this.buttonOrderSell2.Size = new System.Drawing.Size(257, 76);
 			this.buttonOrderSell2.TabIndex = 14;
@@ -291,7 +291,7 @@
 			// buttonCloseAll
 			// 
 			this.buttonCloseAll.Location = new System.Drawing.Point(29, 923);
-			this.buttonCloseAll.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonCloseAll.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonCloseAll.Name = "buttonCloseAll";
 			this.buttonCloseAll.Size = new System.Drawing.Size(257, 76);
 			this.buttonCloseAll.TabIndex = 30;
@@ -302,7 +302,7 @@
 			// buttonSlDownMax
 			// 
 			this.buttonSlDownMax.Location = new System.Drawing.Point(29, 783);
-			this.buttonSlDownMax.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonSlDownMax.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlDownMax.Name = "buttonSlDownMax";
 			this.buttonSlDownMax.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlDownMax.TabIndex = 32;
@@ -313,7 +313,7 @@
 			// buttonSlUpMax
 			// 
 			this.buttonSlUpMax.Location = new System.Drawing.Point(29, 672);
-			this.buttonSlUpMax.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.buttonSlUpMax.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlUpMax.Name = "buttonSlUpMax";
 			this.buttonSlUpMax.Size = new System.Drawing.Size(205, 105);
 			this.buttonSlUpMax.TabIndex = 31;
@@ -334,7 +334,7 @@
 			// timerRefreshLabels
 			// 
 			this.timerRefreshLabels.Enabled = true;
-			this.timerRefreshLabels.Interval = 1000;
+			this.timerRefreshLabels.Interval = 5000;
 			this.timerRefreshLabels.Tick += new System.EventHandler(this.timerRefreshLabels_Tick);
 			// 
 			// labelLoss
@@ -389,7 +389,7 @@
 			this.Controls.Add(this.buttonOrderBuy1);
 			this.Cursor = System.Windows.Forms.Cursors.Default;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MaximizeBox = false;
 			this.Name = "FormTradingPanel";
 			this.Text = "SvpTradePanel";
