@@ -122,6 +122,16 @@ namespace SvpTradingPanel
 				order.SL = idealSl + (idealSl * movement);
 				SvpMT5.Instance.SetPositionSlAndPt(order);
 			}
+			if (!orders.Any())
+			{
+				orders = SvpMT5.Instance.GetPendingOrders();
+				idealSl = IdealMaximumSlPrice(orders);
+				foreach (var order in orders)
+				{
+					order.SL = idealSl + (idealSl * movement);
+					SvpMT5.Instance.SetOrderSlAndPt(order);
+				}
+			}
 			RefreshData(orders);
 		}
 
@@ -133,6 +143,16 @@ namespace SvpTradingPanel
 			{
 				order.SL = idealSl - (idealSl * movement);
 				SvpMT5.Instance.SetPositionSlAndPt(order);
+			}
+			if (!orders.Any())
+			{
+				orders = SvpMT5.Instance.GetPendingOrders();
+				idealSl = IdealMaximumSlPrice(orders);
+				foreach (var order in orders)
+				{
+					order.SL = idealSl - (idealSl * movement);
+					SvpMT5.Instance.SetOrderSlAndPt(order);
+				}
 			}
 			RefreshData(orders);
 		}
@@ -165,9 +185,8 @@ namespace SvpTradingPanel
 			return 0;
 		}
 
-		private void JoinSl()
+		private bool JoinSl(Orders orders, bool position)
 		{
-			Orders orders = SvpMT5.Instance.GetMarketOrders();
 			double idealMinimumSl = IdealMaximumSlPrice(orders); // Minimalni SL (je nejdale od ceny).
 			double slPriceAfterJoin = SlPriceAfterJoin(orders); // Pokud SL jsou vsechny stejne, vrati se hodnota tohoto stejneho SL, jinak se vraci nula.
 			foreach (var order in orders)
@@ -180,9 +199,26 @@ namespace SvpTradingPanel
 				{
 					order.SL = slPriceAfterJoin;
 				}
-				SvpMT5.Instance.SetPositionSlAndPt(order);
+				if (position)
+				{
+					SvpMT5.Instance.SetPositionSlAndPt(order);
+				}
+				else
+				{
+					SvpMT5.Instance.SetOrderSlAndPt(order);
+				}				
 			}
-			RefreshData(orders);
+			return orders.Any();
+		}
+
+		private void JoinSl()
+		{
+			Orders orders = SvpMT5.Instance.GetMarketOrders();
+			if (!JoinSl(orders, true))
+			{
+				orders = SvpMT5.Instance.GetPendingOrders();
+				JoinSl(orders, false);
+			}
 		}
 
 		private void buttonSlUpMax_Click(object sender, EventArgs e)

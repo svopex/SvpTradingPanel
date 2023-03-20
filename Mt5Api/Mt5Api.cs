@@ -100,6 +100,24 @@ namespace Mt5Api
 			return 0;
 		}
 
+		public void SetOrderSlAndPt(Order order)
+		{
+			MqlTradeRequest mqlTradeRequest = new MqlTradeRequest();
+			mqlTradeRequest.Action = ENUM_TRADE_REQUEST_ACTIONS.TRADE_ACTION_MODIFY;
+			mqlTradeRequest.Order = (ulong)order.Id;
+			mqlTradeRequest.Deviation = 5;
+			//mqlTradeRequest.Position = (ulong)order.Id;
+			mqlTradeRequest.Symbol = TransformInstrument(order.Instrument);
+			mqlTradeRequest.Magic = order.Magic;
+			mqlTradeRequest.Sl = order.SL;
+			mqlTradeRequest.Tp = order.PT;
+			mqlTradeRequest.Price = order.Price;
+			//mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
+			MqlTradeResult mqlTradeResult;
+			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
+			//apiClient.PositionModify((ulong)order.Id, order.SL, order.PT);
+		}
+
 		public void SetPositionSlAndPt(Order order)
 		{
 			MqlTradeRequest mqlTradeRequest = new MqlTradeRequest();
@@ -232,7 +250,7 @@ namespace Mt5Api
 			return Order;
 		}
 
-		public Orders GetPendingOrders(ulong magic, string instrument = null)
+		public Orders GetPendingOrders()
 		{
 			Orders Orders = new Orders();
 
@@ -243,8 +261,7 @@ namespace Mt5Api
 
 				Order Order = GetPendingOrder(ticket);
 
-				if (magic == Order.Magic &&
-					(instrument == null || Order.Instrument == TransformInstrument(instrument)))
+				if (/*Utilities.StrategyNumber == Order.Magic && */ Order.Instrument == TransformInstrument(Symbol))
 				{
 					Order.Instrument = DeTransformInstrument(Order.Instrument);
 					Orders.Add(Order);
@@ -370,7 +387,7 @@ namespace Mt5Api
 
 				Order Order = GetMarketOrder(ticket);
 
-				if (Utilities.StrategyNumber == Order.Magic && Order.Instrument == TransformInstrument(Symbol))
+				if (/*Utilities.StrategyNumber == Order.Magic && */ Order.Instrument == TransformInstrument(Symbol))
 				{
 					Order.Instrument = DeTransformInstrument(Order.Instrument);
 					Orders.Add(Order);
