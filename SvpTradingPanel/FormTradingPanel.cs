@@ -343,6 +343,8 @@ namespace SvpTradingPanel
 
 		private void FormTradingPanel_Load(object sender, EventArgs e)
 		{
+			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+
 			bool connected = SvpMT5.Instance.Connect();
 			ShowLabelConnected(connected);
 
