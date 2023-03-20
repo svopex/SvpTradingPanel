@@ -103,7 +103,7 @@ namespace SvpTradingPanel
 			{
 				if (IsExistingPositionBuy(orders))
 				{
-					return orders.Min(x => x.SL);
+					return orders.Where(x => x.SL > 0).Min(x => x.SL);
 				}
 				else
 				{
@@ -206,7 +206,7 @@ namespace SvpTradingPanel
 				else
 				{
 					SvpMT5.Instance.SetOrderSlAndPt(order);
-				}				
+				}
 			}
 			return orders.Any();
 		}
@@ -349,6 +349,7 @@ namespace SvpTradingPanel
 			{
 				SvpMT5.Instance.CloseOrder(order.Id);
 			}
+			SvpMT5.Instance.OrdersCloseAll();
 		}
 
 		private void timerRefreshLabels_Tick(object sender, EventArgs e)

@@ -395,5 +395,10 @@ namespace Mt5Api
 			}
 			return Orders;
 		}
+
+		public void OrdersCloseAll()
+		{
+			apiClient.OrderCloseAll();
+		}
 	}
 }
