@@ -1,6 +1,7 @@
 using MtApi5;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -202,8 +203,40 @@ namespace Mt5Api
 			}
 		}
 
+		public double SymbolPoint()
+		{
+			return apiClient.SymbolInfoDouble(Symbol, ENUM_SYMBOL_INFO_DOUBLE.SYMBOL_POINT);
+		}
+
+		public (bool result, ulong ticket, uint retCode, string comment) CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
+		{
+			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, Utilities.StrategyName, slPercent, ptPercent);
+		}
+
+		public (bool result, ulong ticket, uint retCode, string comment) CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
+		{
+			(bool result, ulong ticket, uint retCode, string comment) result = CreatePendingOrder(instrument, price, units, OrderType.Limit, magic, comment, price);
+			if (result.result)
+			{
+				Order order = GetPendingOrder(result.ticket);
+				double slRelative = 0;
+				double ptRelative = 0;
+				if (slPercent != 0)
+				{
+					slRelative = order.OpenPrice * slPercent / 100;
+				}
+				if (ptPercent != 0)
+				{
+					ptRelative = order.OpenPrice * ptPercent / 100;
+				}
+				FillSlPt(order, slRelative, ptRelative);
+				SetOrderSlAndPt(order);
+			}
+			return result;
+		}
+
 		public (bool result, ulong ticket, uint retCode, string comment)
-			CreatePendingOrderSlPtRelative(string instrument, double price, long units, OrderType orderType, ulong magic, string comment, double SlRelative, double PtRelative, double stopLimitPrice)
+			CreatePendingOrderSlPtRelative(string instrument, double price, double units, OrderType orderType, ulong magic, string comment, double SlRelative, double PtRelative, double stopLimitPrice)
 		{
 			MqlTradeRequest mqlTradeRequest = new MqlTradeRequest();
 			mqlTradeRequest.Action = ENUM_TRADE_REQUEST_ACTIONS.TRADE_ACTION_PENDING;
@@ -232,7 +265,7 @@ namespace Mt5Api
 		}
 
 		public (bool result, ulong ticket, uint retCode, string comment)
-			CreatePendingOrder(string instrument, double price, long units, OrderType orderType, ulong magic, string comment, double stopLimitPrice)
+			CreatePendingOrder(string instrument, double price, double units, OrderType orderType, ulong magic, string comment, double stopLimitPrice)
 		{
 			return CreatePendingOrderSlPtRelative(instrument, price, units, orderType, magic, comment, 0, 0, stopLimitPrice);
 		}
@@ -248,7 +281,7 @@ namespace Mt5Api
 			Order.CurrentPrice = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_PRICE_CURRENT);
 			Order.SL = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_SL);
 			Order.PT = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_TP);
-			Order.Units = (long)(apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_VOLUME_CURRENT));
+			Order.Units = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_VOLUME_CURRENT);
 			ENUM_ORDER_TYPE Type = (ENUM_ORDER_TYPE)apiClient.OrderGetInteger(ENUM_ORDER_PROPERTY_INTEGER.ORDER_TYPE);
 			if (Type == ENUM_ORDER_TYPE.ORDER_TYPE_SELL_LIMIT || Type == ENUM_ORDER_TYPE.ORDER_TYPE_SELL_STOP || Type == ENUM_ORDER_TYPE.ORDER_TYPE_SELL_STOP_LIMIT)
 			{

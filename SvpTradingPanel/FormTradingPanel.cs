@@ -23,14 +23,26 @@ namespace SvpTradingPanel
 		{
 			var sumOfUnits = Math.Abs(orders.Select(x => x.Units).Sum());
 			var rrr = orders.Select(x => ((Math.Abs(x.OpenPrice - x.PT)) / (Math.Abs(x.OpenPrice - x.SL))) / sumOfUnits * Math.Abs(x.Units)).Sum();
-			var loss = orders.Select(x => Math.Abs(x.OpenPrice - x.SL) * Math.Abs(x.Units)).Sum();
-			var profit = orders.Select(x => Math.Abs(x.OpenPrice - x.PT) * Math.Abs(x.Units)).Sum();
+			var loss = orders.Select(x => Math.Abs(x.OpenPrice - x.SL) * Math.Abs(x.Units)).Sum() / SvpMT5.Instance.SymbolPoint();
+			var profit = orders.Select(x => Math.Abs(x.OpenPrice - x.PT) * Math.Abs(x.Units)).Sum() / SvpMT5.Instance.SymbolPoint();
 			labelRrr.Text = "RRR: " + Math.Round(rrr, 2);
 			labelLoss.Text = "Loss:" + +Math.Round(loss, 2);
 			labelProfit.Text = "Profit:" + +Math.Round(profit, 2);
 		}
 
-		private double GetPositionSize(bool buy)
+		private double? GetPrice()
+		{			
+			if (Double.TryParse(textBoxPrice.Text, out double price))
+			{
+				return price;
+			}
+			else
+			{
+				return checkBoxPendingOrder.Checked ? (double?)null : 0;
+			}
+		}
+
+		private double? GetPositionSize(bool buy)
 		{
 			bool result =
 				(Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
@@ -47,41 +59,70 @@ namespace SvpTradingPanel
 			}
 			else
 			{
-				return 0;
+				return null;
 			}
 		}
 
 		private void BuySell603010(bool buy)
 		{
-			double positionSize = GetPositionSize(buy);
-			if (positionSize != 0)
-			{ 
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.6, 1, GetTpDistanceByOrderSize(60));
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.3, 1, GetTpDistanceByOrderSize(30));
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.1, 1, GetTpDistanceByOrderSize(10));
+			double? positionSize = GetPositionSize(buy);
+			double? price = GetPrice();
+			if (positionSize != null && price != null)
+			{
+				if (checkBoxPendingOrder.Checked)
+				{
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.6, 1, GetTpDistanceByOrderSize(60));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.3, 1, GetTpDistanceByOrderSize(30));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.1, 1, GetTpDistanceByOrderSize(10));
+				}
+				else
+				{
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.6, 1, GetTpDistanceByOrderSize(60));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.3, 1, GetTpDistanceByOrderSize(30));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.1, 1, GetTpDistanceByOrderSize(10));
+				}
 				JoinSl();
 			}
 		}
 
 		private void BuySell504010(bool buy)
 		{
-			double positionSize = GetPositionSize(buy);
-			if (positionSize != 0)
+			double? positionSize = GetPositionSize(buy);
+			double? price = GetPrice();
+			if (positionSize != null && price != null)
 			{
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.5, 1, GetTpDistanceByOrderSize(50));
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.4, 1, GetTpDistanceByOrderSize(40));
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.1, 1, GetTpDistanceByOrderSize(10));
+				if (checkBoxPendingOrder.Checked)
+				{
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.5, 1, GetTpDistanceByOrderSize(50));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.4, 1, GetTpDistanceByOrderSize(40));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.1, 1, GetTpDistanceByOrderSize(10));
+				}
+				else
+				{
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.5, 1, GetTpDistanceByOrderSize(50));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.4, 1, GetTpDistanceByOrderSize(40));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.1, 1, GetTpDistanceByOrderSize(10));
+				}
 				JoinSl();
 			}
 		}
 
 		private void BuySell6040(bool buy)
 		{
-			double positionSize = GetPositionSize(buy);
-			if (positionSize != 0)
+			double? positionSize = GetPositionSize(buy);
+			double? price = GetPrice();
+			if (positionSize != null && price != null)
 			{
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.6, 1, GetTpDistanceByOrderSize(100));
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.4, 1, GetTpDistanceByOrderSize(40));
+				if (checkBoxPendingOrder.Checked)
+				{
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.6, 1, GetTpDistanceByOrderSize(100));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.4, 1, GetTpDistanceByOrderSize(40));
+				}
+				else
+				{
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.6, 1, GetTpDistanceByOrderSize(100));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.4, 1, GetTpDistanceByOrderSize(40));
+				}
 				JoinSl();
 			}
 		}
@@ -93,10 +134,18 @@ namespace SvpTradingPanel
 
 		private void BuySellPercent(bool buy, int percent)
 		{
-			double positionSize = GetPositionSize(buy);
-			if (positionSize != 0)
+			double? positionSize = GetPositionSize(buy);
+			double? price = GetPrice();
+			if (positionSize != null && price != null)
 			{
-				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * percent / 100, 1, GetTpDistanceByOrderSize(percent));
+				if (checkBoxPendingOrder.Checked)
+				{
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * percent / 100, 1, GetTpDistanceByOrderSize(percent));
+				}
+				else
+				{
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * percent / 100, 1, GetTpDistanceByOrderSize(percent));
+				}
 				JoinSl();
 			}
 		}
@@ -240,6 +289,7 @@ namespace SvpTradingPanel
 				orders = SvpMT5.Instance.GetPendingOrders();
 				JoinSl(orders, false);
 			}
+			RefreshData(orders);
 		}
 
 		private void buttonSlUpMax_Click(object sender, EventArgs e)
@@ -375,8 +425,12 @@ namespace SvpTradingPanel
 			bool connected = SvpMT5.Instance.Connect();
 			ShowLabelConnected(connected);
 
+			checkBoxPendingOrder.Checked = false;
+			textBoxPrice.Enabled = false;
+
 			textBoxPositionSize.Text = "0.5";
 			checkBoxAlwaysOnTop.Checked = true;
+			
 			this.TopMost = true;
 
 			if (connected)
@@ -405,6 +459,11 @@ namespace SvpTradingPanel
 				SvpMT5.Instance.Disconnect();
 				ShowLabelConnected(SvpMT5.Instance.Connect());
 			}
+		}
+
+		private void checkBoxPendingOrder_CheckedChanged(object sender, EventArgs e)
+		{
+			textBoxPrice.Enabled = checkBoxPendingOrder.Checked;
 		}
 	}
 }
