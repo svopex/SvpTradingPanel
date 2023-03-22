@@ -155,7 +155,7 @@
 			this.checkBoxAlwaysOnTop.Margin = new System.Windows.Forms.Padding(4);
 			this.checkBoxAlwaysOnTop.Name = "checkBoxAlwaysOnTop";
 			this.checkBoxAlwaysOnTop.Size = new System.Drawing.Size(160, 29);
-			this.checkBoxAlwaysOnTop.TabIndex = 5;
+			this.checkBoxAlwaysOnTop.TabIndex = 3;
 			this.checkBoxAlwaysOnTop.Text = "Always on top";
 			this.checkBoxAlwaysOnTop.UseVisualStyleBackColor = true;
 			this.checkBoxAlwaysOnTop.CheckedChanged += new System.EventHandler(this.checkBoxAlwaysOnTop_CheckedChanged);
@@ -398,7 +398,7 @@
 			this.textBoxPrice.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxPrice.Name = "textBoxPrice";
 			this.textBoxPrice.Size = new System.Drawing.Size(134, 29);
-			this.textBoxPrice.TabIndex = 3;
+			this.textBoxPrice.TabIndex = 2;
 			// 
 			// checkBoxPendingOrder
 			// 
@@ -407,7 +407,7 @@
 			this.checkBoxPendingOrder.Margin = new System.Windows.Forms.Padding(4);
 			this.checkBoxPendingOrder.Name = "checkBoxPendingOrder";
 			this.checkBoxPendingOrder.Size = new System.Drawing.Size(160, 29);
-			this.checkBoxPendingOrder.TabIndex = 82;
+			this.checkBoxPendingOrder.TabIndex = 4;
 			this.checkBoxPendingOrder.Text = "Pending order";
 			this.checkBoxPendingOrder.UseVisualStyleBackColor = true;
 			this.checkBoxPendingOrder.CheckedChanged += new System.EventHandler(this.checkBoxPendingOrder_CheckedChanged);
