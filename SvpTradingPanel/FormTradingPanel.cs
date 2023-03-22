@@ -30,17 +30,32 @@ namespace SvpTradingPanel
 			labelProfit.Text = "Profit:" + +Math.Round(profit, 2);
 		}
 
-		private void BuySell603010(bool buy)
+		private double GetPositionSize(bool buy)
 		{
-			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
+			bool result =
+				(Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
 				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
 				&& ((IsExistingPositionBuy() && buy) || (IsExistingPositionSell() && !buy)) // pokud je jiz otevrena pozice, nova pozice musi byt stejnejo typu (buy/sell).
-				)
+				);
+			if (result)
 			{
 				if (!buy)
 				{
 					positionSize = -positionSize;
 				}
+				return positionSize;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+		private void BuySell603010(bool buy)
+		{
+			double positionSize = GetPositionSize(buy);
+			if (positionSize != 0)
+			{ 
 				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.6, 1, GetTpDistanceByOrderSize(60));
 				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.3, 1, GetTpDistanceByOrderSize(30));
 				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.1, 1, GetTpDistanceByOrderSize(10));
@@ -48,16 +63,23 @@ namespace SvpTradingPanel
 			}
 		}
 
+		private void BuySell504010(bool buy)
+		{
+			double positionSize = GetPositionSize(buy);
+			if (positionSize != 0)
+			{
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.5, 1, GetTpDistanceByOrderSize(50));
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.4, 1, GetTpDistanceByOrderSize(40));
+				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.1, 1, GetTpDistanceByOrderSize(10));
+				JoinSl();
+			}
+		}
+
 		private void BuySell6040(bool buy)
 		{
-			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
-				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
-				&& ((IsExistingPositionBuy() && buy) || (IsExistingPositionSell() && !buy))) // pokud je jiz otevrena pozice, nova pozice musi byt stejnejo typu (buy/sell).
+			double positionSize = GetPositionSize(buy);
+			if (positionSize != 0)
 			{
-				if (!buy)
-				{
-					positionSize = -positionSize;
-				}
 				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.6, 1, GetTpDistanceByOrderSize(100));
 				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * 0.4, 1, GetTpDistanceByOrderSize(40));
 				JoinSl();
@@ -71,14 +93,9 @@ namespace SvpTradingPanel
 
 		private void BuySellPercent(bool buy, int percent)
 		{
-			if (Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
-				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
-				&& ((IsExistingPositionBuy() && buy) || (IsExistingPositionSell() && !buy))) // pokud je jiz otevrena pozice, nova pozice musi byt stejnejo typu (buy/sell).
+			double positionSize = GetPositionSize(buy);
+			if (positionSize != 0)
 			{
-				if (!buy)
-				{
-					positionSize = -positionSize;
-				}
 				SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize * percent / 100, 1, GetTpDistanceByOrderSize(percent));
 				JoinSl();
 			}
@@ -285,6 +302,16 @@ namespace SvpTradingPanel
 		private void buttonOrderSell2_Click(object sender, EventArgs e)
 		{
 			BuySell6040(false);
+		}
+
+		private void buttonOrderBuy3_Click(object sender, EventArgs e)
+		{
+			BuySell504010(true);
+		}
+
+		private void buttonOrderSell3_Click(object sender, EventArgs e)
+		{
+			BuySell504010(false);
 		}
 
 		private void buttonBuy100_Click(object sender, EventArgs e)

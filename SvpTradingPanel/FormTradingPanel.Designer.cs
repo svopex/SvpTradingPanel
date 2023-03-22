@@ -57,6 +57,8 @@
 			this.timerRefreshLabels = new System.Windows.Forms.Timer(this.components);
 			this.labelLoss = new System.Windows.Forms.Label();
 			this.labelProfit = new System.Windows.Forms.Label();
+			this.buttonOrderSell3 = new System.Windows.Forms.Button();
+			this.buttonOrderBuy3 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// buttonOrderBuy1
@@ -84,61 +86,61 @@
 			this.LabelPositionSize.Location = new System.Drawing.Point(24, 79);
 			this.LabelPositionSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.LabelPositionSize.Name = "LabelPositionSize";
-			this.LabelPositionSize.Size = new System.Drawing.Size(121, 25);
+			this.LabelPositionSize.Size = new System.Drawing.Size(114, 24);
 			this.LabelPositionSize.TabIndex = 0;
 			this.LabelPositionSize.Text = "&Position size";
 			// 
 			// buttonSlUp
 			// 
-			this.buttonSlUp.Location = new System.Drawing.Point(240, 672);
+			this.buttonSlUp.Location = new System.Drawing.Point(211, 752);
 			this.buttonSlUp.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlUp.Name = "buttonSlUp";
-			this.buttonSlUp.Size = new System.Drawing.Size(205, 105);
-			this.buttonSlUp.TabIndex = 20;
+			this.buttonSlUp.Size = new System.Drawing.Size(176, 88);
+			this.buttonSlUp.TabIndex = 32;
 			this.buttonSlUp.Text = "SL up";
 			this.buttonSlUp.UseVisualStyleBackColor = true;
 			this.buttonSlUp.Click += new System.EventHandler(this.buttonSlUp_Click);
 			// 
 			// buttonSlDown
 			// 
-			this.buttonSlDown.Location = new System.Drawing.Point(240, 783);
+			this.buttonSlDown.Location = new System.Drawing.Point(211, 848);
 			this.buttonSlDown.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlDown.Name = "buttonSlDown";
-			this.buttonSlDown.Size = new System.Drawing.Size(205, 105);
-			this.buttonSlDown.TabIndex = 21;
+			this.buttonSlDown.Size = new System.Drawing.Size(176, 88);
+			this.buttonSlDown.TabIndex = 33;
 			this.buttonSlDown.Text = "SL down";
 			this.buttonSlDown.UseVisualStyleBackColor = true;
 			this.buttonSlDown.Click += new System.EventHandler(this.buttonSlDown_Click);
 			// 
 			// buttonJoinSl
 			// 
-			this.buttonJoinSl.Location = new System.Drawing.Point(400, 923);
+			this.buttonJoinSl.Location = new System.Drawing.Point(314, 944);
 			this.buttonJoinSl.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonJoinSl.Name = "buttonJoinSl";
-			this.buttonJoinSl.Size = new System.Drawing.Size(257, 76);
-			this.buttonJoinSl.TabIndex = 24;
+			this.buttonJoinSl.Size = new System.Drawing.Size(257, 59);
+			this.buttonJoinSl.TabIndex = 37;
 			this.buttonJoinSl.Text = "Join SL";
 			this.buttonJoinSl.UseVisualStyleBackColor = true;
 			this.buttonJoinSl.Click += new System.EventHandler(this.buttonJoinSl_Click);
 			// 
 			// buttonSlUpMini
 			// 
-			this.buttonSlUpMini.Location = new System.Drawing.Point(451, 672);
+			this.buttonSlUpMini.Location = new System.Drawing.Point(395, 752);
 			this.buttonSlUpMini.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlUpMini.Name = "buttonSlUpMini";
-			this.buttonSlUpMini.Size = new System.Drawing.Size(205, 105);
-			this.buttonSlUpMini.TabIndex = 22;
+			this.buttonSlUpMini.Size = new System.Drawing.Size(176, 88);
+			this.buttonSlUpMini.TabIndex = 34;
 			this.buttonSlUpMini.Text = "SL up mini";
 			this.buttonSlUpMini.UseVisualStyleBackColor = true;
 			this.buttonSlUpMini.Click += new System.EventHandler(this.buttonSlUpMini_Click);
 			// 
 			// buttonSlDownMini
 			// 
-			this.buttonSlDownMini.Location = new System.Drawing.Point(451, 783);
+			this.buttonSlDownMini.Location = new System.Drawing.Point(398, 848);
 			this.buttonSlDownMini.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlDownMini.Name = "buttonSlDownMini";
-			this.buttonSlDownMini.Size = new System.Drawing.Size(205, 105);
-			this.buttonSlDownMini.TabIndex = 23;
+			this.buttonSlDownMini.Size = new System.Drawing.Size(173, 88);
+			this.buttonSlDownMini.TabIndex = 35;
 			this.buttonSlDownMini.Text = "SL down mini";
 			this.buttonSlDownMini.UseVisualStyleBackColor = true;
 			this.buttonSlDownMini.Click += new System.EventHandler(this.buttonSlDownMini_Click);
@@ -146,10 +148,10 @@
 			// checkBoxAlwaysOnTop
 			// 
 			this.checkBoxAlwaysOnTop.AutoSize = true;
-			this.checkBoxAlwaysOnTop.Location = new System.Drawing.Point(451, 78);
+			this.checkBoxAlwaysOnTop.Location = new System.Drawing.Point(380, 75);
 			this.checkBoxAlwaysOnTop.Margin = new System.Windows.Forms.Padding(4);
 			this.checkBoxAlwaysOnTop.Name = "checkBoxAlwaysOnTop";
-			this.checkBoxAlwaysOnTop.Size = new System.Drawing.Size(160, 29);
+			this.checkBoxAlwaysOnTop.Size = new System.Drawing.Size(146, 28);
 			this.checkBoxAlwaysOnTop.TabIndex = 2;
 			this.checkBoxAlwaysOnTop.Text = "Always on top";
 			this.checkBoxAlwaysOnTop.UseVisualStyleBackColor = true;
@@ -258,65 +260,65 @@
 			// 
 			this.labelConnected.AutoSize = true;
 			this.labelConnected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labelConnected.Location = new System.Drawing.Point(446, 15);
+			this.labelConnected.Location = new System.Drawing.Point(377, 24);
 			this.labelConnected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelConnected.Name = "labelConnected";
-			this.labelConnected.Size = new System.Drawing.Size(145, 30);
+			this.labelConnected.Size = new System.Drawing.Size(89, 18);
 			this.labelConnected.TabIndex = 25;
 			this.labelConnected.Text = "Connected";
 			this.labelConnected.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// buttonOrderBuy2
 			// 
-			this.buttonOrderBuy2.Location = new System.Drawing.Point(29, 565);
+			this.buttonOrderBuy2.Location = new System.Drawing.Point(27, 650);
 			this.buttonOrderBuy2.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonOrderBuy2.Name = "buttonOrderBuy2";
 			this.buttonOrderBuy2.Size = new System.Drawing.Size(257, 76);
-			this.buttonOrderBuy2.TabIndex = 13;
+			this.buttonOrderBuy2.TabIndex = 15;
 			this.buttonOrderBuy2.Text = "Buy 60% 40%";
 			this.buttonOrderBuy2.UseVisualStyleBackColor = true;
 			this.buttonOrderBuy2.Click += new System.EventHandler(this.buttonOrderBuy2_Click);
 			// 
 			// buttonOrderSell2
 			// 
-			this.buttonOrderSell2.Location = new System.Drawing.Point(290, 565);
+			this.buttonOrderSell2.Location = new System.Drawing.Point(288, 650);
 			this.buttonOrderSell2.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonOrderSell2.Name = "buttonOrderSell2";
 			this.buttonOrderSell2.Size = new System.Drawing.Size(257, 76);
-			this.buttonOrderSell2.TabIndex = 14;
+			this.buttonOrderSell2.TabIndex = 16;
 			this.buttonOrderSell2.Text = "Sell 60% 40%";
 			this.buttonOrderSell2.UseVisualStyleBackColor = true;
 			this.buttonOrderSell2.Click += new System.EventHandler(this.buttonOrderSell2_Click);
 			// 
 			// buttonCloseAll
 			// 
-			this.buttonCloseAll.Location = new System.Drawing.Point(29, 923);
+			this.buttonCloseAll.Location = new System.Drawing.Point(27, 944);
 			this.buttonCloseAll.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonCloseAll.Name = "buttonCloseAll";
-			this.buttonCloseAll.Size = new System.Drawing.Size(257, 76);
-			this.buttonCloseAll.TabIndex = 30;
+			this.buttonCloseAll.Size = new System.Drawing.Size(257, 59);
+			this.buttonCloseAll.TabIndex = 36;
 			this.buttonCloseAll.Text = "Close All";
 			this.buttonCloseAll.UseVisualStyleBackColor = true;
 			this.buttonCloseAll.Click += new System.EventHandler(this.buttonCloseAll_Click);
 			// 
 			// buttonSlDownMax
 			// 
-			this.buttonSlDownMax.Location = new System.Drawing.Point(29, 783);
+			this.buttonSlDownMax.Location = new System.Drawing.Point(27, 848);
 			this.buttonSlDownMax.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlDownMax.Name = "buttonSlDownMax";
-			this.buttonSlDownMax.Size = new System.Drawing.Size(205, 105);
-			this.buttonSlDownMax.TabIndex = 32;
+			this.buttonSlDownMax.Size = new System.Drawing.Size(176, 88);
+			this.buttonSlDownMax.TabIndex = 31;
 			this.buttonSlDownMax.Text = "SL down max";
 			this.buttonSlDownMax.UseVisualStyleBackColor = true;
 			this.buttonSlDownMax.Click += new System.EventHandler(this.buttonSlDownMax_Click);
 			// 
 			// buttonSlUpMax
 			// 
-			this.buttonSlUpMax.Location = new System.Drawing.Point(29, 672);
+			this.buttonSlUpMax.Location = new System.Drawing.Point(27, 752);
 			this.buttonSlUpMax.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlUpMax.Name = "buttonSlUpMax";
-			this.buttonSlUpMax.Size = new System.Drawing.Size(205, 105);
-			this.buttonSlUpMax.TabIndex = 31;
+			this.buttonSlUpMax.Size = new System.Drawing.Size(176, 88);
+			this.buttonSlUpMax.TabIndex = 30;
 			this.buttonSlUpMax.Text = "SL up max";
 			this.buttonSlUpMax.UseVisualStyleBackColor = true;
 			this.buttonSlUpMax.Click += new System.EventHandler(this.buttonSlUpMax_Click);
@@ -327,7 +329,7 @@
 			this.labelRrr.Location = new System.Drawing.Point(24, 20);
 			this.labelRrr.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelRrr.Name = "labelRrr";
-			this.labelRrr.Size = new System.Drawing.Size(51, 25);
+			this.labelRrr.Size = new System.Drawing.Size(49, 24);
 			this.labelRrr.TabIndex = 33;
 			this.labelRrr.Text = "RRR";
 			// 
@@ -340,26 +342,50 @@
 			// labelLoss
 			// 
 			this.labelLoss.AutoSize = true;
-			this.labelLoss.Location = new System.Drawing.Point(156, 20);
+			this.labelLoss.Location = new System.Drawing.Point(127, 20);
 			this.labelLoss.Name = "labelLoss";
-			this.labelLoss.Size = new System.Drawing.Size(54, 25);
+			this.labelLoss.Size = new System.Drawing.Size(49, 24);
 			this.labelLoss.TabIndex = 34;
 			this.labelLoss.Text = "Loss";
 			// 
 			// labelProfit
 			// 
 			this.labelProfit.AutoSize = true;
-			this.labelProfit.Location = new System.Drawing.Point(285, 21);
+			this.labelProfit.Location = new System.Drawing.Point(249, 20);
 			this.labelProfit.Name = "labelProfit";
-			this.labelProfit.Size = new System.Drawing.Size(56, 25);
+			this.labelProfit.Size = new System.Drawing.Size(51, 24);
 			this.labelProfit.TabIndex = 35;
 			this.labelProfit.Text = "Profit";
+			// 
+			// buttonOrderSell3
+			// 
+			this.buttonOrderSell3.Location = new System.Drawing.Point(290, 566);
+			this.buttonOrderSell3.Margin = new System.Windows.Forms.Padding(4);
+			this.buttonOrderSell3.Name = "buttonOrderSell3";
+			this.buttonOrderSell3.Size = new System.Drawing.Size(257, 76);
+			this.buttonOrderSell3.TabIndex = 14;
+			this.buttonOrderSell3.Text = "Sell 50% 40% 10%";
+			this.buttonOrderSell3.UseVisualStyleBackColor = true;
+			this.buttonOrderSell3.Click += new System.EventHandler(this.buttonOrderSell3_Click);
+			// 
+			// buttonOrderBuy3
+			// 
+			this.buttonOrderBuy3.Location = new System.Drawing.Point(29, 566);
+			this.buttonOrderBuy3.Margin = new System.Windows.Forms.Padding(4);
+			this.buttonOrderBuy3.Name = "buttonOrderBuy3";
+			this.buttonOrderBuy3.Size = new System.Drawing.Size(257, 76);
+			this.buttonOrderBuy3.TabIndex = 13;
+			this.buttonOrderBuy3.Text = "Buy 50% 40% 10%";
+			this.buttonOrderBuy3.UseVisualStyleBackColor = true;
+			this.buttonOrderBuy3.Click += new System.EventHandler(this.buttonOrderBuy3_Click);
 			// 
 			// FormTradingPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(684, 1014);
+			this.ClientSize = new System.Drawing.Size(596, 1017);
+			this.Controls.Add(this.buttonOrderSell3);
+			this.Controls.Add(this.buttonOrderBuy3);
 			this.Controls.Add(this.labelProfit);
 			this.Controls.Add(this.labelLoss);
 			this.Controls.Add(this.labelRrr);
@@ -429,6 +455,8 @@
 		private System.Windows.Forms.Timer timerRefreshLabels;
 		private System.Windows.Forms.Label labelLoss;
 		private System.Windows.Forms.Label labelProfit;
+		private System.Windows.Forms.Button buttonOrderSell3;
+		private System.Windows.Forms.Button buttonOrderBuy3;
 	}
 }
 
