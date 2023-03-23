@@ -41,9 +41,11 @@ namespace SvpTradingPanel
 				if (checkBoxPendingOrder.Checked)
 				{
 					double actualPrice = SvpMT5.Instance.GetActualPrice();
+					
+					// Pending order vytvor v idealni vzdalenosti od ceny, pokud cena neni zadana.
 					if (buy)
 					{
-						return actualPrice - (actualPrice * 0.01);
+						return actualPrice - (actualPrice * 0.01); 
 					}
 					else
 					{
@@ -52,17 +54,20 @@ namespace SvpTradingPanel
 				}
 				else
 				{
-					return 0; // Market order
+					// Market order
+					return 0;
 				}
 			}
 		}
 
 		private double? GetPositionSize(bool buy)
 		{
+			Orders marketOrders = SvpMT5.Instance.GetMarketOrders();
+			Orders pendingOrders = SvpMT5.Instance.GetPendingOrders();
 			bool result =
 				(Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
 				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
-				&& ((IsExistingPositionBuy() && buy) || (IsExistingPositionSell() && !buy)) // pokud je jiz otevrena pozice, nova pozice musi byt stejnejo typu (buy/sell).
+				&& ((IsPossibleBuy(marketOrders, pendingOrders) && buy) || (IsPossibleSell(marketOrders, pendingOrders) && !buy)) // Pokud je jiz otevrena pozice, nova pozice musi byt stejnejo typu (buy/sell).
 				);
 			if (result)
 			{
@@ -144,6 +149,7 @@ namespace SvpTradingPanel
 
 		private double GetTpDistanceByOrderSize(int percent)
 		{
+			// Aby nebyly vsechny TP ve stejne vzdalenosti, pocitam vzdalenost TP podle velikosti pozice.
 			return 0.7 + Math.Abs((double)percent - 100) / 100;
 		}
 
@@ -165,16 +171,22 @@ namespace SvpTradingPanel
 			}
 		}
 
-		private bool IsExistingPositionBuy()
+		private bool IsPossibleBuy(Orders marketOrders, Orders pendingOrders)
 		{
-			Orders orders = SvpMT5.Instance.GetMarketOrders();
-			return IsExistingPositionBuy(orders);
+			return (!marketOrders.Any() && !pendingOrders.Any()) || IsExistingPositionBuy(marketOrders) || IsExistingPositionBuy(pendingOrders);
 		}
 
-		private bool IsExistingPositionSell()
+		private bool IsPossibleSell(Orders marketOrders, Orders pendingOrders)
 		{
-			Orders orders = SvpMT5.Instance.GetMarketOrders();
-			return !orders.Any() || (orders.Any() && orders[0].Units <= 0);
+			return (!marketOrders.Any() && !pendingOrders.Any()) || IsExistingPositionSell(marketOrders) || IsExistingPositionSell(pendingOrders);
+		}
+
+		/// <summary>
+		/// Je pozice buy nebo sell?
+		/// </summary>
+		private bool IsExistingPositionSell(Orders orders)
+		{
+			return orders.Any() && orders[0].Units <= 0;
 		}
 
 		/// <summary>
@@ -182,7 +194,7 @@ namespace SvpTradingPanel
 		/// </summary>
 		private bool IsExistingPositionBuy(Orders orders)
 		{
-			return !orders.Any() || (orders.Any() && orders[0].Units >= 0);
+			return orders.Any() && orders[0].Units >= 0;
 		}
 
 		private double IdealMaximumSlPrice(Orders orders)
