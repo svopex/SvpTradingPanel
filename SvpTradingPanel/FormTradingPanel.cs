@@ -31,7 +31,7 @@ namespace SvpTradingPanel
 		}
 
 		private double? GetPrice(bool buy)
-		{			
+		{
 			if (Double.TryParse(textBoxPrice.Text, out double price))
 			{
 				return price;
@@ -41,16 +41,16 @@ namespace SvpTradingPanel
 				if (checkBoxPendingOrder.Checked)
 				{
 					double actualPrice = SvpMT5.Instance.GetActualPrice();
-					
+
 					// Pending order vytvor v idealni vzdalenosti od ceny, pokud cena neni zadana.
 					if (buy)
 					{
-						return actualPrice - (actualPrice * 0.01); 
+						return actualPrice - (actualPrice * 0.01);
 					}
 					else
 					{
 						return actualPrice + (actualPrice * 0.01);
-					}					
+					}
 				}
 				else
 				{
@@ -147,9 +147,18 @@ namespace SvpTradingPanel
 			}
 		}
 
+		private double GetTpDistanceByUnit(Orders orders, double unit)
+		{
+			// Aby nebyly vsechny TP ve stejne vzdalenosti, pocitam vzdalenost TP podle velikosti pozice.
+			// Nejvetsi pozice ma nejblizsi TP.
+			double maxUnit = orders.Max(x => x.Units);
+			return 0.7 + Math.Abs(maxUnit - unit) * 3;
+		}
+
 		private double GetTpDistanceByOrderSize(int percent)
 		{
 			// Aby nebyly vsechny TP ve stejne vzdalenosti, pocitam vzdalenost TP podle velikosti pozice.
+			// Nejvetsi pozice ma nejblizsi TP.
 			return 0.7 + Math.Abs((double)percent - 100) / 100;
 		}
 
@@ -260,7 +269,7 @@ namespace SvpTradingPanel
 						order.SL = idealSl + (idealSl * movement);
 						SvpMT5.Instance.SetOrderSlAndPt(order);
 					}
-				}				
+				}
 			}
 			RefreshData(orders);
 		}
@@ -558,7 +567,7 @@ namespace SvpTradingPanel
 
 			textBoxPositionSize.Text = "0.5";
 			checkBoxAlwaysOnTop.Checked = true;
-			
+
 			this.TopMost = true;
 
 			if (connected)
@@ -570,7 +579,7 @@ namespace SvpTradingPanel
 
 		private void buttonCloseAll_Click(object sender, EventArgs e)
 		{
-			Orders orders = SvpMT5.Instance.GetMarketOrders();			
+			Orders orders = SvpMT5.Instance.GetMarketOrders();
 			foreach (var order in orders)
 			{
 				SvpMT5.Instance.CloseOrder(order.Id);
@@ -592,6 +601,28 @@ namespace SvpTradingPanel
 		private void checkBoxPendingOrder_CheckedChanged(object sender, EventArgs e)
 		{
 			textBoxPrice.Enabled = checkBoxPendingOrder.Checked;
+		}
+
+		private void buttonSetTp_Click(object sender, EventArgs e)
+		{
+			Orders orders = SvpMT5.Instance.GetMarketOrders();
+			if (orders.Any())
+			{
+				foreach (var order in orders)
+				{
+					SvpMT5.Instance.SetPositionSlAndPtPercent(order, 0, GetTpDistanceByUnit(orders, Math.Abs(order.Units)));
+				}
+				RefreshData(orders);
+			}
+			else
+			{
+				orders = SvpMT5.Instance.GetPendingOrders();
+				foreach (var order in orders)
+				{
+					SvpMT5.Instance.SetPendingOrderSlAndPtPercent(order, 0, GetTpDistanceByUnit(orders, Math.Abs(order.Units)));
+				}
+				RefreshData(orders);
+			}
 		}
 	}
 }

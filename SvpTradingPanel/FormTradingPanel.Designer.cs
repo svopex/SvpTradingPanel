@@ -63,6 +63,7 @@
 			this.textBoxPrice = new System.Windows.Forms.TextBox();
 			this.checkBoxPendingOrder = new System.Windows.Forms.CheckBox();
 			this.checkBoxMovePendingOrder = new System.Windows.Forms.CheckBox();
+			this.buttonSetTp = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// buttonOrderBuy1
@@ -118,11 +119,11 @@
 			// 
 			// buttonJoinSl
 			// 
-			this.buttonJoinSl.Location = new System.Drawing.Point(171, 498);
+			this.buttonJoinSl.Location = new System.Drawing.Point(217, 498);
 			this.buttonJoinSl.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.buttonJoinSl.Name = "buttonJoinSl";
-			this.buttonJoinSl.Size = new System.Drawing.Size(140, 32);
-			this.buttonJoinSl.TabIndex = 81;
+			this.buttonJoinSl.Size = new System.Drawing.Size(94, 32);
+			this.buttonJoinSl.TabIndex = 82;
 			this.buttonJoinSl.Text = "Join SL";
 			this.buttonJoinSl.UseVisualStyleBackColor = true;
 			this.buttonJoinSl.Click += new System.EventHandler(this.buttonJoinSl_Click);
@@ -299,7 +300,7 @@
 			this.buttonCloseAll.Location = new System.Drawing.Point(15, 498);
 			this.buttonCloseAll.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.buttonCloseAll.Name = "buttonCloseAll";
-			this.buttonCloseAll.Size = new System.Drawing.Size(140, 32);
+			this.buttonCloseAll.Size = new System.Drawing.Size(97, 32);
 			this.buttonCloseAll.TabIndex = 80;
 			this.buttonCloseAll.Text = "Close All";
 			this.buttonCloseAll.UseVisualStyleBackColor = true;
@@ -426,11 +427,23 @@
 			this.checkBoxMovePendingOrder.Text = "Move pending order, not SL";
 			this.checkBoxMovePendingOrder.UseVisualStyleBackColor = true;
 			// 
+			// buttonSetTp
+			// 
+			this.buttonSetTp.Location = new System.Drawing.Point(115, 498);
+			this.buttonSetTp.Margin = new System.Windows.Forms.Padding(2);
+			this.buttonSetTp.Name = "buttonSetTp";
+			this.buttonSetTp.Size = new System.Drawing.Size(96, 32);
+			this.buttonSetTp.TabIndex = 81;
+			this.buttonSetTp.Text = "Set TP";
+			this.buttonSetTp.UseVisualStyleBackColor = true;
+			this.buttonSetTp.Click += new System.EventHandler(this.buttonSetTp_Click);
+			// 
 			// FormTradingPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(325, 537);
+			this.Controls.Add(this.buttonSetTp);
 			this.Controls.Add(this.checkBoxMovePendingOrder);
 			this.Controls.Add(this.checkBoxPendingOrder);
 			this.Controls.Add(this.textBoxPrice);
@@ -512,6 +525,7 @@
 		private System.Windows.Forms.TextBox textBoxPrice;
 		private System.Windows.Forms.CheckBox checkBoxPendingOrder;
 		private System.Windows.Forms.CheckBox checkBoxMovePendingOrder;
+		private System.Windows.Forms.Button buttonSetTp;
 	}
 }
 

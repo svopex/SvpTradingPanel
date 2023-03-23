@@ -136,6 +136,38 @@ namespace Mt5Api
 			//apiClient.PositionModify((ulong)order.Id, order.SL, order.PT);
 		}
 
+		public void SetPendingOrderSlAndPtPercent(Order order, double slPercent, double ptPercent)
+		{
+			double slRelative = 0;
+			double ptRelative = 0;
+			if (slPercent != 0)
+			{
+				slRelative = order.OpenPrice * slPercent / 100;
+			}
+			if (ptPercent != 0)
+			{
+				ptRelative = order.OpenPrice * ptPercent / 100;
+			}
+			FillSlPt(order, slRelative, ptRelative);
+			SetOrderSlAndPt(order);
+		}
+
+		public void SetPositionSlAndPtPercent(Order order, double slPercent, double ptPercent)
+		{
+			double slRelative = 0;
+			double ptRelative = 0;
+			if (slPercent != 0)
+			{
+				slRelative = order.OpenPrice * slPercent / 100;
+			}
+			if (ptPercent != 0)
+			{
+				ptRelative = order.OpenPrice * ptPercent / 100;
+			}
+			FillSlPt(order, slRelative, ptRelative);
+			SetPositionSlAndPt(order);
+		}
+
 		public void SetPositionSlAndPt(Order order)
 		{
 			MqlTradeRequest mqlTradeRequest = new MqlTradeRequest();
