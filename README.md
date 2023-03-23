@@ -1,1 +1,3 @@
 # SvpTradingPanel
+
+![Screenshot](screenshot.png)
