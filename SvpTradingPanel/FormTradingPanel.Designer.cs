@@ -434,7 +434,7 @@
 			this.buttonSetTp.Name = "buttonSetTp";
 			this.buttonSetTp.Size = new System.Drawing.Size(96, 32);
 			this.buttonSetTp.TabIndex = 81;
-			this.buttonSetTp.Text = "Set TP";
+			this.buttonSetTp.Text = "Re-set TP";
 			this.buttonSetTp.UseVisualStyleBackColor = true;
 			this.buttonSetTp.Click += new System.EventHandler(this.buttonSetTp_Click);
 			// 
