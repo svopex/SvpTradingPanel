@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Xml.Linq;
@@ -92,9 +93,15 @@ namespace Mt5Api
 			return symbol;
 		}
 
+		public double GetActualPrice()
+		{
+			apiClient.SymbolInfoTick(Symbol, out MqlTick tick);
+			return tick.ask;
+		}
+
 		public bool SymbolSelect(string instrument, bool selected)
 		{
-			return SvpMT5.Instance.apiClient.SymbolSelect(TransformInstrument(instrument), selected);
+			return apiClient.SymbolSelect(TransformInstrument(instrument), selected);
 		}
 
 		public bool CloseOrder(long orderId)
@@ -201,6 +208,21 @@ namespace Mt5Api
 					mqlTradeRequest.Tp = NormalizeDouble(mqlTradeRequest.Symbol, mqlTradeRequest.Price - PtRelative);
 				}
 			}
+		}
+
+		public void ModifyPendingOrder(Order order)
+		{
+			MqlTradeRequest mqlTradeRequest = new MqlTradeRequest();
+			mqlTradeRequest.Symbol = Symbol;
+			mqlTradeRequest.Action = ENUM_TRADE_REQUEST_ACTIONS.TRADE_ACTION_MODIFY;
+			mqlTradeRequest.Magic = order.Magic;
+			mqlTradeRequest.Order = (ulong)order.Id;
+			mqlTradeRequest.Price = NormalizeDouble(Symbol, order.OpenPrice);
+			mqlTradeRequest.Stoplimit = NormalizeDouble(Symbol, order.OpenPrice);
+			mqlTradeRequest.Sl = order.SL;
+			mqlTradeRequest.Tp = order.PT;
+			MqlTradeResult mqlTradeResult;
+			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
 		}
 
 		public double SymbolPoint()
