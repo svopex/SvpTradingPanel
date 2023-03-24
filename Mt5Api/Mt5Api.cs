@@ -31,9 +31,17 @@ namespace Mt5Api
 
 		private static SvpMT5 instance;
 
+		private bool Connected { get; set; }
+
+		private void ApiClient_ConnectionStateChanged(object sender, Mt5ConnectionEventArgs e)
+		{
+			Connected = e.Status == Mt5ConnectionState.Connected;
+		}
+
 		public bool isConnected()
 		{
-			return instance.apiClient.ConnectionState == Mt5ConnectionState.Connected;
+			//return instance.apiClient.ConnectionState == Mt5ConnectionState.Connected;
+			return Connected;
 		}
 
 		public void Disconnect()
@@ -43,21 +51,26 @@ namespace Mt5Api
 
 		public bool Connect()
 		{
-			int counter = 10;
+			//int counter = 10;
 			instance.apiClient.BeginConnect(Utilities.Host, Utilities.Port);
-			while (instance.apiClient.ConnectionState != Mt5ConnectionState.Connected)
-			{
-				Thread.Sleep(100);
-				if (counter-- == 0)
-				{
-					Messager messager = new Messager(Utilities.ErrorMessageDestination);
-					messager.SendMessage("Trade computer: MT5 maybe is not running", "MT5 maybe is not running.", Utilities.StrategyName);
-					Logger.WriteLineError("MT5 maybe is not running for strategy " + Utilities.StrategyName + ".");
-					return false;
-				}
-			}
-			Logger.WriteLine("SvpTradingPanel not connected to MT5.");
-			return true;
+			//while (instance.apiClient.ConnectionState != Mt5ConnectionState.Connected)
+			//{
+			//	Thread.Sleep(100);
+			//	if (counter-- == 0)
+			//	{
+			//		Messager messager = new Messager(Utilities.ErrorMessageDestination);
+			//		messager.SendMessage("Trade computer: MT5 maybe is not running", "MT5 maybe is not running.", Utilities.StrategyName);
+			//		Logger.WriteLineError("MT5 maybe is not running for strategy " + Utilities.StrategyName + ".");
+			//		return false;
+			//	}
+			//}
+			//Logger.WriteLine("SvpTradingPanel not connected to MT5.");
+			
+			instance.apiClient.ConnectionStateChanged += ApiClient_ConnectionStateChanged;
+			
+			Connected = false;
+			
+			return false;
 		}
 
 		private string TransformInstrument(string symbol)

@@ -545,12 +545,12 @@ namespace SvpTradingPanel
 		{
 			if (connected)
 			{
-				labelConnected.Text = "Connected!";
+				labelConnected.Text = "*****";
 				labelConnected.ForeColor = Color.Green;
 			}
 			else
 			{
-				labelConnected.Text = "Disconnected!";
+				labelConnected.Text = "-----";
 				labelConnected.ForeColor = Color.Red;
 			}
 		}
@@ -595,8 +595,10 @@ namespace SvpTradingPanel
 			if (!connected)
 			{
 				SvpMT5.Instance.Disconnect();
-				ShowLabelConnected(SvpMT5.Instance.Connect());
+				SvpMT5.Instance.Connect();
 			}
+				//ShowLabelConnected(SvpMT5.Instance.Connect());
+			//}
 		}
 
 		private void checkBoxPendingOrder_CheckedChanged(object sender, EventArgs e)
