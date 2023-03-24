@@ -341,7 +341,7 @@
 			// timerRefreshLabels
 			// 
 			this.timerRefreshLabels.Enabled = true;
-			this.timerRefreshLabels.Interval = 5000;
+			this.timerRefreshLabels.Interval = 1000;
 			this.timerRefreshLabels.Tick += new System.EventHandler(this.timerRefreshLabels_Tick);
 			// 
 			// labelLoss

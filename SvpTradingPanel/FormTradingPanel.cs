@@ -597,8 +597,6 @@ namespace SvpTradingPanel
 				SvpMT5.Instance.Disconnect();
 				SvpMT5.Instance.Connect();
 			}
-				//ShowLabelConnected(SvpMT5.Instance.Connect());
-			//}
 		}
 
 		private void checkBoxPendingOrder_CheckedChanged(object sender, EventArgs e)
