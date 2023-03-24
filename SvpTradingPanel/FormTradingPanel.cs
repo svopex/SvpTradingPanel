@@ -21,13 +21,14 @@ namespace SvpTradingPanel
 
 		private void RefreshData(Orders orders)
 		{
+			string currency = SvpMT5.Instance.AccountCurrency();
 			var sumOfUnits = Math.Abs(orders.Select(x => x.Units).Sum());
 			var rrr = orders.Select(x => ((Math.Abs(x.OpenPrice - x.PT)) / (Math.Abs(x.OpenPrice - x.SL))) / sumOfUnits * Math.Abs(x.Units)).Sum();
-			var loss = orders.Select(x => Math.Abs(x.OpenPrice - x.SL) * Math.Abs(x.Units)).Sum() / SvpMT5.Instance.SymbolPoint();
-			var profit = orders.Select(x => Math.Abs(x.OpenPrice - x.PT) * Math.Abs(x.Units)).Sum() / SvpMT5.Instance.SymbolPoint();
+			var loss = orders.Select(x => Math.Abs(x.OpenPrice - x.SL) * Math.Abs(x.Units)).Sum() / SvpMT5.Instance.SymbolPoint() * SvpMT5.Instance.SymbolTradeTickValue();
+			var profit = orders.Select(x => Math.Abs(x.OpenPrice - x.PT) * Math.Abs(x.Units)).Sum() / SvpMT5.Instance.SymbolPoint() * SvpMT5.Instance.SymbolTradeTickValue();
 			labelRrr.Text = "RRR: " + Math.Round(rrr, 2);
-			labelLoss.Text = "Loss:" + +Math.Round(loss, 2);
-			labelProfit.Text = "Profit:" + +Math.Round(profit, 2);
+			labelLoss.Text = "Loss:" + +Math.Round(loss, 2) + " " + currency;
+			labelProfit.Text = "Profit:" + +Math.Round(profit, 2) + " " + currency;
 		}
 
 		private double? GetPrice(bool buy)

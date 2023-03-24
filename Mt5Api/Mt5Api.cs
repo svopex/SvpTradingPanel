@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -256,6 +257,16 @@ namespace Mt5Api
 			MqlTradeResult mqlTradeResult;
 			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
 		}
+
+		public string AccountCurrency()
+		{
+			return apiClient.AccountInfoString(ENUM_ACCOUNT_INFO_STRING.ACCOUNT_CURRENCY);
+		}
+
+		public double SymbolTradeTickValue()
+		{
+			return apiClient.SymbolInfoDouble(Symbol, ENUM_SYMBOL_INFO_DOUBLE.SYMBOL_TRADE_TICK_VALUE);
+		}		
 
 		public double SymbolPoint()
 		{
