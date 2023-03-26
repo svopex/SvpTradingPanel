@@ -5,6 +5,6 @@ The panel can join Stoploses together, move multiple SL at once.
 It can also shift pending orders and combine them. 
 It's just a great tool for when you want to execute on multiple profit targets in MT5 (Metatrader 5).
 
-![Screenshot](screenshot1.png)
+![Screenshot](screenshot.png)
 
 ![Screenshot](screenshot2.png)
