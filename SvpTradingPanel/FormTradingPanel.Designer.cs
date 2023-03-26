@@ -79,7 +79,7 @@
 			// 
 			// textBoxPositionSize
 			// 
-			this.textBoxPositionSize.Location = new System.Drawing.Point(158, 50);
+			this.textBoxPositionSize.Location = new System.Drawing.Point(153, 80);
 			this.textBoxPositionSize.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxPositionSize.Name = "textBoxPositionSize";
 			this.textBoxPositionSize.Size = new System.Drawing.Size(134, 29);
@@ -88,7 +88,7 @@
 			// LabelPositionSize
 			// 
 			this.LabelPositionSize.AutoSize = true;
-			this.LabelPositionSize.Location = new System.Drawing.Point(29, 54);
+			this.LabelPositionSize.Location = new System.Drawing.Point(24, 84);
 			this.LabelPositionSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.LabelPositionSize.Name = "LabelPositionSize";
 			this.LabelPositionSize.Size = new System.Drawing.Size(121, 25);
@@ -153,7 +153,7 @@
 			// checkBoxAlwaysOnTop
 			// 
 			this.checkBoxAlwaysOnTop.AutoSize = true;
-			this.checkBoxAlwaysOnTop.Location = new System.Drawing.Point(405, 52);
+			this.checkBoxAlwaysOnTop.Location = new System.Drawing.Point(410, 45);
 			this.checkBoxAlwaysOnTop.Margin = new System.Windows.Forms.Padding(4);
 			this.checkBoxAlwaysOnTop.Name = "checkBoxAlwaysOnTop";
 			this.checkBoxAlwaysOnTop.Size = new System.Drawing.Size(160, 29);
@@ -265,12 +265,12 @@
 			// 
 			this.labelConnected.AutoSize = true;
 			this.labelConnected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labelConnected.Location = new System.Drawing.Point(515, 9);
+			this.labelConnected.Location = new System.Drawing.Point(447, 9);
 			this.labelConnected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelConnected.Name = "labelConnected";
-			this.labelConnected.Size = new System.Drawing.Size(68, 30);
+			this.labelConnected.Size = new System.Drawing.Size(123, 30);
 			this.labelConnected.TabIndex = 4;
-			this.labelConnected.Text = "*****";
+			this.labelConnected.Text = "**********";
 			this.labelConnected.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// buttonOrderBuy2
@@ -331,7 +331,7 @@
 			// labelRrr
 			// 
 			this.labelRrr.AutoSize = true;
-			this.labelRrr.Location = new System.Drawing.Point(29, 127);
+			this.labelRrr.Location = new System.Drawing.Point(24, 9);
 			this.labelRrr.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelRrr.Name = "labelRrr";
 			this.labelRrr.Size = new System.Drawing.Size(51, 25);
@@ -347,7 +347,7 @@
 			// labelLoss
 			// 
 			this.labelLoss.AutoSize = true;
-			this.labelLoss.Location = new System.Drawing.Point(29, 15);
+			this.labelLoss.Location = new System.Drawing.Point(24, 47);
 			this.labelLoss.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelLoss.Name = "labelLoss";
 			this.labelLoss.Size = new System.Drawing.Size(54, 25);
@@ -357,7 +357,7 @@
 			// labelProfit
 			// 
 			this.labelProfit.AutoSize = true;
-			this.labelProfit.Location = new System.Drawing.Point(218, 15);
+			this.labelProfit.Location = new System.Drawing.Point(213, 47);
 			this.labelProfit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelProfit.Name = "labelProfit";
 			this.labelProfit.Size = new System.Drawing.Size(56, 25);
@@ -389,7 +389,7 @@
 			// labelPrice
 			// 
 			this.labelPrice.AutoSize = true;
-			this.labelPrice.Location = new System.Drawing.Point(29, 91);
+			this.labelPrice.Location = new System.Drawing.Point(24, 121);
 			this.labelPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelPrice.Name = "labelPrice";
 			this.labelPrice.Size = new System.Drawing.Size(56, 25);
@@ -398,7 +398,7 @@
 			// 
 			// textBoxPrice
 			// 
-			this.textBoxPrice.Location = new System.Drawing.Point(158, 89);
+			this.textBoxPrice.Location = new System.Drawing.Point(153, 119);
 			this.textBoxPrice.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxPrice.Name = "textBoxPrice";
 			this.textBoxPrice.Size = new System.Drawing.Size(134, 29);
@@ -407,7 +407,7 @@
 			// checkBoxPendingOrder
 			// 
 			this.checkBoxPendingOrder.AutoSize = true;
-			this.checkBoxPendingOrder.Location = new System.Drawing.Point(405, 89);
+			this.checkBoxPendingOrder.Location = new System.Drawing.Point(410, 82);
 			this.checkBoxPendingOrder.Margin = new System.Windows.Forms.Padding(4);
 			this.checkBoxPendingOrder.Name = "checkBoxPendingOrder";
 			this.checkBoxPendingOrder.Size = new System.Drawing.Size(160, 29);

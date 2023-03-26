@@ -545,12 +545,12 @@ namespace SvpTradingPanel
 		{
 			if (connected)
 			{
-				labelConnected.Text = "*****";
+				labelConnected.Text = "**********";
 				labelConnected.ForeColor = Color.Green;
 			}
 			else
 			{
-				labelConnected.Text = "-----";
+				labelConnected.Text = "-----------";
 				labelConnected.ForeColor = Color.Red;
 			}
 		}
@@ -580,19 +580,28 @@ namespace SvpTradingPanel
 
 		private void buttonCloseAll_Click(object sender, EventArgs e)
 		{
-			Orders orders = SvpMT5.Instance.GetMarketOrders();
-			foreach (var order in orders)
+			DialogResult dialogResult = MessageBox.Show("Do you really close all orders?", "SvpTradePanel", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+			if (dialogResult == DialogResult.Yes)
 			{
-				SvpMT5.Instance.CloseOrder(order.Id);
+				Orders orders = SvpMT5.Instance.GetMarketOrders();
+				foreach (var order in orders)
+				{
+					SvpMT5.Instance.CloseOrder(order.Id);
+				}
+				SvpMT5.Instance.OrdersCloseAll();
 			}
-			SvpMT5.Instance.OrdersCloseAll();
 		}
 
 		private void timerRefreshLabels_Tick(object sender, EventArgs e)
 		{
 			bool connected = SvpMT5.Instance.isConnected();
 			ShowLabelConnected(connected);
-			if (!connected)
+			if (connected)
+			{
+				Orders orders = SvpMT5.Instance.GetMarketOrders();
+				RefreshData(orders);
+			}
+			else
 			{
 				SvpMT5.Instance.Disconnect();
 				SvpMT5.Instance.Connect();
