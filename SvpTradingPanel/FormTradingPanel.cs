@@ -61,6 +61,13 @@ namespace SvpTradingPanel
 			}
 		}
 
+		private double RoundPrice(double number)
+		{
+			int digits = SvpMT5.Instance.SymbolDigits();
+			double value = Math.Round(number, digits);
+			return value;
+		}
+
 		private double? GetPositionSize(bool buy)
 		{
 			Orders marketOrders = SvpMT5.Instance.GetMarketOrders();
@@ -92,15 +99,15 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.6, 1, GetTpDistanceByOrderSize(60));
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.3, 1, GetTpDistanceByOrderSize(30));
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.1, 1, GetTpDistanceByOrderSize(10));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(60));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.3), 1, GetTpDistanceByOrderSize(30));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				else
 				{
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.6, 1, GetTpDistanceByOrderSize(60));
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.3, 1, GetTpDistanceByOrderSize(30));
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.1, 1, GetTpDistanceByOrderSize(10));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(60));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.3), 1, GetTpDistanceByOrderSize(30));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				JoinSl();
 			}
@@ -114,15 +121,15 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.5, 1, GetTpDistanceByOrderSize(50));
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.4, 1, GetTpDistanceByOrderSize(40));
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.1, 1, GetTpDistanceByOrderSize(10));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.5), 1, GetTpDistanceByOrderSize(50));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				else
 				{
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.5, 1, GetTpDistanceByOrderSize(50));
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.4, 1, GetTpDistanceByOrderSize(40));
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.1, 1, GetTpDistanceByOrderSize(10));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.5), 1, GetTpDistanceByOrderSize(50));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				JoinSl();
 			}
@@ -136,13 +143,13 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.6, 1, GetTpDistanceByOrderSize(100));
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * 0.4, 1, GetTpDistanceByOrderSize(40));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(100));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
 				}
 				else
 				{
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.6, 1, GetTpDistanceByOrderSize(100));
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * 0.4, 1, GetTpDistanceByOrderSize(40));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(100));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
 				}
 				JoinSl();
 			}
@@ -171,11 +178,11 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, positionSize.Value * percent / 100, 1, GetTpDistanceByOrderSize(percent));
+					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * percent / 100), 1, GetTpDistanceByOrderSize(percent));
 				}
 				else
 				{
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(positionSize.Value * percent / 100, 1, GetTpDistanceByOrderSize(percent));
+					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * percent / 100), 1, GetTpDistanceByOrderSize(percent));
 				}
 				JoinSl();
 			}

@@ -67,11 +67,11 @@ namespace Mt5Api
 			//	}
 			//}
 			//Logger.WriteLine("SvpTradingPanel not connected to MT5.");
-			
+
 			instance.apiClient.ConnectionStateChanged += ApiClient_ConnectionStateChanged;
-			
+
 			Connected = false;
-			
+
 			return false;
 		}
 
@@ -107,6 +107,11 @@ namespace Mt5Api
 				symbol = "BRK-B";
 			}
 			return symbol;
+		}
+
+		public int SymbolDigits()
+		{
+			return (int)apiClient.SymbolInfoInteger(Symbol, ENUM_SYMBOL_INFO_INTEGER.SYMBOL_DIGITS);
 		}
 
 		public double GetActualPrice()
