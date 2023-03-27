@@ -577,12 +577,6 @@ namespace SvpTradingPanel
 			checkBoxAlwaysOnTop.Checked = true;
 
 			this.TopMost = true;
-
-			if (connected)
-			{
-				Orders orders = SvpMT5.Instance.GetMarketOrders();
-				RefreshData(orders);
-			}
 		}
 
 		private void buttonCloseAll_Click(object sender, EventArgs e)
@@ -606,6 +600,10 @@ namespace SvpTradingPanel
 			if (connected)
 			{
 				Orders orders = SvpMT5.Instance.GetMarketOrders();
+				if (!orders.Any())
+				{
+					orders = SvpMT5.Instance.GetPendingOrders();
+				}
 				RefreshData(orders);
 			}
 			else
