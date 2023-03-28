@@ -295,7 +295,7 @@ namespace Mt5Api
 
 		public (bool result, ulong ticket, uint retCode, string comment) CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
 		{
-			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, Utilities.StrategyName, slPercent, ptPercent);
+			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, null, slPercent, ptPercent);
 		}
 
 		public (bool result, ulong ticket, uint retCode, string comment) CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
@@ -342,7 +342,7 @@ namespace Mt5Api
 			}
 			mqlTradeRequest.Price = NormalizeDouble(instrument, price);
 			mqlTradeRequest.Magic = magic;
-			mqlTradeRequest.Comment = comment;
+			//mqlTradeRequest.Comment = comment;
 			FillSlPt(mqlTradeRequest, SlRelative, PtRelative);
 			MqlTradeResult mqlTradeResult;
 			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
@@ -429,7 +429,7 @@ namespace Mt5Api
 
 		public (bool result, ulong ticket, uint retCode, string comment) CreateMarketOrderSlPtPercent(double units, double slPercent, double ptPercent)
 		{
-			return CreateMarketOrderSlPtPercent(Symbol, units, Utilities.StrategyNumber, Utilities.StrategyName, slPercent, ptPercent);
+			return CreateMarketOrderSlPtPercent(Symbol, units, Utilities.StrategyNumber, null, slPercent, ptPercent);
 		}
 
 		public (bool result, ulong ticket, uint retCode, string comment) CreateMarketOrderSlPtPercent(string instrument, double units, ulong magic, string comment, double slPercent, double ptPercent)
@@ -476,7 +476,7 @@ namespace Mt5Api
 			mqlTradeRequest.Type = units > 0 ? ENUM_ORDER_TYPE.ORDER_TYPE_BUY : ENUM_ORDER_TYPE.ORDER_TYPE_SELL;
 			mqlTradeRequest.Magic = magic;
 			mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
-			mqlTradeRequest.Comment = comment;
+			//mqlTradeRequest.Comment = comment;
 			MqlTradeResult mqlTradeResult;
 			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
 			return (result, mqlTradeResult.Order, mqlTradeResult.Retcode, mqlTradeResult.Comment);

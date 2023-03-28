@@ -11,7 +11,7 @@ namespace Utils
     {
         public static string Host => "localhost";
         public static int Port => 8228;
-        public static string StrategyName => "SvpTradingPanel";
+        //public static string StrategyName => "SvpTradingPanel";
         public static ulong StrategyNumber => 6877;
         public static ErrorMessageToEnum ErrorMessageDestination => ErrorMessageToEnum.none;
     }
