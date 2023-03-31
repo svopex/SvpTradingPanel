@@ -198,7 +198,7 @@ namespace Mt5Api
 			mqlTradeRequest.Magic = order.Magic;
 			mqlTradeRequest.Sl = order.SL;
 			mqlTradeRequest.Tp = order.PT;
-			mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
+			//mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
 			MqlTradeResult mqlTradeResult;
 			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
 			//apiClient.PositionModify((ulong)order.Id, order.SL, order.PT);
@@ -475,6 +475,7 @@ namespace Mt5Api
 			mqlTradeRequest.Volume = Math.Abs(units);
 			mqlTradeRequest.Type = units > 0 ? ENUM_ORDER_TYPE.ORDER_TYPE_BUY : ENUM_ORDER_TYPE.ORDER_TYPE_SELL;
 			mqlTradeRequest.Magic = magic;
+			// Todle zde musi byt kvuli ICMARKETS, jinak objednavky nechodi
 			mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
 			//mqlTradeRequest.Comment = comment;
 			MqlTradeResult mqlTradeResult;
