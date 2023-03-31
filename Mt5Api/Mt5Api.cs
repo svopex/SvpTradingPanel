@@ -125,7 +125,7 @@ namespace Mt5Api
 			return apiClient.SymbolSelect(TransformInstrument(instrument), selected);
 		}
 
-		public bool CloseOrder(long orderId)
+		public bool CloseMarketOrder(long orderId)
 		{
 			return apiClient.PositionClose((ulong)orderId);
 		}
@@ -526,9 +526,16 @@ namespace Mt5Api
 			return Orders;
 		}
 
-		public void OrdersCloseAll()
+		public void ClosePendingOrder(long orderId)
 		{
+			apiClient.OrderClose((ulong)orderId);
+		}
+
+		public void CloseAllPendingOrders()
+		{
+#pragma warning disable CS0618 // Type or member is obsolete
 			apiClient.OrderCloseAll();
+#pragma warning restore CS0618 // Type or member is obsolete
 		}
 	}
 }

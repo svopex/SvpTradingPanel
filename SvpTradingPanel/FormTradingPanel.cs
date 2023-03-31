@@ -587,9 +587,14 @@ namespace SvpTradingPanel
 				Orders orders = SvpMT5.Instance.GetMarketOrders();
 				foreach (var order in orders)
 				{
-					SvpMT5.Instance.CloseOrder(order.Id);
+					SvpMT5.Instance.CloseMarketOrder(order.Id);
 				}
-				SvpMT5.Instance.OrdersCloseAll();
+				//orders = SvpMT5.Instance.GetPendingOrders();
+				//foreach (var order in orders)
+				//{
+				//	SvpMT5.Instance.ClosePendingOrder(order.Id);
+				//}
+				SvpMT5.Instance.CloseAllPendingOrders();
 			}
 		}
 
