@@ -159,8 +159,8 @@ namespace SvpTradingPanel
 		{
 			// Aby nebyly vsechny TP ve stejne vzdalenosti, pocitam vzdalenost TP podle velikosti pozice.
 			// Nejvetsi pozice ma nejblizsi TP.
-			double maxUnit = orders.Max(x => x.Units);
-			return 0.7 + Math.Abs(maxUnit - unit) * 3;
+			double maxUnit = orders.Max(x => Math.Abs(x.Units));
+			return 0.7 + Math.Abs(maxUnit - Math.Abs(unit)) * 3;
 		}
 
 		private double GetTpDistanceByOrderSize(int percent)
