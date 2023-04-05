@@ -50,9 +50,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mt4Api\Mt4Api.csproj">
-      <Project>{39b26a72-9930-4099-88c9-4bb0622a7464}</Project>
-      <Name>Mt4Api</Name>
+    <ProjectReference Include="..\Mt5Api\Mt5Api.csproj">
+      <Project>{4340cf58-3b25-4969-8bed-683a8d3e71b4}</Project>
+      <Name>Mt5Api</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

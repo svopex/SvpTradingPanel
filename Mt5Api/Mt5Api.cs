@@ -13,11 +13,11 @@ using Utils;
 
 namespace Mt5Api
 {
-	public class SvpMT5
+	public class SvpMT5 : ISvpMt
 	{
 		private readonly MtApi5Client apiClient = new MtApi5Client();
 
-		public static SvpMT5 Instance
+		public static ISvpMt Instance
 		{
 			get
 			{
@@ -293,9 +293,9 @@ namespace Mt5Api
 			return apiClient.SymbolInfoDouble(Symbol, ENUM_SYMBOL_INFO_DOUBLE.SYMBOL_POINT);
 		}
 
-		public (bool result, ulong ticket, uint retCode, string comment) CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
+		public ulong CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
 		{
-			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, null, slPercent, ptPercent);
+			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, null, slPercent, ptPercent).ticket;
 		}
 
 		public (bool result, ulong ticket, uint retCode, string comment) CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
@@ -427,9 +427,9 @@ namespace Mt5Api
 
 		public string Symbol => apiClient.ChartSymbol(0);
 
-		public (bool result, ulong ticket, uint retCode, string comment) CreateMarketOrderSlPtPercent(double units, double slPercent, double ptPercent)
+		public ulong CreateMarketOrderSlPtPercent(double units, double slPercent, double ptPercent)
 		{
-			return CreateMarketOrderSlPtPercent(Symbol, units, Utilities.StrategyNumber, null, slPercent, ptPercent);
+			return CreateMarketOrderSlPtPercent(Symbol, units, Utilities.StrategyNumber, null, slPercent, ptPercent).ticket;
 		}
 
 		public (bool result, ulong ticket, uint retCode, string comment) CreateMarketOrderSlPtPercent(string instrument, double units, ulong magic, string comment, double slPercent, double ptPercent)

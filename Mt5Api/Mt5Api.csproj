@@ -9,6 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="MtApi">
+      <HintPath>..\MtApi.dll</HintPath>
+    </Reference>
     <Reference Include="MtApi5">
       <HintPath>..\MtApi5.dll</HintPath>
     </Reference>
