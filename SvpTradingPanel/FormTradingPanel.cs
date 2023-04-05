@@ -399,6 +399,7 @@ namespace SvpTradingPanel
 			double slPriceAfterJoin = SlPriceAfterJoin(orders); // Pokud SL jsou vsechny stejne, vrati se hodnota tohoto stejneho SL, jinak se vraci nula.
 			foreach (var order in orders)
 			{
+				double previousSl = order.SL;
 				if (slPriceAfterJoin == 0)
 				{
 					order.SL = idealMinimumSl;
@@ -407,13 +408,16 @@ namespace SvpTradingPanel
 				{
 					order.SL = slPriceAfterJoin;
 				}
-				if (position)
+				if (previousSl != order.SL)
 				{
-					SvpMT5.Instance.SetPositionSlAndPt(order);
-				}
-				else
-				{
-					SvpMT5.Instance.SetOrderSlAndPt(order);
+					if (position)
+					{
+						SvpMT5.Instance.SetPositionSlAndPt(order);
+					}
+					else
+					{
+						SvpMT5.Instance.SetOrderSlAndPt(order);
+					}
 				}
 			}
 			return orders.Any();
@@ -589,12 +593,12 @@ namespace SvpTradingPanel
 				{
 					SvpMT5.Instance.CloseMarketOrder(order.Id);
 				}
-				//orders = SvpMT5.Instance.GetPendingOrders();
-				//foreach (var order in orders)
-				//{
-				//	SvpMT5.Instance.ClosePendingOrder(order.Id);
-				//}
-				SvpMT5.Instance.CloseAllPendingOrders();
+				orders = SvpMT5.Instance.GetPendingOrders();
+				foreach (var order in orders)
+				{
+					SvpMT5.Instance.ClosePendingOrder(order.Id);
+				}
+				//SvpMT5.Instance.CloseAllPendingOrders();
 			}
 		}
 

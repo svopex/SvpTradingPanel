@@ -20,10 +20,10 @@ namespace Mt5Api
 		void SetOrderSlAndPt(Order order);
 		bool Connect();
 		bool CloseMarketOrder(long orderId);
-		void CloseAllPendingOrders();
 		bool isConnected();
 		void Disconnect();
 		void SetPositionSlAndPtPercent(Order order, double slPercent, double ptPercent);
 		void SetPendingOrderSlAndPtPercent(Order order, double slPercent, double ptPercent);
+		bool ClosePendingOrder(long orderId);
 	}
 }

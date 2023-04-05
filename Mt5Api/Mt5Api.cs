@@ -1,3 +1,4 @@
+using Mt4Api;
 using MtApi5;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace Mt5Api
 			}
 		}
 
-		private static SvpMT5 instance;
+		private static ISvpMt instance;
 
 		private bool Connected { get; set; }
 
@@ -46,14 +47,14 @@ namespace Mt5Api
 
 		public void Disconnect()
 		{
-			instance.apiClient.BeginDisconnect();
+			apiClient.BeginDisconnect();
 		}
 
 		public bool Connect()
 		{
 			//int counter = 10;
 
-			instance.apiClient.BeginConnect(Utilities.Host, Utilities.Port);
+			apiClient.BeginConnect(Utilities.Host, Utilities.Port);
 
 			//while (instance.apiClient.ConnectionState != Mt5ConnectionState.Connected)
 			//{
@@ -68,7 +69,7 @@ namespace Mt5Api
 			//}
 			//Logger.WriteLine("SvpTradingPanel not connected to MT5.");
 
-			instance.apiClient.ConnectionStateChanged += ApiClient_ConnectionStateChanged;
+			apiClient.ConnectionStateChanged += ApiClient_ConnectionStateChanged;
 
 			Connected = false;
 
@@ -527,9 +528,9 @@ namespace Mt5Api
 			return Orders;
 		}
 
-		public void ClosePendingOrder(long orderId)
+		public bool ClosePendingOrder(long orderId)
 		{
-			apiClient.OrderClose((ulong)orderId);
+			return apiClient.OrderClose((ulong)orderId);
 		}
 
 		public void CloseAllPendingOrders()

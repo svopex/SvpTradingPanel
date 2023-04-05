@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 
 namespace Mt4Api
 {
-    public class SvpMT4
-    {
+    public class SvpMT4 : ISvpMt
+	{
+		private int slippage = 10;
+
 		private readonly MtApiClient apiClient = new MtApiClient();
 
-		public static SvpMT4 Instance
+		public static ISvpMt Instance
 		{
 			get
 			{
@@ -24,7 +26,7 @@ namespace Mt4Api
 				return instance;
 			}
 		}
-		private static SvpMT4 instance;
+		private static ISvpMt instance;
 
 		private bool Connected { get; set; }
 
@@ -40,14 +42,14 @@ namespace Mt4Api
 
 		public void Disconnect()
 		{
-			instance.apiClient.BeginDisconnect();
+			apiClient.BeginDisconnect();
 		}
 
 		public bool Connect()
 		{
 			//int counter = 10;
 
-			instance.apiClient.BeginConnect("localhost", 8222);
+			apiClient.BeginConnect("localhost", 8222);
 
 			//while (instance.apiClient.ConnectionState != Mt5ConnectionState.Connected)
 			//{
@@ -62,7 +64,7 @@ namespace Mt4Api
 			//}
 			//Logger.WriteLine("SvpTradingPanel not connected to MT5.");
 
-			instance.apiClient.ConnectionStateChanged += ApiClient_ConnectionStateChanged;
+			apiClient.ConnectionStateChanged += ApiClient_ConnectionStateChanged;
 
 			Connected = false;
 
@@ -80,12 +82,17 @@ namespace Mt4Api
 			return tick.Ask;
 		}
 
-		public void CloseMarketOrder(long orderId)
+		public bool CloseMarketOrder(long orderId)
         {
-            apiClient.OrderClose((int)orderId, 0);
-        }
+            return apiClient.OrderClose((int)orderId, slippage);	
+		}
 
-        public double GetMarketOrderPrice(long marketOrderId)
+		public bool ClosePendingOrder(long orderId)
+		{
+			return apiClient.OrderDelete((int)orderId);
+		}
+
+		public double GetMarketOrderPrice(long marketOrderId)
         {
             MtOrder order = apiClient.GetOrder((int)marketOrderId, OrderSelectMode.SELECT_BY_TICKET, OrderSelectSource.MODE_TRADES);
             return order.OpenPrice;
@@ -93,7 +100,7 @@ namespace Mt4Api
 
 		public void SetOrderSlAndPt(Order order)
 		{
-			apiClient.OrderModify((int)order.Id, 0, order.SL, order.PT, DateTime.Now.AddDays(1));
+			apiClient.OrderModify((int)order.Id, order.OpenPrice, order.SL, order.PT, DateTime.Now.AddDays(1));
 		}
 
 		public void SetPendingOrderSlAndPtPercent(Order order, double slPercent, double ptPercent)
@@ -130,7 +137,7 @@ namespace Mt4Api
 
 		public void SetPositionSlAndPt(Order order)
 		{
-			apiClient.OrderModify((int)order.Id, 0, order.SL, order.PT, DateTime.Now.AddDays(1));
+			apiClient.OrderModify((int)order.Id, order.OpenPrice, order.SL, order.PT, DateTime.Now.AddDays(1));
 		}
 
 		public void ModifyPendingOrder(Order order)
@@ -221,7 +228,7 @@ namespace Mt4Api
 		public ulong CreateMarketOrderSlPtPercent(double units, double slPercent, double ptPercent)
 		{
 			ulong ticket = (ulong)CreateMarketOrder(Symbol, units);
-			Order order = GetPendingOrder(ticket);
+			Order order = GetMarketOrder(ticket);
 			double slRelative = 0;
 			double ptRelative = 0;
 			if (slPercent != 0)
@@ -245,21 +252,26 @@ namespace Mt4Api
 
 		public long CreatePendingOrder(string instrument, double price, double units)
 		{
-			int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUYLIMIT: TradeOperation.OP_SELLLIMIT, Math.Abs(units), price, 0, 0, 0);
+			int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUYLIMIT: TradeOperation.OP_SELLLIMIT, Math.Abs(units), NormalizeDouble(Symbol, price), slippage, 0, 0);
 			return orderId;
 		}
 
 		public long CreateMarketOrder(string instrument, double units)
         {
-            int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, 0, 0, 0);
+            int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, 0, 0);
             return orderId;
         }
 
 		public string Symbol => apiClient.ChartSymbol(0);
 
-		public Order GetPendingOrder(ulong ticket)
+		public Order GetMarketOrder(ulong ticket)
 		{
 			return GetMarketOrders().FirstOrDefault(x => x.Id == (int)ticket);
+		}
+
+		public Order GetPendingOrder(ulong ticket)
+		{
+			return GetPendingOrders().FirstOrDefault(x => x.Id == (int)ticket);
 		}
 
 		public Orders GetMarketOrders()
