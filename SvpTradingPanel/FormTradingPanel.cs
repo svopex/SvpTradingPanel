@@ -21,11 +21,11 @@ namespace SvpTradingPanel
 
 		private void RefreshData(Orders orders)
 		{
-			string currency = SvpMT5.Instance.AccountCurrency();
+			string currency = MetatraderInstance.Instance.AccountCurrency();
 			var sumOfUnits = Math.Abs(orders.Select(x => x.Units).Sum());
 			var rrr = orders.Select(x => ((Math.Abs(x.OpenPrice - x.PT)) / (Math.Abs(x.OpenPrice - x.SL))) / sumOfUnits * Math.Abs(x.Units)).Sum();
-			var loss = orders.Select(x => Math.Abs(x.OpenPrice - x.SL) * Math.Abs(x.Units)).Sum() / SvpMT5.Instance.SymbolPoint() * SvpMT5.Instance.SymbolTradeTickValue();
-			var profit = orders.Select(x => Math.Abs(x.OpenPrice - x.PT) * Math.Abs(x.Units)).Sum() / SvpMT5.Instance.SymbolPoint() * SvpMT5.Instance.SymbolTradeTickValue();
+			var loss = orders.Select(x => Math.Abs(x.OpenPrice - x.SL) * Math.Abs(x.Units)).Sum() / MetatraderInstance.Instance.SymbolPoint() * MetatraderInstance.Instance.SymbolTradeTickValue();
+			var profit = orders.Select(x => Math.Abs(x.OpenPrice - x.PT) * Math.Abs(x.Units)).Sum() / MetatraderInstance.Instance.SymbolPoint() * MetatraderInstance.Instance.SymbolTradeTickValue();
 			labelRrr.Text = "RRR: " + Math.Round(rrr, 2);
 			labelLoss.Text = "Loss: " + +Math.Round(loss, 2) + " " + currency;
 			labelProfit.Text = "Profit: " + +Math.Round(profit, 2) + " " + currency;
@@ -41,7 +41,7 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					double actualPrice = SvpMT5.Instance.GetActualPrice();
+					double actualPrice = MetatraderInstance.Instance.GetActualPrice();
 
 					// Pending order vytvor v idealni vzdalenosti od ceny, pokud cena neni zadana.
 					if (buy)
@@ -63,15 +63,15 @@ namespace SvpTradingPanel
 
 		private double RoundPrice(double number)
 		{
-			int digits = SvpMT5.Instance.SymbolDigits();
+			int digits = MetatraderInstance.Instance.SymbolDigits();
 			double value = Math.Round(number, digits);
 			return value;
 		}
 
 		private double? GetPositionSize(bool buy)
 		{
-			Orders marketOrders = SvpMT5.Instance.GetMarketOrders();
-			Orders pendingOrders = SvpMT5.Instance.GetPendingOrders();
+			Orders marketOrders = MetatraderInstance.Instance.GetMarketOrders();
+			Orders pendingOrders = MetatraderInstance.Instance.GetPendingOrders();
 			bool result =
 				(Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
 				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
@@ -99,15 +99,15 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(60));
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.3), 1, GetTpDistanceByOrderSize(30));
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(60));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.3), 1, GetTpDistanceByOrderSize(30));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				else
 				{
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(60));
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.3), 1, GetTpDistanceByOrderSize(30));
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(60));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.3), 1, GetTpDistanceByOrderSize(30));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				JoinSl();
 			}
@@ -121,15 +121,15 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.5), 1, GetTpDistanceByOrderSize(50));
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.5), 1, GetTpDistanceByOrderSize(50));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				else
 				{
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.5), 1, GetTpDistanceByOrderSize(50));
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.5), 1, GetTpDistanceByOrderSize(50));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				JoinSl();
 			}
@@ -143,13 +143,13 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(100));
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(100));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
 				}
 				else
 				{
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(100));
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(100));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
 				}
 				JoinSl();
 			}
@@ -178,11 +178,11 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					SvpMT5.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * percent / 100), 1, GetTpDistanceByOrderSize(percent));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * percent / 100), 1, GetTpDistanceByOrderSize(percent));
 				}
 				else
 				{
-					SvpMT5.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * percent / 100), 1, GetTpDistanceByOrderSize(percent));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * percent / 100), 1, GetTpDistanceByOrderSize(percent));
 				}
 				JoinSl();
 			}
@@ -251,31 +251,31 @@ namespace SvpTradingPanel
 			Orders orders;
 			if (checkBoxMovePendingOrder.Checked)
 			{
-				orders = SvpMT5.Instance.GetPendingOrders();
+				orders = MetatraderInstance.Instance.GetPendingOrders();
 				double idealPrice = IdealMaximumPrice(orders);
 				foreach (var order in orders)
 				{
 					order.OpenPrice = idealPrice + (idealPrice * movement);
-					SvpMT5.Instance.ModifyPendingOrder(order);
+					MetatraderInstance.Instance.ModifyPendingOrder(order);
 				}
 			}
 			else
 			{
-				orders = SvpMT5.Instance.GetMarketOrders();
+				orders = MetatraderInstance.Instance.GetMarketOrders();
 				double idealSl = IdealMaximumSlPrice(orders);
 				foreach (var order in orders)
 				{
 					order.SL = idealSl + (idealSl * movement);
-					SvpMT5.Instance.SetPositionSlAndPt(order);
+					MetatraderInstance.Instance.SetPositionSlAndPt(order);
 				}
 				if (!orders.Any())
 				{
-					orders = SvpMT5.Instance.GetPendingOrders();
+					orders = MetatraderInstance.Instance.GetPendingOrders();
 					idealSl = IdealMaximumSlPrice(orders);
 					foreach (var order in orders)
 					{
 						order.SL = idealSl + (idealSl * movement);
-						SvpMT5.Instance.SetOrderSlAndPt(order);
+						MetatraderInstance.Instance.SetOrderSlAndPt(order);
 					}
 				}
 			}
@@ -287,31 +287,31 @@ namespace SvpTradingPanel
 			Orders orders;
 			if (checkBoxMovePendingOrder.Checked)
 			{
-				orders = SvpMT5.Instance.GetPendingOrders();
+				orders = MetatraderInstance.Instance.GetPendingOrders();
 				double idealPrice = IdealMaximumPrice(orders);
 				foreach (var order in orders)
 				{
 					order.OpenPrice = idealPrice - (idealPrice * movement);
-					SvpMT5.Instance.ModifyPendingOrder(order);
+					MetatraderInstance.Instance.ModifyPendingOrder(order);
 				}
 			}
 			else
 			{
-				orders = SvpMT5.Instance.GetMarketOrders();
+				orders = MetatraderInstance.Instance.GetMarketOrders();
 				double idealSl = IdealMaximumSlPrice(orders);
 				foreach (var order in orders)
 				{
 					order.SL = idealSl - (idealSl * movement);
-					SvpMT5.Instance.SetPositionSlAndPt(order);
+					MetatraderInstance.Instance.SetPositionSlAndPt(order);
 				}
 				if (!orders.Any())
 				{
-					orders = SvpMT5.Instance.GetPendingOrders();
+					orders = MetatraderInstance.Instance.GetPendingOrders();
 					idealSl = IdealMaximumSlPrice(orders);
 					foreach (var order in orders)
 					{
 						order.SL = idealSl - (idealSl * movement);
-						SvpMT5.Instance.SetOrderSlAndPt(order);
+						MetatraderInstance.Instance.SetOrderSlAndPt(order);
 					}
 				}
 			}
@@ -380,6 +380,7 @@ namespace SvpTradingPanel
 			double priceAfterJoin = PriceAfterJoin(orders); // Pokud ceny jsou vsechny stejne, vrati se hodnota tohoto stejneho SL, jinak se vraci nula.
 			foreach (var order in orders)
 			{
+				double oldOpenPrice = order.OpenPrice;
 				if (priceAfterJoin == 0)
 				{
 					order.OpenPrice = idealMinimumPrice;
@@ -388,7 +389,10 @@ namespace SvpTradingPanel
 				{
 					order.OpenPrice = priceAfterJoin;
 				}
-				SvpMT5.Instance.ModifyPendingOrder(order);
+				if (oldOpenPrice != order.OpenPrice)
+				{
+					MetatraderInstance.Instance.ModifyPendingOrder(order);
+				}
 			}
 			return orders.Any();
 		}
@@ -412,11 +416,11 @@ namespace SvpTradingPanel
 				{
 					if (position)
 					{
-						SvpMT5.Instance.SetPositionSlAndPt(order);
+						MetatraderInstance.Instance.SetPositionSlAndPt(order);
 					}
 					else
 					{
-						SvpMT5.Instance.SetOrderSlAndPt(order);
+						MetatraderInstance.Instance.SetOrderSlAndPt(order);
 					}
 				}
 			}
@@ -427,15 +431,15 @@ namespace SvpTradingPanel
 		{
 			if (checkBoxMovePendingOrder.Checked)
 			{
-				Orders orders = SvpMT5.Instance.GetPendingOrders();
+				Orders orders = MetatraderInstance.Instance.GetPendingOrders();
 				JoinPrice(orders);
 			}
 			else
 			{
-				Orders orders = SvpMT5.Instance.GetMarketOrders();
+				Orders orders = MetatraderInstance.Instance.GetMarketOrders();
 				if (!JoinSl(orders, true))
 				{
-					orders = SvpMT5.Instance.GetPendingOrders();
+					orders = MetatraderInstance.Instance.GetPendingOrders();
 					JoinSl(orders, false);
 				}
 				RefreshData(orders);
@@ -566,11 +570,57 @@ namespace SvpTradingPanel
 			}
 		}
 
+		private void buttonCloseAll_Click(object sender, EventArgs e)
+		{
+			DialogResult dialogResult = MessageBox.Show("Do you really close all orders?", "SvpTradePanel", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+			if (dialogResult == DialogResult.Yes)
+			{
+				Orders orders = MetatraderInstance.Instance.GetMarketOrders();
+				foreach (var order in orders)
+				{
+					MetatraderInstance.Instance.CloseMarketOrder(order.Id);
+				}
+				orders = MetatraderInstance.Instance.GetPendingOrders();
+				foreach (var order in orders)
+				{
+					MetatraderInstance.Instance.ClosePendingOrder(order.Id);
+				}
+				//MetatraderInstance.Instance.CloseAllPendingOrders();
+			}
+		}
+
+		private void checkBoxPendingOrder_CheckedChanged(object sender, EventArgs e)
+		{
+			textBoxPrice.Enabled = checkBoxPendingOrder.Checked;
+		}
+
+		private void buttonSetTp_Click(object sender, EventArgs e)
+		{
+			Orders orders = MetatraderInstance.Instance.GetMarketOrders();
+			if (orders.Any())
+			{
+				foreach (var order in orders)
+				{
+					MetatraderInstance.Instance.SetPositionSlAndPtPercent(order, 0, GetTpDistanceByUnit(orders, Math.Abs(order.Units)));
+				}
+				RefreshData(orders);
+			}
+			else
+			{
+				orders = MetatraderInstance.Instance.GetPendingOrders();
+				foreach (var order in orders)
+				{
+					MetatraderInstance.Instance.SetPendingOrderSlAndPtPercent(order, 0, GetTpDistanceByUnit(orders, Math.Abs(order.Units)));
+				}
+				RefreshData(orders);
+			}
+		}
+
 		private void FormTradingPanel_Load(object sender, EventArgs e)
 		{
 			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
-			bool connected = SvpMT5.Instance.Connect();
+			bool connected = MetatraderInstance.Connect();
 			ShowLabelConnected(connected);
 
 			checkBoxMovePendingOrder.Checked = false;
@@ -583,69 +633,31 @@ namespace SvpTradingPanel
 			this.TopMost = true;
 		}
 
-		private void buttonCloseAll_Click(object sender, EventArgs e)
-		{
-			DialogResult dialogResult = MessageBox.Show("Do you really close all orders?", "SvpTradePanel", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-			if (dialogResult == DialogResult.Yes)
-			{
-				Orders orders = SvpMT5.Instance.GetMarketOrders();
-				foreach (var order in orders)
-				{
-					SvpMT5.Instance.CloseMarketOrder(order.Id);
-				}
-				orders = SvpMT5.Instance.GetPendingOrders();
-				foreach (var order in orders)
-				{
-					SvpMT5.Instance.ClosePendingOrder(order.Id);
-				}
-				//SvpMT5.Instance.CloseAllPendingOrders();
-			}
-		}
-
 		private void timerRefreshLabels_Tick(object sender, EventArgs e)
 		{
-			bool connected = SvpMT5.Instance.isConnected();
-			ShowLabelConnected(connected);
+			bool connected = MetatraderInstance.IsConnected();
 			if (connected)
 			{
-				Orders orders = SvpMT5.Instance.GetMarketOrders();
-				if (!orders.Any())
+				connected = MetatraderInstance.Instance.isConnected();
+				ShowLabelConnected(connected);
+				if (connected)
 				{
-					orders = SvpMT5.Instance.GetPendingOrders();
+					try
+					{
+						Orders orders = MetatraderInstance.Instance.GetMarketOrders();
+						if (!orders.Any())
+						{
+							orders = MetatraderInstance.Instance.GetPendingOrders();
+						}
+						RefreshData(orders);
+					}
+					catch { }
 				}
-				RefreshData(orders);
-			}
-			else
-			{
-				SvpMT5.Instance.Disconnect();
-				SvpMT5.Instance.Connect();
-			}
-		}
-
-		private void checkBoxPendingOrder_CheckedChanged(object sender, EventArgs e)
-		{
-			textBoxPrice.Enabled = checkBoxPendingOrder.Checked;
-		}
-
-		private void buttonSetTp_Click(object sender, EventArgs e)
-		{
-			Orders orders = SvpMT5.Instance.GetMarketOrders();
-			if (orders.Any())
-			{
-				foreach (var order in orders)
+				else
 				{
-					SvpMT5.Instance.SetPositionSlAndPtPercent(order, 0, GetTpDistanceByUnit(orders, Math.Abs(order.Units)));
+					MetatraderInstance.Instance.Disconnect();
+					MetatraderInstance.Instance.Connect();
 				}
-				RefreshData(orders);
-			}
-			else
-			{
-				orders = SvpMT5.Instance.GetPendingOrders();
-				foreach (var order in orders)
-				{
-					SvpMT5.Instance.SetPendingOrderSlAndPtPercent(order, 0, GetTpDistanceByUnit(orders, Math.Abs(order.Units)));
-				}
-				RefreshData(orders);
 			}
 		}
 	}

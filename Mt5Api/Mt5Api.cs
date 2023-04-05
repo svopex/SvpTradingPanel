@@ -18,19 +18,7 @@ namespace Mt5Api
 	{
 		private readonly MtApi5Client apiClient = new MtApi5Client();
 
-		public static ISvpMt Instance
-		{
-			get
-			{
-				if (instance == null)
-				{
-					instance = new SvpMT5();
-				}
-				return instance;
-			}
-		}
-
-		private static ISvpMt instance;
+		public static ISvpMt Instance { get; set; }
 
 		private bool Connected { get; set; }
 

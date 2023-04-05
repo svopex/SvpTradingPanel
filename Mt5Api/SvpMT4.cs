@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mt4Api
 {
-    public class SvpMT4 : ISvpMt
+	public class SvpMT4 : ISvpMt
 	{
 		private int slippage = 10;
 
@@ -83,8 +83,8 @@ namespace Mt4Api
 		}
 
 		public bool CloseMarketOrder(long orderId)
-        {
-            return apiClient.OrderClose((int)orderId, slippage);	
+		{
+			return apiClient.OrderClose((int)orderId, slippage);
 		}
 
 		public bool ClosePendingOrder(long orderId)
@@ -93,10 +93,10 @@ namespace Mt4Api
 		}
 
 		public double GetMarketOrderPrice(long marketOrderId)
-        {
-            MtOrder order = apiClient.GetOrder((int)marketOrderId, OrderSelectMode.SELECT_BY_TICKET, OrderSelectSource.MODE_TRADES);
-            return order.OpenPrice;
-        }
+		{
+			MtOrder order = apiClient.GetOrder((int)marketOrderId, OrderSelectMode.SELECT_BY_TICKET, OrderSelectSource.MODE_TRADES);
+			return order.OpenPrice;
+		}
 
 		public void SetOrderSlAndPt(Order order)
 		{
@@ -105,6 +105,8 @@ namespace Mt4Api
 
 		public void SetPendingOrderSlAndPtPercent(Order order, double slPercent, double ptPercent)
 		{
+			double ptOld = order.PT;
+			double slOld = order.SL;
 			double slRelative = 0;
 			double ptRelative = 0;
 			if (slPercent != 0)
@@ -116,11 +118,16 @@ namespace Mt4Api
 				ptRelative = order.OpenPrice * ptPercent / 100;
 			}
 			FillSlPt(order, slRelative, ptRelative);
-			SetOrderSlAndPt(order);
+			if (ptOld != order.PT || slOld != order.SL)
+			{
+				SetOrderSlAndPt(order);
+			}
 		}
 
 		public void SetPositionSlAndPtPercent(Order order, double slPercent, double ptPercent)
 		{
+			double oldSl = order.SL;
+			double oldPT = order.PT;
 			double slRelative = 0;
 			double ptRelative = 0;
 			if (slPercent != 0)
@@ -132,7 +139,10 @@ namespace Mt4Api
 				ptRelative = order.OpenPrice * ptPercent / 100;
 			}
 			FillSlPt(order, slRelative, ptRelative);
-			SetPositionSlAndPt(order);
+			if (oldSl != order.SL || oldPT != order.PT)
+			{
+				SetPositionSlAndPt(order);
+			}
 		}
 
 		public void SetPositionSlAndPt(Order order)
@@ -183,6 +193,8 @@ namespace Mt4Api
 		{
 			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units);
 			Order order = GetPendingOrder(ticket);
+			double ptOld = order.PT;
+			double slOld = order.SL;
 			double slRelative = 0;
 			double ptRelative = 0;
 			if (slPercent != 0)
@@ -194,7 +206,10 @@ namespace Mt4Api
 				ptRelative = order.OpenPrice * ptPercent / 100;
 			}
 			FillSlPt(order, slRelative, ptRelative);
-			SetOrderSlAndPt(order);
+			if (order.PT != ptOld || order.SL != slOld)
+			{
+				SetOrderSlAndPt(order);
+			}
 
 			return ticket;
 		}
@@ -229,6 +244,8 @@ namespace Mt4Api
 		{
 			ulong ticket = (ulong)CreateMarketOrder(Symbol, units);
 			Order order = GetMarketOrder(ticket);
+			double oldSl = order.SL;
+			double oldPt = order.PT;
 			double slRelative = 0;
 			double ptRelative = 0;
 			if (slPercent != 0)
@@ -240,27 +257,25 @@ namespace Mt4Api
 				ptRelative = order.OpenPrice * ptPercent / 100;
 			}
 			FillSlPt(order, slRelative, ptRelative);
-			SetOrderSlAndPt(order);
+			if (order.SL != oldSl || order.PT != oldPt)
+			{
+				SetOrderSlAndPt(order);
+			}
 
 			return ticket;
 		}
 
-		public void ModifyMarketOrder(Order newOAMarketOrder)
-        {
-            apiClient.OrderModify((int)newOAMarketOrder.Id, 0, newOAMarketOrder.SL, newOAMarketOrder.PT, DateTime.Now.AddDays(1));
-        }
-
 		public long CreatePendingOrder(string instrument, double price, double units)
 		{
-			int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUYLIMIT: TradeOperation.OP_SELLLIMIT, Math.Abs(units), NormalizeDouble(Symbol, price), slippage, 0, 0);
+			int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUYLIMIT : TradeOperation.OP_SELLLIMIT, Math.Abs(units), NormalizeDouble(Symbol, price), slippage, 0, 0);
 			return orderId;
 		}
 
 		public long CreateMarketOrder(string instrument, double units)
-        {
-            int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, 0, 0);
-            return orderId;
-        }
+		{
+			int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, 0, 0);
+			return orderId;
+		}
 
 		public string Symbol => apiClient.ChartSymbol(0);
 
@@ -275,29 +290,29 @@ namespace Mt4Api
 		}
 
 		public Orders GetMarketOrders()
-        {
-            Orders orders = new Orders();
-            List<MtOrder> mtOrders = apiClient.GetOrders(OrderSelectSource.MODE_TRADES);
-            foreach(MtOrder mtOrder in mtOrders)
-            {
-                if (mtOrder.Operation == TradeOperation.OP_BUY || mtOrder.Operation == TradeOperation.OP_SELL)
-                {
-                    Order order = new Order();
-                    order.Id = mtOrder.Ticket;
-                    order.OpenPrice = mtOrder.OpenPrice;
-                    order.CurrentPrice = mtOrder.ClosePrice;
-                    order.Units = mtOrder.Operation == TradeOperation.OP_BUY ? mtOrder.Lots : -mtOrder.Lots;
-                    order.Instrument = mtOrder.Symbol;
-                    order.PT = mtOrder.TakeProfit;
-                    order.SL = mtOrder.StopLoss;
-                    if (order.Instrument == Symbol)
-                    {
-                        orders.Add(order);
-                    }
-                }
-            }
-            return orders;
-        }
+		{
+			Orders orders = new Orders();
+			List<MtOrder> mtOrders = apiClient.GetOrders(OrderSelectSource.MODE_TRADES);
+			foreach (MtOrder mtOrder in mtOrders)
+			{
+				if (mtOrder.Operation == TradeOperation.OP_BUY || mtOrder.Operation == TradeOperation.OP_SELL)
+				{
+					Order order = new Order();
+					order.Id = mtOrder.Ticket;
+					order.OpenPrice = mtOrder.OpenPrice;
+					order.CurrentPrice = mtOrder.ClosePrice;
+					order.Units = mtOrder.Operation == TradeOperation.OP_BUY ? mtOrder.Lots : -mtOrder.Lots;
+					order.Instrument = mtOrder.Symbol;
+					order.PT = mtOrder.TakeProfit;
+					order.SL = mtOrder.StopLoss;
+					if (order.Instrument == Symbol)
+					{
+						orders.Add(order);
+					}
+				}
+			}
+			return orders;
+		}
 
 		public Orders GetPendingOrders()
 		{
@@ -305,21 +320,21 @@ namespace Mt4Api
 			List<MtOrder> mtOrders = apiClient.GetOrders(OrderSelectSource.MODE_TRADES);
 			foreach (MtOrder mtOrder in mtOrders)
 			{
-                if (mtOrder.Operation == TradeOperation.OP_BUYLIMIT || mtOrder.Operation == TradeOperation.OP_SELLLIMIT)
-                {
-                    Order order = new Order();
-                    order.Id = mtOrder.Ticket;
-                    order.OpenPrice = mtOrder.OpenPrice;
-                    order.CurrentPrice = mtOrder.ClosePrice;
-                    order.Units = mtOrder.Operation == TradeOperation.OP_BUYLIMIT ? mtOrder.Lots : -mtOrder.Lots;
-                    order.Instrument = mtOrder.Symbol;
-                    order.PT = mtOrder.TakeProfit;
-                    order.SL = mtOrder.StopLoss;
-                    if (order.Instrument == Symbol)
-                    {
-                        orders.Add(order);
-                    }
-                }
+				if (mtOrder.Operation == TradeOperation.OP_BUYLIMIT || mtOrder.Operation == TradeOperation.OP_SELLLIMIT)
+				{
+					Order order = new Order();
+					order.Id = mtOrder.Ticket;
+					order.OpenPrice = mtOrder.OpenPrice;
+					order.CurrentPrice = mtOrder.ClosePrice;
+					order.Units = mtOrder.Operation == TradeOperation.OP_BUYLIMIT ? mtOrder.Lots : -mtOrder.Lots;
+					order.Instrument = mtOrder.Symbol;
+					order.PT = mtOrder.TakeProfit;
+					order.SL = mtOrder.StopLoss;
+					if (order.Instrument == Symbol)
+					{
+						orders.Add(order);
+					}
+				}
 			}
 			return orders;
 		}
