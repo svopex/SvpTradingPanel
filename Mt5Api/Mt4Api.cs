@@ -353,7 +353,9 @@ namespace Mt4Api
 					order.Instrument = mtOrder.Symbol;
 					order.PT = mtOrder.TakeProfit;
 					order.SL = mtOrder.StopLoss;
-					if (/*Utilities.StrategyNumber == order.Magic && */order.Instrument == Symbol)
+					order.Magic = (ulong)mtOrder.MagicNumber;
+					order.Comment = mtOrder.Comment;
+					if (Utilities.StrategyNumber == order.Magic && order.Instrument == Symbol)
 					{
 						orders.Add(order);
 					}
@@ -379,7 +381,9 @@ namespace Mt4Api
 					order.Instrument = mtOrder.Symbol;
 					order.PT = mtOrder.TakeProfit;
 					order.SL = mtOrder.StopLoss;
-					if (/*Utilities.StrategyNumber == order.Magic && */order.Instrument == Symbol)
+					order.Magic = (ulong)mtOrder.MagicNumber;
+					order.Comment = mtOrder.Comment;
+					if (Utilities.StrategyNumber == order.Magic && order.Instrument == Symbol)
 					{
 						orders.Add(order);
 					}

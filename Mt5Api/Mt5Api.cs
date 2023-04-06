@@ -411,7 +411,7 @@ namespace Mt5Api
 
 				Order order = GetPendingOrder(ticket);
 
-				if (/*Utilities.StrategyNumber == order.Magic && */ order.Instrument == TransformInstrument(Symbol))
+				if (Utilities.StrategyNumber == order.Magic && order.Instrument == TransformInstrument(Symbol))
 				{
 					order.Instrument = DeTransformInstrument(order.Instrument);
 					Orders.Add(order);
@@ -561,7 +561,7 @@ namespace Mt5Api
 
 				Order order = GetMarketOrder(ticket);
 
-				if (/*Utilities.StrategyNumber == order.Magic && */ order.Instrument == TransformInstrument(Symbol))
+				if (Utilities.StrategyNumber == order.Magic && order.Instrument == TransformInstrument(Symbol))
 				{
 					order.Instrument = DeTransformInstrument(order.Instrument);
 					Orders.Add(order);
