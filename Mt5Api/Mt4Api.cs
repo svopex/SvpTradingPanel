@@ -156,6 +156,17 @@ namespace Mt4Api
 			}
 		}
 
+		public void SetPendingOrderSlAndPtRelative(Order order, double slRelative, double ptRelative)
+		{
+			double ptOld = order.PT;
+			double slOld = order.SL;
+			FillSlPt(order, slRelative, ptRelative);
+			if (ptOld != order.PT || slOld != order.SL)
+			{
+				SetOrderSlAndPt(order);
+			}
+		}
+
 		public void SetPositionSlAndPtPercent(Order order, double slPercent, double ptPercent)
 		{
 			double oldSl = order.SL;

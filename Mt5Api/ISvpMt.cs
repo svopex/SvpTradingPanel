@@ -36,5 +36,6 @@ namespace Mt5Api
 		double DailyClose(int Shift);
 		bool IsConnectedConsole();
 		ulong CreatePendingOrderSlPtRelative(double price, double units, double slRelative, double ptRelative);
+		void SetPendingOrderSlAndPtRelative(Order order, double slRelative, double ptRelative);
 	}
 }

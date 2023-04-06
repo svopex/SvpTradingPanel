@@ -177,6 +177,12 @@ namespace Mt5Api
 			//apiClient.PositionModify((ulong)order.Id, order.SL, order.PT);
 		}
 
+		public void SetPendingOrderSlAndPtRelative(Order order, double slRelative, double ptRelative)
+		{
+			FillSlPt(order, slRelative, ptRelative);
+			SetOrderSlAndPt(order);
+		}
+
 		public void SetPendingOrderSlAndPtPercent(Order order, double slPercent, double ptPercent)
 		{
 			double slRelative = 0;
