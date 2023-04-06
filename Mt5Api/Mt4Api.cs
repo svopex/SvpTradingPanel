@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Mt4Api
 {
-	public class SvpMT4 : ISvpMt
+	public class Mt4Api : ISvpMt
 	{
 		private int slippage = 10;
 
@@ -22,7 +22,7 @@ namespace Mt4Api
 			{
 				if (instance == null)
 				{
-					instance = new SvpMT4();
+					instance = new Mt4Api();
 				}
 				return instance;
 			}

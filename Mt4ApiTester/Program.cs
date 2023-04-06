@@ -11,14 +11,14 @@ namespace Mt4ApiTester
 	{
 		static void Main(string[] args)
 		{
-			bool connected = SvpMT4.Instance.Connect();
+			bool connected = Mt4Api.Mt4Api.Instance.Connect();
 
-			while (!SvpMT4.Instance.isConnected())
+			while (!Mt4Api.Mt4Api.Instance.isConnected())
 			{
-				Task.Delay(100);
+                Task.Delay(100);
 			}
 
-			var orders = SvpMT4.Instance.GetMarketOrders();
+			var orders = Mt4Api.Mt4Api.Instance.GetMarketOrders();
 		}
 	}
 }
