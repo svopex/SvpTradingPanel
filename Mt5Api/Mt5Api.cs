@@ -28,10 +28,15 @@ namespace Mt5Api
 			Connected = e.Status == Mt5ConnectionState.Connected;
 		}
 
-		public bool isConnected()
+		public bool IsConnected()
 		{
 			//return instance.apiClient.ConnectionState == Mt5ConnectionState.Connected;
 			return Connected;
+		}
+
+		public bool IsConnectedConsole()
+		{
+			return apiClient.ConnectionState == Mt5ConnectionState.Connected;
 		}
 
 		public void Disconnect()
@@ -379,6 +384,7 @@ namespace Mt5Api
 			Order.Id = (long)ticket;
 			Order.OpenPrice = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_PRICE_OPEN);
 			Order.CurrentPrice = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_PRICE_CURRENT);
+			Order.OpenTime = ConvertMscTimeToDateTime(apiClient.PositionGetInteger(ENUM_POSITION_PROPERTY_INTEGER.POSITION_TIME_MSC));
 			Order.SL = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_SL);
 			Order.PT = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_TP);
 			Order.Units = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_VOLUME_CURRENT);
@@ -498,6 +504,11 @@ namespace Mt5Api
 			return (result, mqlTradeResult.Order, mqlTradeResult.Retcode, mqlTradeResult.Comment);
 		}
 
+		private DateTime ConvertMscTimeToDateTime(long time)
+		{
+			return new DateTime(time * 10000).AddYears(1969);
+		}
+
 		public Order GetMarketOrder(ulong ticket)
 		{
 			apiClient.PositionSelectByTicket(ticket);
@@ -507,6 +518,8 @@ namespace Mt5Api
 			Order.Id = (long)ticket;
 			Order.OpenPrice = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_PRICE_OPEN);
 			Order.CurrentPrice = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_PRICE_CURRENT);
+			//Order.OpenTime = new DateTime(apiClient.PositionGetInteger(ENUM_POSITION_PROPERTY_INTEGER.POSITION_TIME_MSC) * 10000).AddYears(1969);
+			Order.OpenTime = ConvertMscTimeToDateTime(apiClient.PositionGetInteger(ENUM_POSITION_PROPERTY_INTEGER.POSITION_TIME_MSC));
 			Order.SL = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_SL);
 			Order.PT = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_TP);
 			Order.Units = apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_VOLUME);
@@ -562,6 +575,15 @@ namespace Mt5Api
 		public string SymbolName(int pos, bool fromMarketWatch)
 		{
 			return apiClient.SymbolName(pos, fromMarketWatch);
+		}
+
+		public double DailyClose(int Shift)
+		{
+			if (apiClient.CopyClose(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_D1, Shift, 1, out double[] result) == 1)
+			{
+				return result[0];
+			}
+			return 0;
 		}
 	}
 }

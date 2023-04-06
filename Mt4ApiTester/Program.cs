@@ -1,4 +1,5 @@
 ﻿using Mt4Api;
+using Mt5Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,16 @@ namespace Mt4ApiTester
 	{
 		static void Main(string[] args)
 		{
-			bool connected = Mt4Api.Mt4Api.Instance.Connect();
+			bool connected = MetatraderInstance.Connect();
 
-			while (!Mt4Api.Mt4Api.Instance.isConnected())
+			while (!MetatraderInstance.IsConnectedConsole())
 			{
-                Task.Delay(100);
+				Task.Delay(100);
 			}
 
-			var orders = Mt4Api.Mt4Api.Instance.GetMarketOrders();
+			var xxx = MetatraderInstance.Instance.DailyClose(1);
+
+			var yyy = MetatraderInstance.Instance.GetMarketOrders();
 		}
 	}
 }

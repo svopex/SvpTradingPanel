@@ -36,7 +36,12 @@ namespace Mt4Api
 			Connected = e.Status == MtConnectionState.Connected;
 		}
 
-		public bool isConnected()
+		public bool IsConnectedConsole()
+		{
+			return apiClient.ConnectionState == MtConnectionState.Connected;
+		}
+
+		public bool IsConnected()
 		{
 			return Connected;
 		}
@@ -327,6 +332,7 @@ namespace Mt4Api
 					order.Id = mtOrder.Ticket;
 					order.OpenPrice = mtOrder.OpenPrice;
 					order.CurrentPrice = mtOrder.ClosePrice;
+					order.OpenTime = mtOrder.OpenTime;
 					order.Units = mtOrder.Operation == TradeOperation.OP_BUY ? mtOrder.Lots : -mtOrder.Lots;
 					order.Instrument = mtOrder.Symbol;
 					order.PT = mtOrder.TakeProfit;
@@ -352,6 +358,7 @@ namespace Mt4Api
 					order.Id = mtOrder.Ticket;
 					order.OpenPrice = mtOrder.OpenPrice;
 					order.CurrentPrice = mtOrder.ClosePrice;
+					order.OpenTime = mtOrder.OpenTime;
 					order.Units = mtOrder.Operation == TradeOperation.OP_BUYLIMIT ? mtOrder.Lots : -mtOrder.Lots;
 					order.Instrument = mtOrder.Symbol;
 					order.PT = mtOrder.TakeProfit;
@@ -373,6 +380,11 @@ namespace Mt4Api
 		public string SymbolName(int pos, bool fromMarketWatch)
 		{
 			return apiClient.SymbolName(pos, fromMarketWatch);
+		}
+
+		public double DailyClose(int Shift)
+		{
+			return apiClient.iClose(Symbol, ChartPeriod.PERIOD_D1, Shift);
 		}
 	}
 }

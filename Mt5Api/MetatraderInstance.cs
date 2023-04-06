@@ -26,14 +26,29 @@ namespace Mt5Api
 			return false;
 		}
 
-		public static bool IsConnected()
+		public static bool IsConnectedConsole()
 		{
-			if (svpMt5Instance.isConnected())
+			if (svpMt5Instance.IsConnectedConsole())
 			{
 				Instance = svpMt5Instance;
 				return true;
 			}
-			if (svpMt4Instance.isConnected())
+			if (svpMt4Instance.IsConnectedConsole())
+			{
+				Instance = svpMt4Instance;
+				return true;
+			}			
+			return false;
+		}
+
+		public static bool IsConnected()
+		{
+			if (svpMt5Instance.IsConnected())
+			{
+				Instance = svpMt5Instance;
+				return true;
+			}
+			if (svpMt4Instance.IsConnected())
 			{
 				Instance = svpMt4Instance;
 				return true;

@@ -640,7 +640,7 @@ namespace SvpTradingPanel
 			bool connected = MetatraderInstance.IsConnected();
 			if (connected)
 			{
-				connected = MetatraderInstance.Instance.isConnected();
+				connected = MetatraderInstance.Instance.IsConnected();
 				if (connected)
 				{
 					try
