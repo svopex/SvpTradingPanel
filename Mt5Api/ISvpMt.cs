@@ -8,6 +8,7 @@ namespace Mt5Api
 {
 	public interface ISvpMt
 	{
+		string Symbol { get; set; }
 		string AccountCurrency();
 		double SymbolPoint();
 		double SymbolTradeTickValue();

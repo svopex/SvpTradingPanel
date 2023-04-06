@@ -446,7 +446,22 @@ namespace Mt5Api
 			}
 		}
 
-		public string Symbol => apiClient.ChartSymbol(0);
+		public string Symbol
+		{
+			get
+			{
+				if (String.IsNullOrWhiteSpace(symbol))
+				{
+					return apiClient.ChartSymbol(0);
+				}
+				return symbol;
+			}
+			set
+			{
+				symbol = value;
+			}
+		}
+		private string symbol;
 
 		public ulong CreateMarketOrderSlPtPercent(double units, double slPercent, double ptPercent)
 		{

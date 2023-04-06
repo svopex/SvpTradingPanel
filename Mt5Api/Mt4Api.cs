@@ -308,7 +308,22 @@ namespace Mt4Api
 			return orderId;
 		}
 
-		public string Symbol => apiClient.ChartSymbol(0);
+		public string Symbol
+		{
+			get 
+			{ 
+				if (String.IsNullOrWhiteSpace(symbol)) 
+				{
+					return apiClient.ChartSymbol(0);
+				}
+				return symbol; 
+			}
+			set 
+			{ 
+				symbol = value; 
+			}	
+		}			
+		private string symbol;
 
 		public Order GetMarketOrder(ulong ticket)
 		{
