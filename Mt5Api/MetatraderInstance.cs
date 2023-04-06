@@ -6,7 +6,7 @@ namespace Mt5Api
 {
 	public class MetatraderInstance
 	{
-		private static ISvpMt svpMt5Instance = new SvpMT5();
+		private static ISvpMt svpMt5Instance = new Mt5Api();
 		private static ISvpMt svpMt4Instance = new Mt4Api.Mt4Api();		
 
 		public static ISvpMt Instance { get; set; }

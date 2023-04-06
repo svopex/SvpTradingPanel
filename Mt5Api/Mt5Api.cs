@@ -15,7 +15,7 @@ using Utils;
 
 namespace Mt5Api
 {
-	public class SvpMT5 : ISvpMt
+	public class Mt5Api : ISvpMt
 	{
 		private readonly MtApi5Client apiClient = new MtApi5Client();
 
