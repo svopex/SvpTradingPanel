@@ -364,5 +364,15 @@ namespace Mt4Api
 			}
 			return orders;
 		}
+
+		public int SymbolsTotal(bool symbolsInMarketWatch)
+		{
+			return apiClient.SymbolsTotal(symbolsInMarketWatch);
+		}
+
+		public string SymbolName(int pos, bool fromMarketWatch)
+		{
+			return apiClient.SymbolName(pos, fromMarketWatch);
+		}
 	}
 }

@@ -30,5 +30,7 @@ namespace Mt5Api
 		void SetPositionSlAndPtPercent(Order order, double slPercent, double ptPercent);
 		void SetPendingOrderSlAndPtPercent(Order order, double slPercent, double ptPercent);
 		bool ClosePendingOrder(long orderId);
+		int SymbolsTotal(bool symbolsInMarketWatch);
+		string SymbolName(int pos, bool fromMarketWatch);
 	}
 }

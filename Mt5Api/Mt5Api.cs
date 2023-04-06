@@ -301,7 +301,7 @@ namespace Mt5Api
 		public double SymbolTradeTickValue()
 		{
 			return apiClient.SymbolInfoDouble(Symbol, ENUM_SYMBOL_INFO_DOUBLE.SYMBOL_TRADE_TICK_VALUE);
-		}		
+		}
 
 		public double SymbolPoint()
 		{
@@ -552,6 +552,16 @@ namespace Mt5Api
 #pragma warning disable CS0618 // Type or member is obsolete
 			apiClient.OrderCloseAll();
 #pragma warning restore CS0618 // Type or member is obsolete
+		}
+
+		public int SymbolsTotal(bool symbolsInMarketWatch)
+		{
+			return apiClient.SymbolsTotal(symbolsInMarketWatch);
+		}
+
+		public string SymbolName(int pos, bool fromMarketWatch)
+		{
+			return apiClient.SymbolName(pos, fromMarketWatch);
 		}
 	}
 }
