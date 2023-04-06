@@ -217,6 +217,25 @@ namespace Mt4Api
 			return apiClient.SymbolInfoDouble(Symbol, EnumSymbolInfoDouble.SYMBOL_POINT);
 		}
 
+		public ulong CreatePendingOrderSlPtRelative(double price, double units, double slRelative, double ptRelative)
+		{
+			return CreatePendingOrderSlPtRelative(Symbol, price, units, Utilities.StrategyNumber, null, slRelative, ptRelative);
+		}
+
+		public ulong CreatePendingOrderSlPtRelative(string instrument, double price, double units, ulong magic, string comment, double slRelative, double ptRelative)
+		{
+			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, null, (int)Utilities.StrategyNumber);
+			Order order = GetPendingOrder(ticket);
+			double ptOld = order.PT;
+			double slOld = order.SL;
+			FillSlPt(order, slRelative, ptRelative);
+			if (order.PT != ptOld || order.SL != slOld)
+			{
+				SetOrderSlAndPt(order);
+			}
+			return ticket;
+		}
+
 		public ulong CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
 		{
 			return CreatePendingOrderSlPtPercent(Symbol, price, units, 0, null, slPercent, ptPercent);

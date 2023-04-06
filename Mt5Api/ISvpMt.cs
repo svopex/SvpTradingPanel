@@ -35,5 +35,6 @@ namespace Mt5Api
 		string SymbolName(int pos, bool fromMarketWatch);
 		double DailyClose(int Shift);
 		bool IsConnectedConsole();
+		ulong CreatePendingOrderSlPtRelative(double price, double units, double slRelative, double ptRelative);
 	}
 }

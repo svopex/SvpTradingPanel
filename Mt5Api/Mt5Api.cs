@@ -315,64 +315,65 @@ namespace Mt5Api
 
 		public ulong CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
 		{
-			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, null, slPercent, ptPercent).ticket;
+			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, null, slPercent, ptPercent);
 		}
 
-		public (bool result, ulong ticket, uint retCode, string comment) CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
+		public ulong CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
 		{
-			(bool result, ulong ticket, uint retCode, string comment) result = CreatePendingOrder(instrument, price, units, OrderType.Limit, magic, comment, price);
-			if (result.result)
+			ulong ticket = CreatePendingOrder(instrument, price, units, OrderType.Limit, magic, comment);
+			Order order = GetPendingOrder(ticket);
+			double slRelative = 0;
+			double ptRelative = 0;
+			if (slPercent != 0)
 			{
-				Order order = GetPendingOrder(result.ticket);
-				double slRelative = 0;
-				double ptRelative = 0;
-				if (slPercent != 0)
-				{
-					slRelative = order.OpenPrice * slPercent / 100;
-				}
-				if (ptPercent != 0)
-				{
-					ptRelative = order.OpenPrice * ptPercent / 100;
-				}
-				FillSlPt(order, slRelative, ptRelative);
-				SetOrderSlAndPt(order);
+				slRelative = order.OpenPrice * slPercent / 100;
 			}
-			return result;
+			if (ptPercent != 0)
+			{
+				ptRelative = order.OpenPrice * ptPercent / 100;
+			}
+			FillSlPt(order, slRelative, ptRelative);
+			SetOrderSlAndPt(order);
+			return (ulong)order.Id;
 		}
 
-		public (bool result, ulong ticket, uint retCode, string comment)
-			CreatePendingOrderSlPtRelative(string instrument, double price, double units, OrderType orderType, ulong magic, string comment, double SlRelative, double PtRelative, double stopLimitPrice)
+		public ulong CreatePendingOrderSlPtRelative(double price, double units, double SlRelative, double PtRelative)
+		{
+			return CreatePendingOrderSlPtRelative(Symbol, price, units, Utilities.StrategyNumber, null, SlRelative, PtRelative);
+		}
+
+		public ulong CreatePendingOrderSlPtRelative(string instrument, double price, double units, ulong magic, string comment, double SlRelative, double PtRelative)
 		{
 			MqlTradeRequest mqlTradeRequest = new MqlTradeRequest();
 			mqlTradeRequest.Action = ENUM_TRADE_REQUEST_ACTIONS.TRADE_ACTION_PENDING;
 			mqlTradeRequest.Symbol = TransformInstrument(instrument);
 			mqlTradeRequest.Volume = (double)Math.Abs(units);
-			mqlTradeRequest.Stoplimit = NormalizeDouble(instrument, stopLimitPrice);
-			switch (orderType)
-			{
-				case OrderType.Limit:
-					mqlTradeRequest.Type = units > 0 ? ENUM_ORDER_TYPE.ORDER_TYPE_BUY_LIMIT : ENUM_ORDER_TYPE.ORDER_TYPE_SELL_LIMIT;
-					break;
-				case OrderType.Stop:
-					mqlTradeRequest.Type = units > 0 ? ENUM_ORDER_TYPE.ORDER_TYPE_BUY_STOP : ENUM_ORDER_TYPE.ORDER_TYPE_SELL_STOP;
-					break;
-				case OrderType.StopLimit:
-					mqlTradeRequest.Type = units > 0 ? ENUM_ORDER_TYPE.ORDER_TYPE_BUY_STOP_LIMIT : ENUM_ORDER_TYPE.ORDER_TYPE_SELL_STOP_LIMIT;
-					break;
-			}
+			mqlTradeRequest.Stoplimit = NormalizeDouble(instrument, price);
+			mqlTradeRequest.Type = units > 0 ? ENUM_ORDER_TYPE.ORDER_TYPE_BUY_LIMIT : ENUM_ORDER_TYPE.ORDER_TYPE_SELL_LIMIT;
+			//switch (orderType)
+			//{
+			//	case OrderType.Limit:
+			//		mqlTradeRequest.Type = units > 0 ? ENUM_ORDER_TYPE.ORDER_TYPE_BUY_LIMIT : ENUM_ORDER_TYPE.ORDER_TYPE_SELL_LIMIT;
+			//		break;
+			//	case OrderType.Stop:
+			//		mqlTradeRequest.Type = units > 0 ? ENUM_ORDER_TYPE.ORDER_TYPE_BUY_STOP : ENUM_ORDER_TYPE.ORDER_TYPE_SELL_STOP;
+			//		break;
+			//	case OrderType.StopLimit:
+			//		mqlTradeRequest.Type = units > 0 ? ENUM_ORDER_TYPE.ORDER_TYPE_BUY_STOP_LIMIT : ENUM_ORDER_TYPE.ORDER_TYPE_SELL_STOP_LIMIT;
+			//		break;
+			//}
 			mqlTradeRequest.Price = NormalizeDouble(instrument, price);
 			mqlTradeRequest.Magic = magic;
-			//mqlTradeRequest.Comment = comment;
+			mqlTradeRequest.Comment = comment;
 			FillSlPt(mqlTradeRequest, SlRelative, PtRelative);
 			MqlTradeResult mqlTradeResult;
 			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
-			return (result, mqlTradeResult.Order, mqlTradeResult.Retcode, mqlTradeResult.Comment);
+			return mqlTradeResult.Order;
 		}
 
-		public (bool result, ulong ticket, uint retCode, string comment)
-			CreatePendingOrder(string instrument, double price, double units, OrderType orderType, ulong magic, string comment, double stopLimitPrice)
+		public ulong CreatePendingOrder(string instrument, double price, double units, OrderType orderType, ulong magic, string comment)
 		{
-			return CreatePendingOrderSlPtRelative(instrument, price, units, orderType, magic, comment, 0, 0, stopLimitPrice);
+			return CreatePendingOrderSlPtRelative(instrument, price, units, magic, comment, 0, 0);
 		}
 
 		public Order GetPendingOrder(ulong ticket)
