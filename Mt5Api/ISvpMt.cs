@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MtApi;
+using MtApi5;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +12,9 @@ namespace Mt5Api
 		double SymbolPoint();
 		double SymbolTradeTickValue();
 		double GetActualPrice();
+		double SymbolMinLot();
+		double SymbolLotStep();
+		int SymbolLotStepDigits();
 		int SymbolDigits();
 		Orders GetMarketOrders();
 		Orders GetPendingOrders();

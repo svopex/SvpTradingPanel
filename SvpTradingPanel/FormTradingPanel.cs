@@ -63,7 +63,8 @@ namespace SvpTradingPanel
 
 		private double RoundPrice(double number)
 		{
-			int digits = MetatraderInstance.Instance.SymbolDigits();
+			//int digits = MetatraderInstance.Instance.SymbolDigits();
+			int digits = MetatraderInstance.Instance.SymbolLotStepDigits();
 			double value = Math.Round(number, digits);
 			return value;
 		}
@@ -182,7 +183,8 @@ namespace SvpTradingPanel
 				}
 				else
 				{
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * percent / 100), 1, GetTpDistanceByOrderSize(percent));
+					var position = RoundPrice(positionSize.Value * percent / 100);
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(position, 1, GetTpDistanceByOrderSize(percent));
 				}
 				JoinSl();
 			}
@@ -639,7 +641,6 @@ namespace SvpTradingPanel
 			if (connected)
 			{
 				connected = MetatraderInstance.Instance.isConnected();
-				ShowLabelConnected(connected);
 				if (connected)
 				{
 					try
@@ -659,6 +660,7 @@ namespace SvpTradingPanel
 					MetatraderInstance.Instance.Connect();
 				}
 			}
+			ShowLabelConnected(connected);
 		}
 	}
 }

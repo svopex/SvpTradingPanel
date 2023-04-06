@@ -29,10 +29,6 @@ namespace Mt5Api
 
 		public static bool IsConnected()
 		{
-			if (Instance != null)
-			{
-				return true;
-			}
 			if (svpMt5Instance.isConnected())
 			{
 				Instance = svpMt5Instance;

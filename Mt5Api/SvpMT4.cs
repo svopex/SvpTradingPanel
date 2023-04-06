@@ -1,5 +1,6 @@
 ﻿using Mt5Api;
 using MtApi;
+using MtApi5;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -69,6 +70,31 @@ namespace Mt4Api
 			Connected = false;
 
 			return false;
+		}
+
+		public double SymbolMinLot()
+		{
+			return apiClient.MarketInfo(Symbol, MarketInfoModeType.MODE_MINLOT);
+		}
+
+		public double SymbolLotStep()
+		{
+			return apiClient.MarketInfo(Symbol, MarketInfoModeType.MODE_LOTSTEP);
+		}
+
+		public int SymbolLotStepDigits()
+		{
+			double lotStep = SymbolLotStep();
+			int digits = 0;
+			if (lotStep <= 0.001)
+				digits = 3;
+			if (lotStep <= 0.01)
+				digits = 2;
+			else if (lotStep <= 0.1)
+				digits = 1;
+			else
+				digits = 0;
+			return digits;
 		}
 
 		public int SymbolDigits()

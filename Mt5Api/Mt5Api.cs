@@ -1,4 +1,5 @@
 using Mt4Api;
+using MtApi;
 using MtApi5;
 using System;
 using System.Collections.Generic;
@@ -98,6 +99,31 @@ namespace Mt5Api
 			return symbol;
 		}
 
+		public double SymbolMinLot()
+		{
+			return apiClient.SymbolInfoDouble(Symbol, ENUM_SYMBOL_INFO_DOUBLE.SYMBOL_VOLUME_MIN);
+		}
+
+		public double SymbolLotStep()
+		{
+			return apiClient.SymbolInfoDouble(Symbol, ENUM_SYMBOL_INFO_DOUBLE.SYMBOL_VOLUME_STEP);
+		}
+
+		public int SymbolLotStepDigits()
+		{
+			double lotStep = SymbolLotStep();
+			int digits = 0;
+			if (lotStep <= 0.001)
+				digits = 3;
+			if (lotStep <= 0.01)
+				digits = 2;
+			else if (lotStep <= 0.1)
+				digits = 1;
+			else
+				digits = 0;
+			return digits;
+		}
+
 		public int SymbolDigits()
 		{
 			return (int)apiClient.SymbolInfoInteger(Symbol, ENUM_SYMBOL_INFO_INTEGER.SYMBOL_DIGITS);
@@ -105,7 +131,7 @@ namespace Mt5Api
 
 		public double GetActualPrice()
 		{
-			apiClient.SymbolInfoTick(Symbol, out MqlTick tick);
+			apiClient.SymbolInfoTick(Symbol, out MtApi5.MqlTick tick);
 			return tick.ask;
 		}
 
