@@ -37,5 +37,7 @@ namespace Mt5Api
 		bool IsConnectedConsole();
 		ulong CreatePendingOrderSlPtRelative(double price, double units, double slRelative, double ptRelative);
 		void SetPendingOrderSlAndPtRelative(Order order, double slRelative, double ptRelative);
+		ulong CreateMarketOrderSlPtRelative(double units, double slRelative, double ptRelative);
+		void SetPositionSlAndPtRelative(Order order, double slRelative, double ptRelative);
 	}
 }

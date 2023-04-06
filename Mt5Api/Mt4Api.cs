@@ -188,6 +188,17 @@ namespace Mt4Api
 			}
 		}
 
+		public void SetPositionSlAndPtRelative(Order order, double slRelative, double ptRelative)
+		{
+			double oldSl = order.SL;
+			double oldPT = order.PT;
+			FillSlPt(order, slRelative, ptRelative);
+			if (oldSl != order.SL || oldPT != order.PT)
+			{
+				SetPositionSlAndPt(order);
+			}
+		}
+
 		public void SetPositionSlAndPt(Order order)
 		{
 			apiClient.OrderModify((int)order.Id, order.OpenPrice, order.SL, order.PT, DateTime.Now.AddDays(1));
@@ -318,6 +329,21 @@ namespace Mt4Api
 			{
 				ptRelative = order.OpenPrice * ptPercent / 100;
 			}
+			FillSlPt(order, slRelative, ptRelative);
+			if (order.SL != oldSl || order.PT != oldPt)
+			{
+				SetOrderSlAndPt(order);
+			}
+
+			return ticket;
+		}
+
+		public ulong CreateMarketOrderSlPtRelative(double units, double slRelative, double ptRelative)
+		{
+			ulong ticket = (ulong)CreateMarketOrder(Symbol, units, null, (int)Utilities.StrategyNumber);
+			Order order = GetMarketOrder(ticket);
+			double oldSl = order.SL;
+			double oldPt = order.PT;
 			FillSlPt(order, slRelative, ptRelative);
 			if (order.SL != oldSl || order.PT != oldPt)
 			{

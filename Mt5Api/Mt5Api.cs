@@ -199,6 +199,12 @@ namespace Mt5Api
 			SetOrderSlAndPt(order);
 		}
 
+		public void SetPositionSlAndPtRelative(Order order, double slRelative, double ptRelative)
+		{
+			FillSlPt(order, slRelative, ptRelative);
+			SetPositionSlAndPt(order);
+		}
+
 		public void SetPositionSlAndPtPercent(Order order, double slPercent, double ptPercent)
 		{
 			double slRelative = 0;
@@ -497,8 +503,12 @@ namespace Mt5Api
 			return result;
 		}
 
-		public (bool result, ulong ticket, uint retCode, string comment)
-			CreateMarketOrderSlPtRelative(string instrument, long units, ulong magic, string comment, double SlRelative, double PtRelative)
+		public ulong CreateMarketOrderSlPtRelative(double units, double slRelative, double ptRelative)
+		{
+			return CreateMarketOrderSlPtRelative(Symbol, units, Utilities.StrategyNumber, null, slRelative, ptRelative);
+		}
+
+		public ulong CreateMarketOrderSlPtRelative(string instrument, double units, ulong magic, string comment, double SlRelative, double PtRelative)
 		{
 			(bool result, ulong ticket, uint retCode, string comment) result = CreateMarketOrder(instrument, units, magic, comment);
 			if (result.result)
@@ -507,7 +517,7 @@ namespace Mt5Api
 				FillSlPt(order, SlRelative, PtRelative);
 				SetPositionSlAndPt(order);
 			}
-			return result;
+			return result.ticket;
 		}
 
 		public (bool result, ulong ticket, uint retCode, string comment) CreateMarketOrder(string instrument, double units, ulong magic, string comment)
