@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils;
 
 namespace Mt4Api
 {
@@ -222,7 +223,7 @@ namespace Mt4Api
 		}
 		public ulong CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
 		{
-			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units);
+			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, null, (int)Utilities.StrategyNumber);
 			Order order = GetPendingOrder(ticket);
 			double ptOld = order.PT;
 			double slOld = order.SL;
@@ -273,7 +274,7 @@ namespace Mt4Api
 
 		public ulong CreateMarketOrderSlPtPercent(double units, double slPercent, double ptPercent)
 		{
-			ulong ticket = (ulong)CreateMarketOrder(Symbol, units);
+			ulong ticket = (ulong)CreateMarketOrder(Symbol, units, null, (int)Utilities.StrategyNumber);
 			Order order = GetMarketOrder(ticket);
 			double oldSl = order.SL;
 			double oldPt = order.PT;
@@ -296,15 +297,15 @@ namespace Mt4Api
 			return ticket;
 		}
 
-		public long CreatePendingOrder(string instrument, double price, double units)
+		public long CreatePendingOrder(string instrument, double price, double units, string comment, int magic)
 		{
-			int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUYLIMIT : TradeOperation.OP_SELLLIMIT, Math.Abs(units), NormalizeDouble(Symbol, price), slippage, 0, 0);
+			int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUYLIMIT : TradeOperation.OP_SELLLIMIT, Math.Abs(units), NormalizeDouble(Symbol, price), slippage, 0, 0, comment, magic);
 			return orderId;
 		}
 
-		public long CreateMarketOrder(string instrument, double units)
+		public long CreateMarketOrder(string instrument, double units, string comment, int magic)
 		{
-			int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, 0, 0);
+			int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, 0, 0, comment, magic);
 			return orderId;
 		}
 
@@ -352,7 +353,7 @@ namespace Mt4Api
 					order.Instrument = mtOrder.Symbol;
 					order.PT = mtOrder.TakeProfit;
 					order.SL = mtOrder.StopLoss;
-					if (order.Instrument == Symbol)
+					if (/*Utilities.StrategyNumber == order.Magic && */order.Instrument == Symbol)
 					{
 						orders.Add(order);
 					}
@@ -378,7 +379,7 @@ namespace Mt4Api
 					order.Instrument = mtOrder.Symbol;
 					order.PT = mtOrder.TakeProfit;
 					order.SL = mtOrder.StopLoss;
-					if (order.Instrument == Symbol)
+					if (/*Utilities.StrategyNumber == order.Magic && */order.Instrument == Symbol)
 					{
 						orders.Add(order);
 					}

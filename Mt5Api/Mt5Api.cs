@@ -379,25 +379,25 @@ namespace Mt5Api
 		{
 			apiClient.OrderSelect(ticket);
 
-			Order Order = new Order();
+			Order order = new Order();
 
-			Order.Id = (long)ticket;
-			Order.OpenPrice = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_PRICE_OPEN);
-			Order.CurrentPrice = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_PRICE_CURRENT);
-			Order.OpenTime = ConvertMscTimeToDateTime(apiClient.PositionGetInteger(ENUM_POSITION_PROPERTY_INTEGER.POSITION_TIME_MSC));
-			Order.SL = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_SL);
-			Order.PT = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_TP);
-			Order.Units = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_VOLUME_CURRENT);
+			order.Id = (long)ticket;
+			order.OpenPrice = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_PRICE_OPEN);
+			order.CurrentPrice = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_PRICE_CURRENT);
+			order.OpenTime = ConvertMscTimeToDateTime(apiClient.PositionGetInteger(ENUM_POSITION_PROPERTY_INTEGER.POSITION_TIME_MSC));
+			order.SL = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_SL);
+			order.PT = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_TP);
+			order.Units = apiClient.OrderGetDouble(ENUM_ORDER_PROPERTY_DOUBLE.ORDER_VOLUME_CURRENT);
 			ENUM_ORDER_TYPE Type = (ENUM_ORDER_TYPE)apiClient.OrderGetInteger(ENUM_ORDER_PROPERTY_INTEGER.ORDER_TYPE);
 			if (Type == ENUM_ORDER_TYPE.ORDER_TYPE_SELL_LIMIT || Type == ENUM_ORDER_TYPE.ORDER_TYPE_SELL_STOP || Type == ENUM_ORDER_TYPE.ORDER_TYPE_SELL_STOP_LIMIT)
 			{
-				Order.Units = -Order.Units;
+				order.Units = -order.Units;
 			}
-			Order.Instrument = apiClient.OrderGetString(ENUM_ORDER_PROPERTY_STRING.ORDER_SYMBOL);
-			Order.Magic = (ulong)apiClient.OrderGetInteger(ENUM_ORDER_PROPERTY_INTEGER.ORDER_MAGIC);
-			Order.Comment = apiClient.OrderGetString(ENUM_ORDER_PROPERTY_STRING.ORDER_COMMENT);
+			order.Instrument = apiClient.OrderGetString(ENUM_ORDER_PROPERTY_STRING.ORDER_SYMBOL);
+			order.Magic = (ulong)apiClient.OrderGetInteger(ENUM_ORDER_PROPERTY_INTEGER.ORDER_MAGIC);
+			order.Comment = apiClient.OrderGetString(ENUM_ORDER_PROPERTY_STRING.ORDER_COMMENT);
 
-			return Order;
+			return order;
 		}
 
 		public Orders GetPendingOrders()
@@ -409,12 +409,12 @@ namespace Mt5Api
 			{
 				ulong ticket = apiClient.OrderGetTicket(i);
 
-				Order Order = GetPendingOrder(ticket);
+				Order order = GetPendingOrder(ticket);
 
-				if (/*Utilities.StrategyNumber == Order.Magic && */ Order.Instrument == TransformInstrument(Symbol))
+				if (/*Utilities.StrategyNumber == order.Magic && */ order.Instrument == TransformInstrument(Symbol))
 				{
-					Order.Instrument = DeTransformInstrument(Order.Instrument);
-					Orders.Add(Order);
+					order.Instrument = DeTransformInstrument(order.Instrument);
+					Orders.Add(order);
 				}
 			}
 			return Orders;
@@ -559,12 +559,12 @@ namespace Mt5Api
 			{
 				ulong ticket = apiClient.PositionGetTicket(i);
 
-				Order Order = GetMarketOrder(ticket);
+				Order order = GetMarketOrder(ticket);
 
-				if (/*Utilities.StrategyNumber == Order.Magic && */ Order.Instrument == TransformInstrument(Symbol))
+				if (/*Utilities.StrategyNumber == order.Magic && */ order.Instrument == TransformInstrument(Symbol))
 				{
-					Order.Instrument = DeTransformInstrument(Order.Instrument);
-					Orders.Add(Order);
+					order.Instrument = DeTransformInstrument(order.Instrument);
+					Orders.Add(order);
 				}
 			}
 			return Orders;
