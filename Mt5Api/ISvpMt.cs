@@ -31,6 +31,8 @@ namespace Mt5Api
 		void SetPositionSlAndPtPercent(Order order, double slPercent, double ptPercent);
 		void SetPendingOrderSlAndPtPercent(Order order, double slPercent, double ptPercent);
 		bool ClosePendingOrder(long orderId);
+
+		// No SvpTradingPanel
 		int SymbolsTotal(bool symbolsInMarketWatch);
 		string SymbolName(int pos, bool fromMarketWatch);
 		double DailyClose(int Shift);

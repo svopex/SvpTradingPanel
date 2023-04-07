@@ -100,15 +100,15 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(60));
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.3), 1, GetTpDistanceByOrderSize(30));
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.6), 1, GetTpDistanceByOrderSize(60));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(30));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				else
 				{
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(60));
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.3), 1, GetTpDistanceByOrderSize(30));
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.6), 1, GetTpDistanceByOrderSize(60));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(30));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				JoinSl();
 			}
@@ -122,15 +122,15 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.5), 1, GetTpDistanceByOrderSize(50));
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.5), 1, GetTpDistanceByOrderSize(50));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.4), 1, GetTpDistanceByOrderSize(40));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				else
 				{
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.5), 1, GetTpDistanceByOrderSize(50));
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.1), 1, GetTpDistanceByOrderSize(10));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.5), 1, GetTpDistanceByOrderSize(50));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.4), 1, GetTpDistanceByOrderSize(40));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.1), 1, GetTpDistanceByOrderSize(10));
 				}
 				JoinSl();
 			}
@@ -144,13 +144,13 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(100));
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.6), 1, GetTpDistanceByOrderSize(100));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.4), 1, GetTpDistanceByOrderSize(40));
 				}
 				else
 				{
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.6), 1, GetTpDistanceByOrderSize(100));
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(RoundPrice(positionSize.Value * 0.4), 1, GetTpDistanceByOrderSize(40));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.6), 1, GetTpDistanceByOrderSize(100));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.4), 1, GetTpDistanceByOrderSize(40));
 				}
 				JoinSl();
 			}
@@ -171,6 +171,16 @@ namespace SvpTradingPanel
 			return 0.7 + Math.Abs((double)percent - 100) / 100;
 		}
 
+		double CalculatePositionPercent(double positionSize, int percent)
+		{
+			return RoundPrice((positionSize * percent / 100) * (GetTrackBarPositionUsingPercent() / 100));		
+		}
+
+		double CalculatePosition(double positionSize, double x)
+		{
+			return RoundPrice((positionSize * x) * (GetTrackBarPositionUsingPercent() / 100));
+		}
+
 		private void BuySellPercent(bool buy, int percent)
 		{
 			double? positionSize = GetPositionSize(buy);
@@ -179,12 +189,11 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, RoundPrice(positionSize.Value * percent / 100), 1, GetTpDistanceByOrderSize(percent));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePositionPercent(positionSize.Value, percent), 1, GetTpDistanceByOrderSize(percent));
 				}
 				else
 				{
-					var position = RoundPrice(positionSize.Value * percent / 100);
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(position, 1, GetTpDistanceByOrderSize(percent));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePositionPercent(positionSize.Value, percent), 1, GetTpDistanceByOrderSize(percent));
 				}
 				JoinSl();
 			}
@@ -661,6 +670,16 @@ namespace SvpTradingPanel
 				}
 			}
 			ShowLabelConnected(connected);
+		}
+
+		private double GetTrackBarPositionUsingPercent()
+		{
+			return (100 - ((trackBarPositionUsing.Value - 1) * 10));
+		}
+
+		private void trackBarPositionUsing_ValueChanged(object sender, EventArgs e)
+		{
+			labelPositionUsingPercent.Text = GetTrackBarPositionUsingPercent().ToString() + " %";
 		}
 	}
 }
