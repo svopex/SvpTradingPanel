@@ -15,6 +15,7 @@ namespace SvpTradingPanel
 {
 	public partial class FormTradingPanel : Form
 	{
+		private const int BrokerMarginEquityCoefficient = 4;
 		private const int SlToBeAutomationProgressIncrementConstant = 20;
 		private bool SlToBeAutomation { get; set; }
 		private int SlToBeAutomationLastCountOfOrder { get; set; }
@@ -87,7 +88,7 @@ namespace SvpTradingPanel
 		private double RiskValue()
 		{
 			// na uctu mam pouze 1/4 toho, co chci obchodovat, kvuli mozne kradezi. Pouzivam paku.			
-			return MetatraderInstance.Instance.AccountEquity() * 4 * 0.01;
+			return MetatraderInstance.Instance.AccountEquity() * BrokerMarginEquityCoefficient * 0.01;
 		}
 
 		private double? GetPositionSize(bool buy)
@@ -671,7 +672,7 @@ namespace SvpTradingPanel
 			SlToBeAutomation = false;
 			progressBarSlToBeAutomation.Value = 0;
 
-			trackBarPositionUsing.Value = 2;
+			trackBarPositionUsing.Value = 50;
 			trackBarPositionUsing_ValueChanged(null, null);
 
 			timerRefreshLabels.Interval = 500;
@@ -742,22 +743,24 @@ namespace SvpTradingPanel
 
 		private double GetTrackBarPositionUsingPercent()
 		{
-			//return (100 - ((trackBarPositionUsing.Value - 1) * 10));
+			return trackBarPositionUsing.Value;
+/*
 			switch (trackBarPositionUsing.Value)
 			{
 				case 0: return 10;
-				case 1: return 30;
+				case 1: return 25;
 				case 2: return 50;
 				case 3: return 75;
 				case 4: return 100;
-				case 5: return 150;
-				case 6: return 200;
-				case 7: return 250;
-				case 8: return 300;
-				case 9: return 350;
-				case 10: return 400;
+				case 5: return 125;
+				case 6: return 150;
+				case 7: return 175;
+				case 8: return 200;
+				case 9: return 225;
+				case 10: return 250;
 				default: throw new Exception();
 			}
+*/
 		}
 
 		private void trackBarPositionUsing_ValueChanged(object sender, EventArgs e)
