@@ -315,6 +315,11 @@ namespace Mt5Api
 			return apiClient.AccountInfoString(ENUM_ACCOUNT_INFO_STRING.ACCOUNT_CURRENCY);
 		}
 
+		public double AccountEquity()
+		{
+			return apiClient.AccountInfoDouble(ENUM_ACCOUNT_INFO_DOUBLE.ACCOUNT_EQUITY);
+		}
+
 		public double SymbolTradeTickValue()
 		{
 			return apiClient.SymbolInfoDouble(Symbol, ENUM_SYMBOL_INFO_DOUBLE.SYMBOL_TRADE_TICK_VALUE);

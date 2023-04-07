@@ -10,6 +10,7 @@ namespace Mt5Api
 	{
 		string Symbol { get; set; }
 		string AccountCurrency();
+		double AccountEquity();
 		double SymbolPoint();
 		double SymbolTradeTickValue();
 		double GetActualPrice();

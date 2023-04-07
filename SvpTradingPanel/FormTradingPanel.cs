@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
@@ -14,9 +15,22 @@ namespace SvpTradingPanel
 {
 	public partial class FormTradingPanel : Form
 	{
+		private const int SlToBeAutomationProgressIncrementConstant = 20;
+		private bool SlToBeAutomation { get; set; }
+		private int SlToBeAutomationLastCountOfOrder { get; set; }
+
 		public FormTradingPanel()
 		{
 			InitializeComponent();
+		}
+
+		private void RefreshLabelSlLoss()
+		{
+			string currency = MetatraderInstance.Instance?.AccountCurrency();
+			if (currency != null)
+			{
+				labelSlLoss.Text = "Full SL loss: " + Math.Round(RiskValue() * GetTrackBarPositionUsingPercent() / 100, 2) + " " + currency;
+			}
 		}
 
 		private void RefreshData(Orders orders)
@@ -27,8 +41,9 @@ namespace SvpTradingPanel
 			var loss = orders.Select(x => Math.Abs(x.OpenPrice - x.SL) * Math.Abs(x.Units)).Sum() / MetatraderInstance.Instance.SymbolPoint() * MetatraderInstance.Instance.SymbolTradeTickValue();
 			var profit = orders.Select(x => Math.Abs(x.OpenPrice - x.PT) * Math.Abs(x.Units)).Sum() / MetatraderInstance.Instance.SymbolPoint() * MetatraderInstance.Instance.SymbolTradeTickValue();
 			labelRrr.Text = "RRR: " + Math.Round(rrr, 2);
-			labelLoss.Text = "Loss: " + +Math.Round(loss, 2) + " " + currency;
-			labelProfit.Text = "Profit: " + +Math.Round(profit, 2) + " " + currency;
+			labelLoss.Text = "Loss: " + Math.Round(loss, 2) + " " + currency;
+			labelProfit.Text = "Profit: " + Math.Round(profit, 2) + " " + currency;
+			RefreshLabelSlLoss();
 		}
 
 		private double? GetPrice(bool buy)
@@ -69,17 +84,27 @@ namespace SvpTradingPanel
 			return value;
 		}
 
+		private double RiskValue()
+		{
+			// na uctu mam pouze 1/4 toho, co chci obchodovat, kvuli mozne kradezi. Pouzivam paku.			
+			return MetatraderInstance.Instance.AccountEquity() * 4 * 0.01;
+		}
+
 		private double? GetPositionSize(bool buy)
 		{
 			Orders marketOrders = MetatraderInstance.Instance.GetMarketOrders();
 			Orders pendingOrders = MetatraderInstance.Instance.GetPendingOrders();
 			bool result =
-				(Double.TryParse(textBoxPositionSize.Text, out double positionSize) // Je validni velikost pozice v textboxu?
+				(Double.TryParse(textBoxSlDistance.Text, out double positionSize) // Je validni velikost pozice v textboxu?
 				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
 				&& ((IsPossibleBuy(marketOrders, pendingOrders) && buy) || (IsPossibleSell(marketOrders, pendingOrders) && !buy)) // Pokud je jiz otevrena pozice, nova pozice musi byt stejnejo typu (buy/sell).
 				);
 			if (result)
 			{
+				// tick size misto velikosti pozice				
+				var symbolTradeTickValue = MetatraderInstance.Instance.SymbolTradeTickValue();
+				positionSize = RiskValue() / (positionSize * symbolTradeTickValue);
+				
 				if (!buy)
 				{
 					positionSize = -positionSize;
@@ -638,10 +663,51 @@ namespace SvpTradingPanel
 			checkBoxPendingOrder.Checked = false;
 			textBoxPrice.Enabled = false;
 
-			textBoxPositionSize.Text = "0.5";
+			textBoxSlDistance.Text = String.Empty; //"0.5";
 			checkBoxAlwaysOnTop.Checked = true;
 
 			this.TopMost = true;
+			
+			SlToBeAutomation = false;
+			progressBarSlToBeAutomation.Value = 0;
+
+			trackBarPositionUsing.Value = 2;
+			trackBarPositionUsing_ValueChanged(null, null);
+
+			timerRefreshLabels.Interval = 500;
+		}
+
+		// Po ukonceni prvniho TP se posune SL na BE u vsech obchodu.
+		private void SlAutomation()
+		{
+			if (SlToBeAutomation)
+			{
+				if (progressBarSlToBeAutomation.Value == 100)
+				{
+					progressBarSlToBeAutomation.Value = 0;
+				}
+				else
+				{
+					progressBarSlToBeAutomation.Value += SlToBeAutomationProgressIncrementConstant;
+				}
+
+				Orders orders = MetatraderInstance.Instance.GetMarketOrders();
+				if (SlToBeAutomationLastCountOfOrder > orders.Count)
+				{
+					foreach(var order in orders)
+					{
+						order.SL = order.OpenPrice;
+						MetatraderInstance.Instance.SetPositionSlAndPt(order);
+					}
+
+					SlToBeAutomation = false;
+					progressBarSlToBeAutomation.Value = 0;
+				}
+			}
+			else
+			{
+				progressBarSlToBeAutomation.Value = 0;
+			}
 		}
 
 		private void timerRefreshLabels_Tick(object sender, EventArgs e)
@@ -660,6 +726,8 @@ namespace SvpTradingPanel
 							orders = MetatraderInstance.Instance.GetPendingOrders();
 						}
 						RefreshData(orders);
+
+						SlAutomation();
 					}
 					catch { }
 				}
@@ -674,12 +742,36 @@ namespace SvpTradingPanel
 
 		private double GetTrackBarPositionUsingPercent()
 		{
-			return (100 - ((trackBarPositionUsing.Value - 1) * 10));
+			//return (100 - ((trackBarPositionUsing.Value - 1) * 10));
+			switch (trackBarPositionUsing.Value)
+			{
+				case 0: return 10;
+				case 1: return 30;
+				case 2: return 50;
+				case 3: return 75;
+				case 4: return 100;
+				case 5: return 150;
+				case 6: return 200;
+				case 7: return 250;
+				case 8: return 300;
+				case 9: return 350;
+				case 10: return 400;
+				default: throw new Exception();
+			}
 		}
 
 		private void trackBarPositionUsing_ValueChanged(object sender, EventArgs e)
 		{
 			labelPositionUsingPercent.Text = GetTrackBarPositionUsingPercent().ToString() + " %";
+			RefreshLabelSlLoss();
+		}
+
+		private void buttonSlToBeAutomation_Click(object sender, EventArgs e)
+		{
+			SlToBeAutomation = !SlToBeAutomation;
+			
+			Orders orders = MetatraderInstance.Instance.GetMarketOrders();
+			SlToBeAutomationLastCountOfOrder = orders.Count;
 		}
 	}
 }

@@ -229,6 +229,11 @@ namespace Mt4Api
 			return apiClient.AccountCurrency();
 		}
 
+		public double AccountEquity()
+		{
+			return apiClient.AccountEquity();
+		}
+
 		public double SymbolTradeTickValue()
 		{
 			return apiClient.SymbolInfoDouble(Symbol, EnumSymbolInfoDouble.SYMBOL_TRADE_TICK_VALUE);
