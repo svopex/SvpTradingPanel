@@ -472,11 +472,11 @@ namespace Mt4Api
 		{
 			if (period == 5)
 			{
-				return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M5, (24 / 3) * 60 / 5, 0); // prumer za posledni seanci - 8 hodin
+				return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M5, 60 / 5, 0); // prumer za posledni hodinu
 			}
 			else if (period == 10)
 			{
-				return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M10, (24 / 3) * 60 / 10, 0); // prumer za posledni seanci - 8 hodin
+				return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M10, 60 / 10, 0); // prumer za posledni hodinu
 			}
 			throw new Exception();
 		}
