@@ -30,7 +30,7 @@ namespace Mt4ApiTester
 			var actualAskPrice = MetatraderInstance.Instance.GetActualAskPrice();
 			var WtrsAtr5 = MetatraderInstance.Instance.WtrsAtr(5);
 			var WtrsAtr10 = MetatraderInstance.Instance.WtrsAtr(10);
-			var spread = MetatraderInstance.Instance.GetActualSpread(); // ASK - BID
+			var spread = actualAskPrice - actualBidPrice;
 			var symbolPoint = MetatraderInstance.Instance.SymbolPoint();
 			var symbolTradeTickValue = MetatraderInstance.Instance.SymbolTradeTickValue();
 
