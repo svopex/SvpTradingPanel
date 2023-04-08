@@ -627,11 +627,11 @@ namespace Mt5Api
 		{
 			if (period == 5)
 			{
-				return apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M5, 60 / 5); // prumer za posledni hodinu - 8 hodin
+				return apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M5, 60 / 5); // prumer za posledni hodinu
 			}
 			else if (period == 10)
 			{
-				return apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M10, 60 / 10); // prumer za posledni hodinu - 8 hodin
+				return apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M10, 60 / 10); // prumer za posledni hodinu
 			}
 			throw new Exception();
 		}
