@@ -753,11 +753,13 @@ namespace SvpTradingPanel
 
 					SlToBeAutomation = false;
 					progressBarSlToBeAutomation.Value = 0;
+					progressBarSlPtMonitoring.Value = 0;
 				}
 			}
 			else
 			{
 				progressBarSlToBeAutomation.Value = 0;
+				progressBarSlPtMonitoring.Value = 0;
 			}
 		}
 
