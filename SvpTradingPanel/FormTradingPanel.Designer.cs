@@ -70,6 +70,8 @@
 			this.labelSlLoss = new System.Windows.Forms.Label();
 			this.buttonSlToBeAutomation = new System.Windows.Forms.Button();
 			this.progressBarSlToBeAutomation = new System.Windows.Forms.ProgressBar();
+			this.buttonSlPtMonitoring = new System.Windows.Forms.Button();
+			this.progressBarSlPtMonitoring = new System.Windows.Forms.ProgressBar();
 			((System.ComponentModel.ISupportInitialize)(this.trackBarPositionUsing)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -104,7 +106,7 @@
 			// 
 			// buttonSlUp
 			// 
-			this.buttonSlUp.Location = new System.Drawing.Point(741, 302);
+			this.buttonSlUp.Location = new System.Drawing.Point(741, 253);
 			this.buttonSlUp.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlUp.Name = "buttonSlUp";
 			this.buttonSlUp.Size = new System.Drawing.Size(178, 76);
@@ -115,7 +117,7 @@
 			// 
 			// buttonSlDown
 			// 
-			this.buttonSlDown.Location = new System.Drawing.Point(743, 383);
+			this.buttonSlDown.Location = new System.Drawing.Point(743, 334);
 			this.buttonSlDown.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlDown.Name = "buttonSlDown";
 			this.buttonSlDown.Size = new System.Drawing.Size(178, 73);
@@ -126,7 +128,7 @@
 			// 
 			// buttonJoinSl
 			// 
-			this.buttonJoinSl.Location = new System.Drawing.Point(928, 464);
+			this.buttonJoinSl.Location = new System.Drawing.Point(928, 415);
 			this.buttonJoinSl.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonJoinSl.Name = "buttonJoinSl";
 			this.buttonJoinSl.Size = new System.Drawing.Size(176, 76);
@@ -137,7 +139,7 @@
 			// 
 			// buttonSlUpMini
 			// 
-			this.buttonSlUpMini.Location = new System.Drawing.Point(928, 302);
+			this.buttonSlUpMini.Location = new System.Drawing.Point(928, 253);
 			this.buttonSlUpMini.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlUpMini.Name = "buttonSlUpMini";
 			this.buttonSlUpMini.Size = new System.Drawing.Size(176, 76);
@@ -148,7 +150,7 @@
 			// 
 			// buttonSlDownMini
 			// 
-			this.buttonSlDownMini.Location = new System.Drawing.Point(927, 383);
+			this.buttonSlDownMini.Location = new System.Drawing.Point(927, 334);
 			this.buttonSlDownMini.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlDownMini.Name = "buttonSlDownMini";
 			this.buttonSlDownMini.Size = new System.Drawing.Size(177, 76);
@@ -304,7 +306,7 @@
 			// 
 			// buttonCloseAll
 			// 
-			this.buttonCloseAll.Location = new System.Drawing.Point(556, 464);
+			this.buttonCloseAll.Location = new System.Drawing.Point(556, 415);
 			this.buttonCloseAll.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonCloseAll.Name = "buttonCloseAll";
 			this.buttonCloseAll.Size = new System.Drawing.Size(179, 76);
@@ -315,7 +317,7 @@
 			// 
 			// buttonSlDownMax
 			// 
-			this.buttonSlDownMax.Location = new System.Drawing.Point(556, 383);
+			this.buttonSlDownMax.Location = new System.Drawing.Point(556, 334);
 			this.buttonSlDownMax.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlDownMax.Name = "buttonSlDownMax";
 			this.buttonSlDownMax.Size = new System.Drawing.Size(179, 76);
@@ -326,7 +328,7 @@
 			// 
 			// buttonSlUpMax
 			// 
-			this.buttonSlUpMax.Location = new System.Drawing.Point(556, 302);
+			this.buttonSlUpMax.Location = new System.Drawing.Point(556, 253);
 			this.buttonSlUpMax.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSlUpMax.Name = "buttonSlUpMax";
 			this.buttonSlUpMax.Size = new System.Drawing.Size(179, 76);
@@ -426,7 +428,7 @@
 			// checkBoxMovePendingOrder
 			// 
 			this.checkBoxMovePendingOrder.AutoSize = true;
-			this.checkBoxMovePendingOrder.Location = new System.Drawing.Point(825, 265);
+			this.checkBoxMovePendingOrder.Location = new System.Drawing.Point(825, 216);
 			this.checkBoxMovePendingOrder.Margin = new System.Windows.Forms.Padding(4);
 			this.checkBoxMovePendingOrder.Name = "checkBoxMovePendingOrder";
 			this.checkBoxMovePendingOrder.Size = new System.Drawing.Size(279, 29);
@@ -436,7 +438,7 @@
 			// 
 			// buttonSetTp
 			// 
-			this.buttonSetTp.Location = new System.Drawing.Point(741, 464);
+			this.buttonSetTp.Location = new System.Drawing.Point(741, 415);
 			this.buttonSetTp.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonSetTp.Name = "buttonSetTp";
 			this.buttonSetTp.Size = new System.Drawing.Size(179, 76);
@@ -489,7 +491,7 @@
 			// 
 			// buttonSlToBeAutomation
 			// 
-			this.buttonSlToBeAutomation.Location = new System.Drawing.Point(556, 582);
+			this.buttonSlToBeAutomation.Location = new System.Drawing.Point(556, 500);
 			this.buttonSlToBeAutomation.Name = "buttonSlToBeAutomation";
 			this.buttonSlToBeAutomation.Size = new System.Drawing.Size(548, 101);
 			this.buttonSlToBeAutomation.TabIndex = 86;
@@ -499,16 +501,35 @@
 			// 
 			// progressBarSlToBeAutomation
 			// 
-			this.progressBarSlToBeAutomation.Location = new System.Drawing.Point(556, 689);
+			this.progressBarSlToBeAutomation.Location = new System.Drawing.Point(556, 607);
 			this.progressBarSlToBeAutomation.Name = "progressBarSlToBeAutomation";
 			this.progressBarSlToBeAutomation.Size = new System.Drawing.Size(548, 30);
 			this.progressBarSlToBeAutomation.TabIndex = 87;
+			// 
+			// buttonSlPtMonitoring
+			// 
+			this.buttonSlPtMonitoring.Location = new System.Drawing.Point(555, 643);
+			this.buttonSlPtMonitoring.Name = "buttonSlPtMonitoring";
+			this.buttonSlPtMonitoring.Size = new System.Drawing.Size(548, 101);
+			this.buttonSlPtMonitoring.TabIndex = 88;
+			this.buttonSlPtMonitoring.Text = "SL/PT monitoring";
+			this.buttonSlPtMonitoring.UseVisualStyleBackColor = true;
+			this.buttonSlPtMonitoring.Click += new System.EventHandler(this.buttonSlPtMonitoring_Click);
+			// 
+			// progressBarSlPtMonitoring
+			// 
+			this.progressBarSlPtMonitoring.Location = new System.Drawing.Point(563, 750);
+			this.progressBarSlPtMonitoring.Name = "progressBarSlPtMonitoring";
+			this.progressBarSlPtMonitoring.Size = new System.Drawing.Size(540, 40);
+			this.progressBarSlPtMonitoring.TabIndex = 89;
 			// 
 			// FormTradingPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1134, 802);
+			this.Controls.Add(this.progressBarSlPtMonitoring);
+			this.Controls.Add(this.buttonSlPtMonitoring);
 			this.Controls.Add(this.progressBarSlToBeAutomation);
 			this.Controls.Add(this.buttonSlToBeAutomation);
 			this.Controls.Add(this.labelSlLoss);
@@ -605,6 +626,8 @@
 		private System.Windows.Forms.Label labelSlLoss;
 		private System.Windows.Forms.Button buttonSlToBeAutomation;
 		private System.Windows.Forms.ProgressBar progressBarSlToBeAutomation;
+		private System.Windows.Forms.Button buttonSlPtMonitoring;
+		private System.Windows.Forms.ProgressBar progressBarSlPtMonitoring;
 	}
 }
 

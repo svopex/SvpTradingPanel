@@ -22,6 +22,7 @@ namespace SvpTradingPanel
 		private const int SlToBeAutomationProgressIncrementConstant = 20;
 		private bool SlToBeAutomation { get; set; }
 		private int SlToBeAutomationLastCountOfOrder { get; set; }
+		private bool SlToBeAutomationMoveSlEnabled { get; set; }
 
 		public FormTradingPanel()
 		{
@@ -705,13 +706,27 @@ namespace SvpTradingPanel
 		{
 			if (SlToBeAutomation)
 			{
-				if (progressBarSlToBeAutomation.Value == 100)
+				if (SlToBeAutomationMoveSlEnabled)
 				{
-					progressBarSlToBeAutomation.Value = 0;
+					if (progressBarSlToBeAutomation.Value == 100)
+					{
+						progressBarSlToBeAutomation.Value = 0;
+					}
+					else
+					{
+						progressBarSlToBeAutomation.Value += SlToBeAutomationProgressIncrementConstant;
+					}
 				}
 				else
 				{
-					progressBarSlToBeAutomation.Value += SlToBeAutomationProgressIncrementConstant;
+					if (progressBarSlPtMonitoring.Value == 100)
+					{
+						progressBarSlPtMonitoring.Value = 0;
+					}
+					else
+					{
+						progressBarSlPtMonitoring.Value += SlToBeAutomationProgressIncrementConstant;
+					}
 				}
 
 				Orders orders = MetatraderInstance.Instance.GetMarketOrders();
@@ -725,10 +740,14 @@ namespace SvpTradingPanel
 					else
 					{
 						CallHue(true);
-						foreach (var order in orders)
+
+						if (SlToBeAutomationMoveSlEnabled)
 						{
-							order.SL = order.OpenPrice;
-							MetatraderInstance.Instance.SetPositionSlAndPt(order);
+							foreach (var order in orders)
+							{
+								order.SL = order.OpenPrice;
+								MetatraderInstance.Instance.SetPositionSlAndPt(order);
+							}
 						}
 					}
 
@@ -806,6 +825,18 @@ namespace SvpTradingPanel
 			
 			Orders orders = MetatraderInstance.Instance.GetMarketOrders();
 			SlToBeAutomationLastCountOfOrder = orders.Count;
+
+			SlToBeAutomationMoveSlEnabled = true;
+		}
+
+		private void buttonSlPtMonitoring_Click(object sender, EventArgs e)
+		{
+			SlToBeAutomation = !SlToBeAutomation;
+
+			Orders orders = MetatraderInstance.Instance.GetMarketOrders();
+			SlToBeAutomationLastCountOfOrder = orders.Count;
+
+			SlToBeAutomationMoveSlEnabled = false;
 		}
 	}
 }
