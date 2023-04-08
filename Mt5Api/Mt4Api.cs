@@ -468,6 +468,24 @@ namespace Mt4Api
 			return apiClient.iClose(Symbol, ChartPeriod.PERIOD_D1, Shift);
 		}
 
+		public double GetActualSpread()
+		{
+			var tick = apiClient.SymbolInfoTick(Symbol);
+			return tick.Ask - tick.Bid;
+		}
+
+		public double GetActualBidPrice()
+		{
+			var tick = apiClient.SymbolInfoTick(Symbol);
+			return tick.Bid;
+		}
+
+		public double GetActualAskPrice()
+		{
+			var tick = apiClient.SymbolInfoTick(Symbol);
+			return tick.Ask;
+		}
+
 		public double WtrsAtr(int period)
 		{
 			if (period == 5)

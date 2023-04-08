@@ -623,15 +623,37 @@ namespace Mt5Api
 			return 0;
 		}
 
+		public double GetActualSpread()
+		{
+			var tick = apiClient.SymbolInfoTick(Symbol);
+			return tick.ask - tick.bid;
+		}
+
+		public double GetActualBidPrice()
+		{
+			var tick = apiClient.SymbolInfoTick(Symbol);
+			return tick.bid;
+		}
+
+		public double GetActualAskPrice()
+		{
+			var tick = apiClient.SymbolInfoTick(Symbol);
+			return tick.ask;
+		}
+
 		public double WtrsAtr(int period)
 		{
 			if (period == 5)
 			{
-				return apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M5, 60 / 5); // prumer za posledni hodinu
+				int handle = apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M5, 60 / 5); // prumer za posledni hodinu
+				apiClient.CopyBuffer(handle, 0, 0, 5, out double[] Buffer);
+				return Buffer[0];
 			}
 			else if (period == 10)
 			{
-				return apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M10, 60 / 10); // prumer za posledni hodinu
+				int handle = apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M10, 60 / 10); // prumer za posledni hodinu
+				apiClient.CopyBuffer(handle, 0, 0, 5, out double[] Buffer);
+				return Buffer[0];
 			}
 			throw new Exception();
 		}

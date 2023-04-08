@@ -42,6 +42,9 @@ namespace Mt5Api
 		void SetPendingOrderSlAndPtRelative(Order order, double slRelative, double ptRelative);
 		ulong CreateMarketOrderSlPtRelative(double units, double slRelative, double ptRelative);
 		void SetPositionSlAndPtRelative(Order order, double slRelative, double ptRelative);
+		double GetActualSpread();
+		double GetActualBidPrice();
+		double GetActualAskPrice();
 
 		// Scalping WTRS
 		double WtrsAtr(int period); // period = 5/10
