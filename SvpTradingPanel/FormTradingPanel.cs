@@ -6,10 +6,13 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace SvpTradingPanel
 {
@@ -678,6 +681,25 @@ namespace SvpTradingPanel
 			timerRefreshLabels.Interval = 500;
 		}
 
+		private void CallHue(bool Pt)
+		{
+			using (var client = new HttpClient())
+			{
+				string url;
+				if (Pt)
+				{
+					url = "http://localhost/huePt";
+				}
+				else
+				{
+					url = "http://localhost/hueSl";
+				}
+				var body = "This is the body of the request.";
+				var content = new StringContent(body);
+				var response = client.PostAsync(url, content).GetAwaiter().GetResult();
+			}
+		}
+
 		// Po ukonceni prvniho TP se posune SL na BE u vsech obchodu.
 		private void SlAutomation()
 		{
@@ -695,10 +717,18 @@ namespace SvpTradingPanel
 				Orders orders = MetatraderInstance.Instance.GetMarketOrders();
 				if (SlToBeAutomationLastCountOfOrder > orders.Count)
 				{
-					foreach(var order in orders)
+					if (orders.Count == 0)
 					{
-						order.SL = order.OpenPrice;
-						MetatraderInstance.Instance.SetPositionSlAndPt(order);
+						CallHue(false);
+					}
+					else
+					{
+						CallHue(true);
+						foreach (var order in orders)
+						{
+							order.SL = order.OpenPrice;
+							MetatraderInstance.Instance.SetPositionSlAndPt(order);
+						}
 					}
 
 					SlToBeAutomation = false;
