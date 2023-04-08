@@ -679,7 +679,7 @@ namespace SvpTradingPanel
 			trackBarPositionUsing.Value = 50;
 			trackBarPositionUsing_ValueChanged(null, null);
 
-			timerRefreshLabels.Interval = 500;
+			timerRefreshLabels.Interval = 1000;
 		}
 
 		private void CallHue(bool Pt)
@@ -786,7 +786,10 @@ namespace SvpTradingPanel
 
 						SlAutomation();
 					}
-					catch { }
+					catch (Exception ex)
+					{
+						Logger.WriteLineError(ex.ToString());
+					}
 				}
 				else
 				{
