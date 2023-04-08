@@ -717,6 +717,7 @@ namespace SvpTradingPanel
 				Orders orders = MetatraderInstance.Instance.GetMarketOrders();
 				if (SlToBeAutomationLastCountOfOrder > orders.Count)
 				{
+					Task.Delay(5000); // Cekani na pripadne uzavreni vsech pozic.
 					if (orders.Count == 0)
 					{
 						CallHue(false);
