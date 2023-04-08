@@ -684,21 +684,25 @@ namespace SvpTradingPanel
 
 		private void CallHue(bool Pt)
 		{
-			using (var client = new HttpClient())
+			try
 			{
-				string url;
-				if (Pt)
+				using (var client = new HttpClient())
 				{
-					url = "http://localhost/huePt";
+					string url;
+					if (Pt)
+					{
+						url = "http://localhost/huePt";
+					}
+					else
+					{
+						url = "http://localhost/hueSl";
+					}
+					var body = "This is the body of the request.";
+					var content = new StringContent(body);
+					var response = client.PostAsync(url, content).GetAwaiter().GetResult();
 				}
-				else
-				{
-					url = "http://localhost/hueSl";
-				}
-				var body = "This is the body of the request.";
-				var content = new StringContent(body);
-				var response = client.PostAsync(url, content).GetAwaiter().GetResult();
 			}
+			catch (Exception) { }
 		}
 
 		// Po ukonceni prvniho TP se posune SL na BE u vsech obchodu.
