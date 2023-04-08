@@ -622,5 +622,54 @@ namespace Mt5Api
 			}
 			return 0;
 		}
+
+		public double WtrsAtr(int period)
+		{
+			if (period == 5)
+			{
+				return apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M5, (24 / 3) * 60 / 5); // prumer za posledni seanci - 8 hodin
+			}
+			else if (period == 10)
+			{
+				return apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M10, (24 / 3) * 60 / 10); // prumer za posledni seanci - 8 hodin
+			}
+			throw new Exception();
+		}
+
+		public double WtrsHigh()
+		{
+			apiClient.CopyRates(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M1, 0, 5,  out MtApi5.MqlRates[] result);
+			double high = 0;
+			for (int i = 0; i < result.Count(); i++)
+			{
+				if (result[i].high >= high)
+				{
+					high = result[i].high;
+				}
+				else
+				{
+					break;
+				}
+			}
+			return high;
+		}
+
+		public double WtrsLow()
+		{
+			apiClient.CopyRates(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M1, 0, 5, out MtApi5.MqlRates[] result);
+			double low = double.MaxValue;
+			for (int i = 0; i < result.Count(); i++)
+			{
+				if (result[i].low <= low)
+				{
+					low = result[i].low;
+				}
+				else
+				{
+					break;
+				}
+			}
+			return low;
+		}
 	}
 }

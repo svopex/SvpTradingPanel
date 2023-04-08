@@ -467,5 +467,54 @@ namespace Mt4Api
 		{
 			return apiClient.iClose(Symbol, ChartPeriod.PERIOD_D1, Shift);
 		}
+
+		public double WtrsAtr(int period)
+		{
+			if (period == 5)
+			{
+				return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M5, (24 / 3) * 60 / 5, 0); // prumer za posledni seanci - 8 hodin
+			}
+			else if (period == 10)
+			{
+				return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M10, (24 / 3) * 60 / 10, 0); // prumer za posledni seanci - 8 hodin
+			}
+			throw new Exception();
+		}
+
+		public double WtrsHigh()
+		{
+			var result = apiClient.CopyRates(Symbol, MtApi.ENUM_TIMEFRAMES.PERIOD_M1, 0, 5);
+			double high = 0;
+			for (int i = 0; i < result.Count(); i++)
+			{
+				if (result[i].High >= high)
+				{
+					high = result[i].High;
+				}
+				else
+				{
+					break;
+				}
+			}
+			return high;
+		}
+
+		public double WtrsLow()
+		{
+			var result = apiClient.CopyRates(Symbol, MtApi.ENUM_TIMEFRAMES.PERIOD_M1, 0, 5);
+			double low = double.MaxValue;
+			for (int i = 0; i < result.Count(); i++)
+			{
+				if (result[i].Low <= low)
+				{
+					low = result[i].Low;
+				}
+				else
+				{
+					break;
+				}
+			}
+			return low;
+		}
 	}
 }
