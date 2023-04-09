@@ -520,7 +520,7 @@ namespace Mt4Api
 		{
 			var result = apiClient.CopyRates(Symbol, MtApi.ENUM_TIMEFRAMES.PERIOD_M1, 0, 5);
 			double high = 0;
-			for (int i = 0; i < result.Count(); i++)
+			for (int i = result.Count() - 1; i >= 0; i--)
 			{
 				if (result[i].High >= high)
 				{
@@ -538,7 +538,7 @@ namespace Mt4Api
 		{
 			var result = apiClient.CopyRates(Symbol, MtApi.ENUM_TIMEFRAMES.PERIOD_M1, 0, 5);
 			double low = double.MaxValue;
-			for (int i = 0; i < result.Count(); i++)
+			for (int i = result.Count() - 1; i >= 0; i--)
 			{
 				if (result[i].Low <= low)
 				{
