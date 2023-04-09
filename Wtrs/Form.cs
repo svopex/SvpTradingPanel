@@ -74,7 +74,7 @@ namespace Wtrs
 						var WtrsAtr5 = MetatraderInstance.Instance.WtrsAtr(5);
 						var WtrsAtr10 = MetatraderInstance.Instance.WtrsAtr(10);
 
-						labelAtr.Text = "Atr5: " + Math.Round(WtrsAtr5, 2).ToString() + "   Atr5: " + Math.Round(WtrsAtr10, 2).ToString();
+						labelAtr.Text = "Atr5: " + Math.Round(WtrsAtr5, 2).ToString() + "   Atr10: " + Math.Round(WtrsAtr10, 2).ToString();
 					}
 					catch { }
 				}
