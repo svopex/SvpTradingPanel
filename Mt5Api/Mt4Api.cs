@@ -12,7 +12,7 @@ using Utils;
 
 namespace Mt4Api
 {
-	public class Mt4Api : ISvpMt
+	public class Mt4Api : MtApiBase, ISvpMt
 	{
 		private int slippage = 10;
 
@@ -497,13 +497,23 @@ namespace Mt4Api
 		{
 			if (period == 5)
 			{
-				return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M5, 60 / 5, 0); // prumer za posledni hodinu
+				return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M5, CalculateCandlesFromSessionStart(5), 0);
 			}
 			else if (period == 10)
 			{
-				return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M10, 60 / 10, 0); // prumer za posledni hodinu
+				return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M10, CalculateCandlesFromSessionStart(10), 0);
 			}
 			throw new Exception();
+
+			//if (period == 5)
+			//{
+			//	return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M5, 60 / 5, 0); // prumer za posledni hodinu
+			//}
+			//else if (period == 10)
+			//{
+			//	return apiClient.iATR(Symbol, (int)MtApi.ENUM_TIMEFRAMES.PERIOD_M10, 60 / 10, 0); // prumer za posledni hodinu
+			//}
+			//throw new Exception();
 		}
 
 		public double WtrsHigh()

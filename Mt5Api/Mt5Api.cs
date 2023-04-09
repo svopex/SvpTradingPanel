@@ -15,7 +15,7 @@ using Utils;
 
 namespace Mt5Api
 {
-	public class Mt5Api : ISvpMt
+	public class Mt5Api : MtApiBase, ISvpMt
 	{
 		private readonly MtApi5Client apiClient = new MtApi5Client();
 
@@ -663,17 +663,33 @@ namespace Mt5Api
 		{
 			if (period == 5)
 			{
-				int handle = apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M5, 60 / 5); // prumer za posledni hodinu
-				apiClient.CopyBuffer(handle, 0, 0, 5, out double[] Buffer);
+				var candles = CalculateCandlesFromSessionStart(5);
+				int handle = apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M5, candles);
+				apiClient.CopyBuffer(handle, 0, 0, 1, out double[] Buffer);
 				return Buffer[0];
 			}
 			else if (period == 10)
 			{
-				int handle = apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M10, 60 / 10); // prumer za posledni hodinu
-				apiClient.CopyBuffer(handle, 0, 0, 5, out double[] Buffer);
+				var candles = CalculateCandlesFromSessionStart(10);
+				int handle = apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M10, candles);
+				apiClient.CopyBuffer(handle, 0, 0, 1, out double[] Buffer);
 				return Buffer[0];
 			}
 			throw new Exception();
+
+			//if (period == 5)
+			//{
+			//	int handle = apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M5, 60 / 5); // prumer za posledni hodinu
+			//	apiClient.CopyBuffer(handle, 0, 0, 5, out double[] Buffer);
+			//	return Buffer[0];
+			//}
+			//else if (period == 10)
+			//{
+			//	int handle = apiClient.iATR(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M10, 60 / 10); // prumer za posledni hodinu
+			//	apiClient.CopyBuffer(handle, 0, 0, 5, out double[] Buffer);
+			//	return Buffer[0];
+			//}
+			//throw new Exception();
 		}
 
 		public double WtrsHigh()
