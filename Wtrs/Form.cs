@@ -23,6 +23,22 @@ namespace Wtrs
 		private int SymbolDigits { get; set; }
 		private const double Risk = 0.005;
 
+		private void RefreshData()
+		{
+			Orders orders = MetatraderInstance.Instance.GetMarketOrders();
+			string currency = MetatraderInstance.Instance.AccountCurrency();
+			var sumOfUnits = Math.Abs(orders.Select(x => x.Units).Sum());
+			var rrr = orders.Select(x => ((Math.Abs(x.OpenPrice - x.PT)) / (Math.Abs(x.OpenPrice - x.SL))) / sumOfUnits * Math.Abs(x.Units)).Sum();
+			var loss = orders.Select(x => Math.Abs(x.OpenPrice - x.SL) * Math.Abs(x.Units)).Sum() / MetatraderInstance.Instance.SymbolPoint() * MetatraderInstance.Instance.SymbolTradeTickValue();
+			var profit = orders.Select(x => Math.Abs(x.OpenPrice - x.PT) * Math.Abs(x.Units)).Sum() / MetatraderInstance.Instance.SymbolPoint() * MetatraderInstance.Instance.SymbolTradeTickValue();
+			labelRrr.Text = "RRR: " + Math.Round(rrr, 2);
+			labelLoss.Text = "Loss: " + Math.Round(loss, 2) + " " + currency;
+			labelProfit.Text = "Profit: " + Math.Round(profit, 2) + " " + currency;
+
+			var WtrsAtr5 = MetatraderInstance.Instance.WtrsAtr(5);
+			var WtrsAtr10 = MetatraderInstance.Instance.WtrsAtr(10);
+			labelAtr.Text = "Atr5: " + Math.Round(WtrsAtr5, 2).ToString() + "   Atr10: " + Math.Round(WtrsAtr10, 2).ToString();
+		}
 
 		private void Form_Load(object sender, EventArgs e)
 		{
@@ -70,11 +86,8 @@ namespace Wtrs
 				if (connected)
 				{
 					try
-					{
-						var WtrsAtr5 = MetatraderInstance.Instance.WtrsAtr(5);
-						var WtrsAtr10 = MetatraderInstance.Instance.WtrsAtr(10);
-
-						labelAtr.Text = "Atr5: " + Math.Round(WtrsAtr5, 2).ToString() + "   Atr10: " + Math.Round(WtrsAtr10, 2).ToString();
+					{			
+						RefreshData();
 					}
 					catch { }
 				}

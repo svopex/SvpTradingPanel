@@ -36,13 +36,16 @@
 			this.buttonBuy = new System.Windows.Forms.Button();
 			this.buttonSell = new System.Windows.Forms.Button();
 			this.buttonCloseAll = new System.Windows.Forms.Button();
+			this.labelProfit = new System.Windows.Forms.Label();
+			this.labelLoss = new System.Windows.Forms.Label();
+			this.labelRrr = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// labelAtr
 			// 
 			this.labelAtr.AutoSize = true;
 			this.labelAtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labelAtr.Location = new System.Drawing.Point(12, 9);
+			this.labelAtr.Location = new System.Drawing.Point(12, 54);
 			this.labelAtr.Name = "labelAtr";
 			this.labelAtr.Size = new System.Drawing.Size(81, 30);
 			this.labelAtr.TabIndex = 0;
@@ -66,7 +69,7 @@
 			// 
 			// buttonBuy
 			// 
-			this.buttonBuy.Location = new System.Drawing.Point(47, 84);
+			this.buttonBuy.Location = new System.Drawing.Point(50, 117);
 			this.buttonBuy.Name = "buttonBuy";
 			this.buttonBuy.Size = new System.Drawing.Size(312, 121);
 			this.buttonBuy.TabIndex = 2;
@@ -76,7 +79,7 @@
 			// 
 			// buttonSell
 			// 
-			this.buttonSell.Location = new System.Drawing.Point(393, 84);
+			this.buttonSell.Location = new System.Drawing.Point(396, 117);
 			this.buttonSell.Name = "buttonSell";
 			this.buttonSell.Size = new System.Drawing.Size(312, 121);
 			this.buttonSell.TabIndex = 3;
@@ -86,7 +89,7 @@
 			// 
 			// buttonCloseAll
 			// 
-			this.buttonCloseAll.Location = new System.Drawing.Point(47, 233);
+			this.buttonCloseAll.Location = new System.Drawing.Point(50, 266);
 			this.buttonCloseAll.Name = "buttonCloseAll";
 			this.buttonCloseAll.Size = new System.Drawing.Size(658, 121);
 			this.buttonCloseAll.TabIndex = 4;
@@ -94,11 +97,44 @@
 			this.buttonCloseAll.UseVisualStyleBackColor = true;
 			this.buttonCloseAll.Click += new System.EventHandler(this.buttonCloseAll_Click);
 			// 
+			// labelProfit
+			// 
+			this.labelProfit.AutoSize = true;
+			this.labelProfit.Location = new System.Drawing.Point(416, 9);
+			this.labelProfit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.labelProfit.Name = "labelProfit";
+			this.labelProfit.Size = new System.Drawing.Size(56, 25);
+			this.labelProfit.TabIndex = 38;
+			this.labelProfit.Text = "Profit";
+			// 
+			// labelLoss
+			// 
+			this.labelLoss.AutoSize = true;
+			this.labelLoss.Location = new System.Drawing.Point(204, 9);
+			this.labelLoss.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.labelLoss.Name = "labelLoss";
+			this.labelLoss.Size = new System.Drawing.Size(54, 25);
+			this.labelLoss.TabIndex = 37;
+			this.labelLoss.Text = "Loss";
+			// 
+			// labelRrr
+			// 
+			this.labelRrr.AutoSize = true;
+			this.labelRrr.Location = new System.Drawing.Point(12, 9);
+			this.labelRrr.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.labelRrr.Name = "labelRrr";
+			this.labelRrr.Size = new System.Drawing.Size(51, 25);
+			this.labelRrr.TabIndex = 36;
+			this.labelRrr.Text = "RRR";
+			// 
 			// Form
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(761, 391);
+			this.ClientSize = new System.Drawing.Size(763, 416);
+			this.Controls.Add(this.labelProfit);
+			this.Controls.Add(this.labelLoss);
+			this.Controls.Add(this.labelRrr);
 			this.Controls.Add(this.buttonCloseAll);
 			this.Controls.Add(this.buttonSell);
 			this.Controls.Add(this.buttonBuy);
@@ -121,6 +157,9 @@
 		private System.Windows.Forms.Button buttonBuy;
 		private System.Windows.Forms.Button buttonSell;
 		private System.Windows.Forms.Button buttonCloseAll;
+		private System.Windows.Forms.Label labelProfit;
+		private System.Windows.Forms.Label labelLoss;
+		private System.Windows.Forms.Label labelRrr;
 	}
 }
 
