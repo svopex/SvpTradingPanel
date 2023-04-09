@@ -616,6 +616,8 @@ namespace SvpTradingPanel
 			DialogResult dialogResult = MessageBox.Show("Do you really close all orders?", "SvpTradePanel", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
 			if (dialogResult == DialogResult.Yes)
 			{
+				SlToBeAutomation = false;
+
 				Orders orders = MetatraderInstance.Instance.GetMarketOrders();
 				foreach (var order in orders)
 				{
