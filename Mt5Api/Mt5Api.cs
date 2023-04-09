@@ -694,7 +694,7 @@ namespace Mt5Api
 
 		public double WtrsHigh()
 		{
-			apiClient.CopyRates(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M1, 0, 5,  out MtApi5.MqlRates[] result);			
+			apiClient.CopyRates(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M1, 0, 10,  out MtApi5.MqlRates[] result);			
 			double high = 0;
 			for (int i = result.Count() - 1; i >= 0; i--)
 			{
@@ -712,7 +712,7 @@ namespace Mt5Api
 
 		public double WtrsLow()
 		{
-			apiClient.CopyRates(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M1, 0, 5, out MtApi5.MqlRates[] result);
+			apiClient.CopyRates(Symbol, MtApi5.ENUM_TIMEFRAMES.PERIOD_M1, 0, 10, out MtApi5.MqlRates[] result);
 			double low = double.MaxValue;
 			for (int i = result.Count() - 1; i >= 0; i--)
 			{
