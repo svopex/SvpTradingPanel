@@ -525,6 +525,24 @@ namespace Mt5Api
 			return result.ticket;
 		}
 
+		public ulong CreateMarketOrderSlPt(double units, double Sl, double Pt)
+		{
+			return CreateMarketOrderSlPt(Symbol, units, Utilities.StrategyNumber, null, Sl, Pt);
+		}
+
+		private ulong CreateMarketOrderSlPt(string instrument, double units, ulong magic, string comment, double Sl, double Pt)
+		{
+			(bool result, ulong ticket, uint retCode, string comment) result = CreateMarketOrder(instrument, units, magic, comment);
+			if (result.result)
+			{
+				Order order = GetMarketOrder(result.ticket);
+				order.SL = Sl;
+				order.PT = Pt;
+				SetPositionSlAndPt(order);
+			}
+			return result.ticket;
+		}
+
 		public (bool result, ulong ticket, uint retCode, string comment) CreateMarketOrder(string instrument, double units, ulong magic, string comment)
 		{
 			MqlTradeRequest mqlTradeRequest = new MqlTradeRequest();
@@ -692,6 +710,11 @@ namespace Mt5Api
 				}
 			}
 			return low;
+		}
+
+		public bool IsOpenPosition()
+		{
+			return apiClient.PositionsTotal() > 0;
 		}
 	}
 }

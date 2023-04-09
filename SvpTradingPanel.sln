@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mt4ApiTester", "Mt4ApiTester\Mt4ApiTester.csproj", "{1B0B7BBA-F5A0-4E96-87AE-1869080D321D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wtrs", "Wtrs\Wtrs.csproj", "{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1B0B7BBA-F5A0-4E96-87AE-1869080D321D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B0B7BBA-F5A0-4E96-87AE-1869080D321D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B0B7BBA-F5A0-4E96-87AE-1869080D321D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

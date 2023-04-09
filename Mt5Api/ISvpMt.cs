@@ -45,6 +45,8 @@ namespace Mt5Api
 		double GetActualSpread();
 		double GetActualBidPrice();
 		double GetActualAskPrice();
+		ulong CreateMarketOrderSlPt(double units, double Sl, double Pt);
+		bool IsOpenPosition();
 
 		// Scalping WTRS
 		double WtrsAtr(int period); // period = 5/10

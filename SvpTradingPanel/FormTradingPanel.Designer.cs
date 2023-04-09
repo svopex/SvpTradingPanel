@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTradingPanel));
 			this.buttonOrderBuy1 = new System.Windows.Forms.Button();
 			this.textBoxSlDistance = new System.Windows.Forms.TextBox();
 			this.LabelPositionSize = new System.Windows.Forms.Label();
@@ -572,6 +573,7 @@
 			this.Controls.Add(this.buttonOrderBuy1);
 			this.Cursor = System.Windows.Forms.Cursors.Default;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MaximizeBox = false;
 			this.Name = "FormTradingPanel";

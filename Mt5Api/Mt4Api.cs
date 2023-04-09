@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Utils;
 
 namespace Mt4Api
@@ -364,6 +365,12 @@ namespace Mt4Api
 			return orderId;
 		}
 
+		public ulong CreateMarketOrderSlPt(double units, double Sl, double Pt)
+		{
+			int orderId = apiClient.OrderSend(Symbol, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, Sl, Pt, null, (int)Utilities.StrategyNumber);
+			return (ulong)orderId;
+		}
+
 		public long CreateMarketOrder(string instrument, double units, string comment, int magic)
 		{
 			int orderId = apiClient.OrderSend(instrument, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, 0, 0, comment, magic);
@@ -533,6 +540,20 @@ namespace Mt4Api
 				}
 			}
 			return low;
+		}
+
+		public bool IsOpenPosition()
+		{
+			for (int i = apiClient.OrdersTotal() - 1; i >= 0; i--)
+			{
+				var order = apiClient.GetOrder(i, OrderSelectMode.SELECT_BY_POS, OrderSelectSource.MODE_TRADES);
+				if (order.Operation == TradeOperation.OP_BUY || order.Operation == TradeOperation.OP_SELL)
+				{
+					return true;
+				}
+
+			}
+			return false;
 		}
 	}
 }
