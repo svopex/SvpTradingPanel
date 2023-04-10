@@ -527,20 +527,20 @@ namespace Mt5Api
 
 		public ulong CreateMarketOrderSlPt(double units, double Sl, double Pt)
 		{
-			return CreateMarketOrderSlPt(Symbol, units, Utilities.StrategyNumber, null, Sl, Pt);
-		}
-
-		private ulong CreateMarketOrderSlPt(string instrument, double units, ulong magic, string comment, double Sl, double Pt)
-		{
-			(bool result, ulong ticket, uint retCode, string comment) result = CreateMarketOrder(instrument, units, magic, comment);
-			if (result.result)
-			{
-				Order order = GetMarketOrder(result.ticket);
-				order.SL = Sl;
-				order.PT = Pt;
-				SetPositionSlAndPt(order);
-			}
-			return result.ticket;
+			MqlTradeRequest mqlTradeRequest = new MqlTradeRequest();
+			mqlTradeRequest.Action = ENUM_TRADE_REQUEST_ACTIONS.TRADE_ACTION_DEAL;
+			mqlTradeRequest.Symbol = TransformInstrument(Symbol);
+			mqlTradeRequest.Volume = Math.Abs(units);
+			mqlTradeRequest.Type = units > 0 ? ENUM_ORDER_TYPE.ORDER_TYPE_BUY : ENUM_ORDER_TYPE.ORDER_TYPE_SELL;
+			mqlTradeRequest.Magic = Utilities.StrategyNumber;
+			// Todle zde musi byt kvuli ICMARKETS, jinak objednavky nechodi
+			mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
+			//mqlTradeRequest.Comment = comment;
+			mqlTradeRequest.Sl = Sl;
+			mqlTradeRequest.Tp = Pt;
+			MqlTradeResult mqlTradeResult;
+			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
+			return mqlTradeResult.Order;
 		}
 
 		public (bool result, ulong ticket, uint retCode, string comment) CreateMarketOrder(string instrument, double units, ulong magic, string comment)

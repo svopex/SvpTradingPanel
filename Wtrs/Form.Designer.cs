@@ -44,10 +44,10 @@
 			// labelAtr
 			// 
 			this.labelAtr.AutoSize = true;
-			this.labelAtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labelAtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.142858F);
 			this.labelAtr.Location = new System.Drawing.Point(12, 54);
 			this.labelAtr.Name = "labelAtr";
-			this.labelAtr.Size = new System.Drawing.Size(81, 30);
+			this.labelAtr.Size = new System.Drawing.Size(64, 25);
 			this.labelAtr.TabIndex = 0;
 			this.labelAtr.Text = "label1";
 			// 
@@ -110,7 +110,7 @@
 			// labelLoss
 			// 
 			this.labelLoss.AutoSize = true;
-			this.labelLoss.Location = new System.Drawing.Point(204, 9);
+			this.labelLoss.Location = new System.Drawing.Point(195, 9);
 			this.labelLoss.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelLoss.Name = "labelLoss";
 			this.labelLoss.Size = new System.Drawing.Size(54, 25);

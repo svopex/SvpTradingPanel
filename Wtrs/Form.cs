@@ -44,23 +44,14 @@ namespace Wtrs
 		{
 			bool connected = MetatraderInstance.Connect();
 
-			while (!MetatraderInstance.IsConnectedConsole())
-			{
-				Task.Delay(100);
-			}
-
-			ShowLabelConnected(true);
+			ShowLabelConnected(false);
 
 			timer.Interval = 1000;
 			timer.Enabled = true;
 
 			labelAtr.Text = String.Empty;
 
-			SymbolPoint = MetatraderInstance.Instance.SymbolPoint();
-			SymbolTradeTickValue = MetatraderInstance.Instance.SymbolTradeTickValue();
-			SymbolDigits = MetatraderInstance.Instance.SymbolLotStepDigits();
-
-			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);			
 		}
 
 		public void ShowLabelConnected(bool connected)
@@ -86,16 +77,20 @@ namespace Wtrs
 				if (connected)
 				{
 					try
-					{			
+					{
+						SymbolPoint = MetatraderInstance.Instance.SymbolPoint();
+						SymbolTradeTickValue = MetatraderInstance.Instance.SymbolTradeTickValue();
+						SymbolDigits = MetatraderInstance.Instance.SymbolLotStepDigits();
+
 						RefreshData();
 					}
 					catch { }
 				}
-			}
-			else
-			{
-				MetatraderInstance.Instance.Disconnect();
-				MetatraderInstance.Instance.Connect();
+				else
+				{
+					MetatraderInstance.Instance.Disconnect();
+					MetatraderInstance.Instance.Connect();
+				}
 			}
 			ShowLabelConnected(connected);
 		}
