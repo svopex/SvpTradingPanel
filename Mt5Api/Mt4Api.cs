@@ -565,5 +565,16 @@ namespace Mt4Api
 			}
 			return false;
 		}
+
+		public double? GetLatestProfit()		
+		{
+			int ordersHistoryTotal = apiClient.OrdersHistoryTotal();
+			if (ordersHistoryTotal > 0)
+			{
+				var order = apiClient.GetOrder(ordersHistoryTotal - 1, OrderSelectMode.SELECT_BY_POS, OrderSelectSource.MODE_HISTORY);
+				return order.Profit;
+			}
+			return null;
+		}
 	}
 }

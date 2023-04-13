@@ -732,5 +732,35 @@ namespace Mt5Api
 		{
 			return apiClient.PositionsTotal() > 0;
 		}
+
+		public double? GetLatestProfit()
+		{
+			apiClient.HistorySelect(apiClient.TimeCurrent().AddDays(-7), apiClient.TimeCurrent());
+			int TotalDeals = apiClient.HistoryDealsTotal();
+			DateTime latestDeal = DateTime.MinValue;
+			ulong latestTicket = 0;
+			for (int i = 0; i < TotalDeals; i++)
+			{
+				ulong ticket = apiClient.HistoryDealGetTicket(i);
+				if (apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_ENTRY) == (int)ENUM_DEAL_ENTRY.DEAL_ENTRY_OUT)
+				{
+					DateTime DealTime = ConvertMscTimeToDateTime(apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TIME_MSC));
+					if (ticket > latestTicket)
+					{
+						latestDeal = DealTime;
+						latestTicket = ticket;
+					}
+				}
+			}
+			if (latestTicket > 0)
+			{
+				double latestProfit = apiClient.HistoryDealGetDouble(latestTicket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_PROFIT);
+				return latestProfit;
+			}
+			else
+			{
+				return null;
+			}
+		}
 	}
 }

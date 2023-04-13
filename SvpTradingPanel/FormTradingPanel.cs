@@ -741,14 +741,14 @@ namespace SvpTradingPanel
 				if (SlToBeAutomationLastCountOfOrder > orders.Count)
 				{
 					Task.Delay(5000); // Cekani na pripadne uzavreni vsech pozic.
-					if (orders.Count == 0)
-					{
-						CallHue(false);
-					}
-					else
-					{
-						CallHue(true);
 
+					double? latestProfit = MetatraderInstance.Instance.GetLatestProfit();
+					if (latestProfit != null)
+					{
+						CallHue(latestProfit > 0);
+					}
+					if (orders.Count > 0)
+					{ 
 						if (SlToBeAutomationMoveSlEnabled)
 						{
 							foreach (var order in orders)

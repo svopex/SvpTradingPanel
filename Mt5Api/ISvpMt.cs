@@ -47,10 +47,11 @@ namespace Mt5Api
 		double GetActualAskPrice();
 		ulong CreateMarketOrderSlPt(double units, double Sl, double Pt);
 		bool IsOpenPosition();
+		double? GetLatestProfit();
 
 		// Scalping WTRS
 		double WtrsAtr(int period); // period = 5/10
 		double WtrsHigh();
-		double WtrsLow();
+		double WtrsLow();		
 	}
 }
