@@ -63,7 +63,7 @@ namespace Wtrs
 			}
 			else
 			{
-				labelConnected.Text = "-----------";
+				labelConnected.Text = "----------";
 				labelConnected.ForeColor = Color.Red;
 			}
 		}
