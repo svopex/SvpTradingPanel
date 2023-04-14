@@ -144,7 +144,6 @@ namespace Wtrs
 				var shortSlPrice = wtrsHigh + spread; //(wtrsHigh - actualBidPrice) + spread + actualBidPrice;
 				var shortTpPrice = actualAskPrice - WtrsAtr5; // ASK price, protoze na ni prodavam pri shortu
 				
-
 				MetatraderInstance.Instance.CreateMarketOrderSlPt(RoundPrice(SymbolDigits, -shortPositionSize), RoundPrice(SymbolDigits, shortSlPrice), RoundPrice(SymbolDigits, shortTpPrice));
 
 				var WtrsAtr10 = MetatraderInstance.Instance.WtrsAtr(10);
