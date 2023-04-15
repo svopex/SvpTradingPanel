@@ -757,11 +757,23 @@ namespace SvpTradingPanel
 								MetatraderInstance.Instance.SetPositionSlAndPt(order);
 							}
 						}
+						SlToBeAutomationLastCountOfOrder = orders.Count;
 					}
-
+				}
+				if (orders.Count == 0)
+				{
 					SlToBeAutomation = false;
-					progressBarSlToBeAutomation.Value = 0;
+				}
+			}
+			if (SlToBeAutomation)
+			{
+				if (SlToBeAutomationMoveSlEnabled)
+				{
 					progressBarSlPtMonitoring.Value = 0;
+				}
+				else
+				{
+					progressBarSlToBeAutomation.Value = 0;
 				}
 			}
 			else
