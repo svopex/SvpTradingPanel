@@ -737,30 +737,42 @@ namespace Mt5Api
 		{
 			apiClient.HistorySelect(apiClient.TimeCurrent().AddDays(-7), apiClient.TimeCurrent());
 			int TotalDeals = apiClient.HistoryDealsTotal();
-			DateTime latestDeal = DateTime.MinValue;
-			ulong latestTicket = 0;
+			Histories histories = new Histories();
+			for (int i = TotalDeals - 1; i >= 0; i--)
+			{
+				ulong ticket = apiClient.HistoryDealGetTicket(i);
+				ENUM_DEAL_TYPE dealType = (ENUM_DEAL_TYPE)apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TYPE);
+				ENUM_DEAL_ENTRY dealEntry = (ENUM_DEAL_ENTRY)apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_ENTRY);
+				if ((dealType == ENUM_DEAL_TYPE.DEAL_TYPE_BUY || dealType == ENUM_DEAL_TYPE.DEAL_TYPE_SELL) && dealEntry == ENUM_DEAL_ENTRY.DEAL_ENTRY_OUT)
+				{
+					DateTime dateTime = ConvertMscTimeToDateTime(apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TIME_MSC));
+					double profit = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_PROFIT);
+					return profit;
+				}
+			}
+			//histories.Sort((x, y) => { return x.dt.CompareTo(y.dt); });
+			return null;
+		}
+
+		public Histories GetLatestProfitHistory(DateTime from, DateTime to)
+		{
+			apiClient.HistorySelect(from, to);
+			int TotalDeals = apiClient.HistoryDealsTotal();
+			Histories histories = new Histories();
 			for (int i = 0; i < TotalDeals; i++)
 			{
 				ulong ticket = apiClient.HistoryDealGetTicket(i);
-				if (apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_ENTRY) == (int)ENUM_DEAL_ENTRY.DEAL_ENTRY_OUT)
+				ENUM_DEAL_TYPE dealType = (ENUM_DEAL_TYPE)apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TYPE);
+				ENUM_DEAL_ENTRY dealEntry = (ENUM_DEAL_ENTRY)apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_ENTRY);
+				if ((dealType == ENUM_DEAL_TYPE.DEAL_TYPE_BUY || dealType == ENUM_DEAL_TYPE.DEAL_TYPE_SELL) && dealEntry == ENUM_DEAL_ENTRY.DEAL_ENTRY_OUT)
 				{
-					DateTime DealTime = ConvertMscTimeToDateTime(apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TIME_MSC));
-					if (ticket > latestTicket)
-					{
-						latestDeal = DealTime;
-						latestTicket = ticket;
-					}
+					DateTime dateTime = ConvertMscTimeToDateTime(apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TIME_MSC));
+					double profit = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_PROFIT);
+					histories.Add(new History() { dt = dateTime, profit = profit });
 				}
 			}
-			if (latestTicket > 0)
-			{
-				double latestProfit = apiClient.HistoryDealGetDouble(latestTicket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_PROFIT);
-				return latestProfit;
-			}
-			else
-			{
-				return null;
-			}
+			//histories.Sort((x, y) => { return x.dt.CompareTo(y.dt); });
+			return histories;
 		}
 	}
 }

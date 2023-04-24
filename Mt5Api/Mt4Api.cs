@@ -379,19 +379,19 @@ namespace Mt4Api
 
 		public string Symbol
 		{
-			get 
-			{ 
-				if (String.IsNullOrWhiteSpace(symbol)) 
+			get
+			{
+				if (String.IsNullOrWhiteSpace(symbol))
 				{
 					return apiClient.ChartSymbol(0);
 				}
-				return symbol; 
+				return symbol;
 			}
-			set 
-			{ 
-				symbol = value; 
-			}	
-		}			
+			set
+			{
+				symbol = value;
+			}
+		}
 		private string symbol;
 
 		public Order GetMarketOrder(ulong ticket)
@@ -566,15 +566,35 @@ namespace Mt4Api
 			return false;
 		}
 
-		public double? GetLatestProfit()		
+		public double? GetLatestProfit()
 		{
 			int ordersHistoryTotal = apiClient.OrdersHistoryTotal();
-			if (ordersHistoryTotal > 0)
+			Histories histories = new Histories();
+			for (int i = ordersHistoryTotal - 1; i >= 0; i--)
 			{
-				var order = apiClient.GetOrder(ordersHistoryTotal - 1, OrderSelectMode.SELECT_BY_POS, OrderSelectSource.MODE_HISTORY);
-				return order.Profit;
+				var order = apiClient.GetOrder(i, OrderSelectMode.SELECT_BY_POS, OrderSelectSource.MODE_HISTORY);
+				if (order.Operation == TradeOperation.OP_BUY || order.Operation == TradeOperation.OP_SELL)
+				{
+					return order.Profit;
+				}
 			}
 			return null;
+		}
+
+		public Histories GetLatestProfitHistory(DateTime from, DateTime to)
+		{
+			int ordersHistoryTotal = apiClient.OrdersHistoryTotal();
+			Histories histories = new Histories();
+			for (int i = 0; i < ordersHistoryTotal ; i++)
+			{
+				var order = apiClient.GetOrder(i, OrderSelectMode.SELECT_BY_POS, OrderSelectSource.MODE_HISTORY);
+				if (order.Operation == TradeOperation.OP_BUY || order.Operation == TradeOperation.OP_SELL)
+				{
+					histories.Add(new History() { dt = order.CloseTime, profit = order.Profit });
+				}
+			}
+			//histories.Sort((x, y) => { return x.dt.CompareTo(y.dt); });
+			return histories;
 		}
 	}
 }

@@ -47,6 +47,8 @@ namespace Mt5Api
 		bool IsOpenPosition();
 		double? GetLatestProfit();
 
+		Histories GetLatestProfitHistory(DateTime from, DateTime to);
+
 		// Scalping WTRS
 		double WtrsAtr(int period); // period = 5/10
 		double WtrsHigh();
