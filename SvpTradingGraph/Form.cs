@@ -21,23 +21,31 @@ namespace SvpTradingGraph
 			InitializeComponent();
 		}
 
-		private void Form1_Load(object sender, EventArgs e)
+		public int GetYear()
 		{
-			bool connected = MetatraderInstance.Connect();
-
-			while (!MetatraderInstance.IsConnectedConsole())
+			if (int.TryParse(textBoxYear.Text, out int result))
 			{
-				Task.Delay(100);
+				return result;
 			}
-			
-			var result = MetatraderInstance.Instance.GetLatestProfitHistory(new DateTime(2023, 1, 1), DateTime.Now);
+			else
+			{
+				return DateTime.Now.Year;
+			}
+		}
+
+		private void RefreshData()
+		{
+			var result = MetatraderInstance.Instance.GetLatestProfitHistory(new DateTime(GetYear(), 1, 1, 0, 0, 0), new DateTime(GetYear(), 12, 31, 23, 59, 59));
+
+			chart1.Series.Clear();
+			labelIncome.Text = String.Empty;
+			labelTaxForm.Text = String.Empty;
 
 			if (result.Count() == 0)
 			{
 				return;
 			}
 
-			chart1.Series.Clear();
 			var series1 = new System.Windows.Forms.DataVisualization.Charting.Series
 			{
 				Name = "Equity",
@@ -80,7 +88,7 @@ namespace SvpTradingGraph
 				{
 					spending += result[i].profit;
 					commission += result[i].commission;
-					swap += result[i].swap;					
+					swap += result[i].swap;
 				}
 				profit += result[i].profit;
 
@@ -91,13 +99,27 @@ namespace SvpTradingGraph
 
 			labelIncome.Text = $"Profit: {income + spending}, prijmy: {income}, vydaje: {spending}, commision = {commission}, swap = {swap}.";
 			labelTaxForm.Text = $"Pro danove priznani, celkove prijmy: {income}, celkove vydaje (prijmy - commission - swap): {spending + commission + swap}.";
-
-			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 		}
 
-		private void chart1_Click(object sender, EventArgs e)
+		private void Form1_Load(object sender, EventArgs e)
 		{
+			bool connected = MetatraderInstance.Connect();
 
+			while (!MetatraderInstance.IsConnectedConsole())
+			{
+				Task.Delay(100);
+			}
+		
+			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+
+			textBoxYear.Text = DateTime.Now.Year.ToString();
+
+			RefreshData();
+		}
+
+		private void textBoxYear_Leave(object sender, EventArgs e)
+		{
+			RefreshData();
 		}
 	}
 }
