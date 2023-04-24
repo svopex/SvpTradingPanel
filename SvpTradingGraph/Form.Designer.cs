@@ -49,14 +49,14 @@
 			this.chart1.ChartAreas.Add(chartArea1);
 			legend1.Name = "Legend1";
 			this.chart1.Legends.Add(legend1);
-			this.chart1.Location = new System.Drawing.Point(0, 38);
+			this.chart1.Location = new System.Drawing.Point(0, 59);
 			this.chart1.Margin = new System.Windows.Forms.Padding(6);
 			this.chart1.Name = "chart1";
 			series1.ChartArea = "ChartArea1";
 			series1.Legend = "Legend1";
 			series1.Name = "Series1";
 			this.chart1.Series.Add(series1);
-			this.chart1.Size = new System.Drawing.Size(1639, 916);
+			this.chart1.Size = new System.Drawing.Size(1645, 895);
 			this.chart1.TabIndex = 0;
 			this.chart1.Text = "chart1";
 			// 
@@ -67,7 +67,7 @@
 			this.labelIncome.Location = new System.Drawing.Point(22, 974);
 			this.labelIncome.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.labelIncome.Name = "labelIncome";
-			this.labelIncome.Size = new System.Drawing.Size(60, 24);
+			this.labelIncome.Size = new System.Drawing.Size(64, 25);
 			this.labelIncome.TabIndex = 1;
 			this.labelIncome.Text = "label1";
 			// 
@@ -78,22 +78,22 @@
 			this.labelTaxForm.Location = new System.Drawing.Point(22, 1020);
 			this.labelTaxForm.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.labelTaxForm.Name = "labelTaxForm";
-			this.labelTaxForm.Size = new System.Drawing.Size(60, 24);
+			this.labelTaxForm.Size = new System.Drawing.Size(64, 25);
 			this.labelTaxForm.TabIndex = 2;
 			this.labelTaxForm.Text = "label1";
 			// 
 			// labelYear
 			// 
 			this.labelYear.AutoSize = true;
-			this.labelYear.Location = new System.Drawing.Point(-4, 0);
+			this.labelYear.Location = new System.Drawing.Point(22, 21);
 			this.labelYear.Name = "labelYear";
-			this.labelYear.Size = new System.Drawing.Size(49, 24);
+			this.labelYear.Size = new System.Drawing.Size(53, 25);
 			this.labelYear.TabIndex = 3;
 			this.labelYear.Text = "Year";
 			// 
 			// textBoxYear
 			// 
-			this.textBoxYear.Location = new System.Drawing.Point(51, 0);
+			this.textBoxYear.Location = new System.Drawing.Point(81, 21);
 			this.textBoxYear.Name = "textBoxYear";
 			this.textBoxYear.Size = new System.Drawing.Size(100, 29);
 			this.textBoxYear.TabIndex = 4;

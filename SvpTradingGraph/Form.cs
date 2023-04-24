@@ -55,11 +55,11 @@ namespace SvpTradingGraph
 				ChartType = SeriesChartType.Line,
 				BorderWidth = 2
 			};
-			this.chart1.Series.Add(series1);
+			//this.chart1.Series.Add(series1);
 
 			var series2 = new System.Windows.Forms.DataVisualization.Charting.Series
 			{
-				Name = "Equity with commission and sap",
+				Name = "Equity with commission and swap",
 				Color = System.Drawing.Color.Red,
 				IsVisibleInLegend = false,
 				IsXValueIndexed = true,
