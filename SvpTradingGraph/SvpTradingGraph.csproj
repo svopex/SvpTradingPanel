@@ -7,7 +7,7 @@
     <ProjectGuid>{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>SvpTradingGraph</RootNamespace>
-    <AssemblyName>CHa</AssemblyName>
+    <AssemblyName>SvpTradingGraph</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
