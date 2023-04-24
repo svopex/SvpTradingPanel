@@ -46,7 +46,6 @@ namespace Mt5Api
 		ulong CreateMarketOrderSlPt(double units, double Sl, double Pt);
 		bool IsOpenPosition();
 		double? GetLatestProfit();
-
 		Histories GetLatestProfitHistory(DateTime from, DateTime to);
 
 		// Scalping WTRS
