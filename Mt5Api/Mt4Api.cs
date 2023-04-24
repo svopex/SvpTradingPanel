@@ -590,7 +590,7 @@ namespace Mt4Api
 				var order = apiClient.GetOrder(i, OrderSelectMode.SELECT_BY_POS, OrderSelectSource.MODE_HISTORY);
 				if (order.Operation == TradeOperation.OP_BUY || order.Operation == TradeOperation.OP_SELL)
 				{
-					histories.Add(new History() { dt = order.CloseTime, profit = order.Profit });
+					histories.Add(new History() { dt = order.CloseTime, profit = order.Profit, commission = order.Commission, swap = order.Swap });
 				}
 			}
 			//histories.Sort((x, y) => { return x.dt.CompareTo(y.dt); });

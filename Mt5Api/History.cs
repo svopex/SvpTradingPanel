@@ -8,6 +8,8 @@ namespace Mt5Api
 	{
 		public DateTime dt { get; set; }
 		public double profit { get; set; }
+		public double swap { get; set; }
+		public double commission { get; set; }
 	}
 
 	public class Histories : List<History>

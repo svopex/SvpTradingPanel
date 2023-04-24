@@ -768,7 +768,9 @@ namespace Mt5Api
 				{
 					DateTime dateTime = ConvertMscTimeToDateTime(apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TIME_MSC));
 					double profit = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_PROFIT);
-					histories.Add(new History() { dt = dateTime, profit = profit });
+					double commission = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_COMMISSION) * 2;
+					double swap = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_SWAP);
+					histories.Add(new History() { dt = dateTime, profit = profit, commission = commission, swap = swap });
 				}
 			}
 			//histories.Sort((x, y) => { return x.dt.CompareTo(y.dt); });

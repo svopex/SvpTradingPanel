@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mt4ApiTester", "Mt4ApiTeste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wtrs", "Wtrs\Wtrs.csproj", "{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SvpTradingGraph", "SvpTradingGraph\SvpTradingGraph.csproj", "{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
