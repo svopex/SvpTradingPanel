@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -105,9 +106,14 @@ namespace SvpTradingGraph
 		{
 			bool connected = MetatraderInstance.Connect();
 
+			int counter = 0;
 			while (!MetatraderInstance.IsConnectedConsole())
 			{
-				Task.Delay(100);
+				Thread.Sleep(100);
+				if (counter++ == 10)
+				{
+					System.Environment.Exit(0);
+				}
 			}
 		
 			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
