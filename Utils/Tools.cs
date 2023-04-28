@@ -17,7 +17,7 @@ namespace Utils
 				string[] args = Environment.GetCommandLineArgs();
 				if (args.Length > 4)
 				{
-					return Int32.Parse(args[3]);
+					return Double.Parse(args[3]);
 				}
 				else
 				{
