@@ -48,7 +48,7 @@ namespace Mt5Api
 		{
 			//int counter = 10;
 
-			apiClient.BeginConnect(Utilities.Host, Utilities.Port);
+			apiClient.BeginConnect(Utilities.Host, Utilities.PortMt5);
 
 			//while (instance.apiClient.ConnectionState != Mt5ConnectionState.Connected)
 			//{
