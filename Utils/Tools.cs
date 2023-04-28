@@ -9,13 +9,47 @@ namespace Utils
 {
 	public class Utilities
 	{
+		// Chci 1% risk na obchod.
+		public static double RiskToTrade
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > 4)
+				{
+					return Int32.Parse(args[3]);
+				}
+				else
+				{
+					return 0.01;
+				}
+			}
+		}
+
+		// Na uctu mam realne 1/4 hodnoty uctu (kvuli nebezpeci krachu brokera).
+		public static int BrokerMarginEquityCoefficient
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > 4)
+				{
+					return Int32.Parse(args[4]);
+				}
+				else
+				{
+					return 4;
+				}
+			}
+		}
+
 		public static string Host => "localhost";
 		public static int PortMt4
 		{
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 2)
+				if (args.Length > 4)
 				{
 					return Int32.Parse(args[1]);
 				}
@@ -30,7 +64,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 2)
+				if (args.Length > 4)
 				{
 					return Int32.Parse(args[1]);
 				}
@@ -45,7 +79,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 2)
+				if (args.Length > 4)
 				{
 					return args[2];
 				}

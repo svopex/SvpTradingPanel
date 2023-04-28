@@ -19,8 +19,6 @@ namespace SvpTradingPanel
 {
 	public partial class FormTradingPanel : Form
 	{
-		private const int BrokerMarginEquityCoefficient = 4; // Na uctu mam realne 1/4 hodnoty uctu (kvuli nebezpeci krachu brokera).
-		private const double RiskToTrade = 0.01; // Chci 1% risk na obchod.
 		private const int SlToBeAutomationProgressIncrementConstant = 20;
 		private bool SlToBeAutomation { get; set; }
 		private int SlToBeAutomationLastCountOfOrder { get; set; }
@@ -95,7 +93,7 @@ namespace SvpTradingPanel
 		{
 			// na uctu mam pouze 1/4 toho, co chci obchodovat, kvuli mozne kradezi. Pouzivam paku.			
 			double accountEquity = MetatraderInstance.Instance.AccountEquity();
-			return accountEquity * BrokerMarginEquityCoefficient * RiskToTrade;
+			return accountEquity * Utilities.BrokerMarginEquityCoefficient * Utilities.RiskToTrade;
 		}
 
 		private double? GetPositionSize(bool buy)
