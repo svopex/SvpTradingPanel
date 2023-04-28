@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Utils;
 
 namespace Wtrs
 {
@@ -51,7 +52,9 @@ namespace Wtrs
 
 			labelAtr.Text = String.Empty;
 
-			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);			
+			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+
+			this.Text = "SvpTradingPanel - " + Utilities.StrategyName;
 		}
 
 		public void ShowLabelConnected(bool connected)

@@ -87,6 +87,10 @@
       <Project>{4340cf58-3b25-4969-8bed-683a8d3e71b4}</Project>
       <Name>Mt5Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{2e574ef0-6a5e-4f11-986f-d76ce267e11d}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />

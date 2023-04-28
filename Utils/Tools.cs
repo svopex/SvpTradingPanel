@@ -7,30 +7,30 @@ using System.Xml;
 
 namespace Utils
 {
-    public class Utilities
-    {
-        public static string Host => "localhost";
-        public static int PortMt4
-        {
-            get
-            {
+	public class Utilities
+	{
+		public static string Host => "localhost";
+		public static int PortMt4
+		{
+			get
+			{
 				string[] args = Environment.GetCommandLineArgs();
-                if (args.Length > 1)
-                {
-                    return Int32.Parse(args[1]);
-                }
-                else
-                {
-                    return 8222;
-                }
+				if (args.Length > 2)
+				{
+					return Int32.Parse(args[1]);
+				}
+				else
+				{
+					return 8222;
+				}
 			}
-        }
+		}
 		public static int PortMt5
 		{
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 1)
+				if (args.Length > 2)
 				{
 					return Int32.Parse(args[1]);
 				}
@@ -40,7 +40,21 @@ namespace Utils
 				}
 			}
 		}
-		//public static string StrategyName => "SvpTradingPanel";
+		public static string StrategyName
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > 2)
+				{
+					return args[2];
+				}
+				else
+				{
+					return "Default";
+				}
+			}
+		}
 		public static ulong StrategyNumber => 6877;
         public static ErrorMessageToEnum ErrorMessageDestination => ErrorMessageToEnum.none;
     }

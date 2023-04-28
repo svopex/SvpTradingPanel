@@ -12,6 +12,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Utils;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace SvpTradingPanel
@@ -684,6 +685,8 @@ namespace SvpTradingPanel
 			trackBarPositionUsing_ValueChanged(null, null);
 
 			timerRefreshLabels.Interval = 1000;
+
+			this.Text = "SvpTradingPanel - " + Utilities.StrategyName;
 		}
 
 		private void CallHue(bool Pt)

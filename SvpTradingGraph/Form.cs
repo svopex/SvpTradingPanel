@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using Utils;
 
 namespace SvpTradingGraph
 {
@@ -121,6 +122,8 @@ namespace SvpTradingGraph
 			textBoxYear.Text = DateTime.Now.Year.ToString();
 
 			RefreshData();
+
+			this.Text = "SvpTradingPanel - " + Utilities.StrategyName;
 		}
 
 		private void textBoxYear_Leave(object sender, EventArgs e)
