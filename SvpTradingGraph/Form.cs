@@ -99,7 +99,7 @@ namespace SvpTradingGraph
 			}
 			chart1.Invalidate();
 
-			labelIncome.Text = $"Profit: {income + spending}, prijmy: {income}, vydaje: {spending}, commision = {commission}, swap = {swap}.";
+			labelIncome.Text = $"Profit: {income + spending + commission + swap}, prijmy: {income}, vydaje: {spending}, commision = {commission}, swap = {swap}.";
 			labelTaxForm.Text = $"Pro danove priznani, celkove prijmy: {income}, celkove vydaje (prijmy - commission - swap): {spending + commission + swap}.";
 		}
 
