@@ -21,7 +21,7 @@ namespace SvpTradingPanel
 	{
 		private const int SlToBeAutomationProgressIncrementConstant = 20;
 		private bool SlToBeAutomation { get; set; }
-		private int SlToBeAutomationLastCountOfOrder { get; set; }
+		private Orders SlToBeAutomationOrders { get; set; }
 		private bool SlToBeAutomationMoveSlEnabled { get; set; }
 
 		public FormTradingPanel()
@@ -738,33 +738,40 @@ namespace SvpTradingPanel
 					}
 				}
 
-				Orders orders = MetatraderInstance.Instance.GetMarketOrders();
-				if (SlToBeAutomationLastCountOfOrder > orders.Count)
+				Orders orders = MetatraderInstance.Instance.GetMarketOrders(true);
+
+				if (SlToBeAutomationOrders.Count > orders.Count)
 				{
 					Task.Delay(5000); // Cekani na pripadne uzavreni vsech pozic.
 
-					orders = MetatraderInstance.Instance.GetMarketOrders();
-
-					(string instrument, double profit)? result = MetatraderInstance.Instance.GetLatestProfit();
-					if (result != null)
+					foreach(var instrument in SlToBeAutomationOrders.Select(x => x.Instrument).Distinct())
 					{
-						CallHue(result.Value.profit > 0);
-					}
+						var slToBeAutomationOrdersByInstrument = SlToBeAutomationOrders.Where(x => x.Instrument == instrument).ToList();
+						var ordersByInstrument = MetatraderInstance.Instance.GetMarketOrders(true).Where(x => x.Instrument == instrument).ToList();
 
-					if (orders.Count > 0)
-					{ 
-						if (SlToBeAutomationMoveSlEnabled)
+						if (slToBeAutomationOrdersByInstrument.Count() > ordersByInstrument.Count())
 						{
-							foreach (var order in orders)
+							(string instrument, double profit)? result = MetatraderInstance.Instance.GetLatestProfit(instrument);
+							if (result != null)
 							{
-								order.SL = order.OpenPrice;
-								MetatraderInstance.Instance.SetPositionSlAndPt(order);
+								CallHue(result.Value.profit > 0);
+							}
+
+							if (SlToBeAutomationMoveSlEnabled && (ordersByInstrument.Count > 0))
+							{
+								foreach (var order in ordersByInstrument)
+								{
+									order.SL = order.OpenPrice;
+									MetatraderInstance.Instance.SetPositionSlAndPt(order);
+								}
 							}
 						}
-						SlToBeAutomationLastCountOfOrder = orders.Count;
 					}
+
+					SlToBeAutomationOrders = MetatraderInstance.Instance.GetMarketOrders(true);
 				}
-				if (orders.Count == 0)
+
+				if (!SlToBeAutomationOrders.Any())
 				{
 					SlToBeAutomation = false;
 				}
@@ -851,9 +858,8 @@ namespace SvpTradingPanel
 		private void buttonSlToBeAutomation_Click(object sender, EventArgs e)
 		{
 			SlToBeAutomation = !SlToBeAutomation;
-			
-			Orders orders = MetatraderInstance.Instance.GetMarketOrders();
-			SlToBeAutomationLastCountOfOrder = orders.Count;
+
+			SlToBeAutomationOrders = MetatraderInstance.Instance.GetMarketOrders(true);
 
 			SlToBeAutomationMoveSlEnabled = true;
 		}
@@ -862,8 +868,7 @@ namespace SvpTradingPanel
 		{
 			SlToBeAutomation = !SlToBeAutomation;
 
-			Orders orders = MetatraderInstance.Instance.GetMarketOrders();
-			SlToBeAutomationLastCountOfOrder = orders.Count;
+			SlToBeAutomationOrders = MetatraderInstance.Instance.GetMarketOrders(true);
 
 			SlToBeAutomationMoveSlEnabled = false;
 		}
