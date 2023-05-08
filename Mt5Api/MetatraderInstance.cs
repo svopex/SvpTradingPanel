@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Utils;
 
 namespace Mt5Api
 {
@@ -12,13 +13,13 @@ namespace Mt5Api
 		public static ISvpMt Instance { get; set; }
 
 		public static bool Connect()
-		{
-			if (svpMt5Instance.Connect())
+		{			
+			if ((Utilities.MetatraderType == MetatraderType.All || Utilities.MetatraderType == MetatraderType.Mt5) && svpMt5Instance.Connect())
 			{
 				Instance = svpMt5Instance;
 				return true;
 			}
-			if (svpMt4Instance.Connect())
+			if ((Utilities.MetatraderType == MetatraderType.All || Utilities.MetatraderType == MetatraderType.Mt4) && svpMt4Instance.Connect())
 			{
 				Instance = svpMt4Instance;
 				return true;
@@ -28,12 +29,12 @@ namespace Mt5Api
 
 		public static bool IsConnectedConsole()
 		{
-			if (svpMt5Instance.IsConnectedConsole())
+			if ((Utilities.MetatraderType == MetatraderType.All || Utilities.MetatraderType == MetatraderType.Mt5) && svpMt5Instance.IsConnectedConsole())
 			{
 				Instance = svpMt5Instance;
 				return true;
 			}
-			if (svpMt4Instance.IsConnectedConsole())
+			if ((Utilities.MetatraderType == MetatraderType.All || Utilities.MetatraderType == MetatraderType.Mt4) && svpMt4Instance.IsConnectedConsole())
 			{
 				Instance = svpMt4Instance;
 				return true;
@@ -43,20 +44,27 @@ namespace Mt5Api
 
 		public static bool IsConnected()
 		{
-			if (svpMt5Instance.IsConnected())
+			if ((Utilities.MetatraderType == MetatraderType.All || Utilities.MetatraderType == MetatraderType.Mt5) && svpMt5Instance.IsConnected())
 			{
 				Instance = svpMt5Instance;
 				return true;
 			}
-			if (svpMt4Instance.IsConnected())
+			if ((Utilities.MetatraderType == MetatraderType.All || Utilities.MetatraderType == MetatraderType.Mt4) && svpMt4Instance.IsConnected())
 			{
 				Instance = svpMt4Instance;
 				return true;
 			}
-			svpMt5Instance.Disconnect();
-			svpMt5Instance.Connect();
-			svpMt4Instance.Disconnect();
-			svpMt4Instance.Connect();
+
+			if (Utilities.MetatraderType == MetatraderType.All || Utilities.MetatraderType == MetatraderType.Mt5)
+			{
+				svpMt5Instance.Disconnect();
+				svpMt5Instance.Connect();
+			}
+			if (Utilities.MetatraderType == MetatraderType.All || Utilities.MetatraderType == MetatraderType.Mt4)
+			{
+				svpMt4Instance.Disconnect();
+				svpMt4Instance.Connect();
+			}
 
 			return false;
 		}

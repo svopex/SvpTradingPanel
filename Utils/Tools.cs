@@ -15,9 +15,9 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 4)
+				if (args.Length > 5)
 				{
-					return Double.Parse(args[3]);
+					return Double.Parse(args[4]);
 				}
 				else
 				{
@@ -32,9 +32,9 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 4)
+				if (args.Length > 5)
 				{
-					return Int32.Parse(args[4]);
+					return Int32.Parse(args[5]);
 				}
 				else
 				{
@@ -49,9 +49,9 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 4)
+				if (args.Length > 5)
 				{
-					return Int32.Parse(args[1]);
+					return Int32.Parse(args[2]);
 				}
 				else
 				{
@@ -64,9 +64,9 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 4)
+				if (args.Length > 5)
 				{
-					return Int32.Parse(args[1]);
+					return Int32.Parse(args[2]);
 				}
 				else
 				{
@@ -79,9 +79,9 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 4)
+				if (args.Length > 5)
 				{
-					return args[2];
+					return args[3];
 				}
 				else
 				{
@@ -89,6 +89,23 @@ namespace Utils
 				}
 			}
 		}
+
+		public static MetatraderType MetatraderType
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > 5)
+				{
+					return (args[1].ToLower() == "mt4") ? MetatraderType.Mt4 : MetatraderType.Mt5;
+				}
+				else
+				{
+					return MetatraderType.All;
+				}
+			}
+		}
+
 		public static ulong StrategyNumber => 6877;
         public static ErrorMessageToEnum ErrorMessageDestination => ErrorMessageToEnum.none;
     }
