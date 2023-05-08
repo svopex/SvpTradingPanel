@@ -590,7 +590,7 @@ namespace Mt5Api
 			return Order;
 		}
 
-		public Orders GetMarketOrders()
+		public Orders GetMarketOrders(bool allOrders)
 		{
 			Orders Orders = new Orders();
 
@@ -601,7 +601,7 @@ namespace Mt5Api
 
 				Order order = GetMarketOrder(ticket);
 
-				if (Utilities.StrategyNumber == order.Magic && order.Instrument == TransformInstrument(Symbol))
+				if (Utilities.StrategyNumber == order.Magic && (order.Instrument == TransformInstrument(Symbol) || allOrders))
 				{
 					order.Instrument = DeTransformInstrument(order.Instrument);
 					Orders.Add(order);
@@ -733,7 +733,7 @@ namespace Mt5Api
 			return apiClient.PositionsTotal() > 0;
 		}
 
-		public double? GetLatestProfit()
+		public (string, double)? GetLatestProfit(string instrument = null)
 		{
 			apiClient.HistorySelect(apiClient.TimeCurrent().AddDays(-7), apiClient.TimeCurrent());
 			int TotalDeals = apiClient.HistoryDealsTotal();
@@ -745,9 +745,13 @@ namespace Mt5Api
 				ENUM_DEAL_ENTRY dealEntry = (ENUM_DEAL_ENTRY)apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_ENTRY);
 				if ((dealType == ENUM_DEAL_TYPE.DEAL_TYPE_BUY || dealType == ENUM_DEAL_TYPE.DEAL_TYPE_SELL) && dealEntry == ENUM_DEAL_ENTRY.DEAL_ENTRY_OUT)
 				{
-					DateTime dateTime = ConvertMscTimeToDateTime(apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TIME_MSC));
-					double profit = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_PROFIT);
-					return profit;
+					string symbol = apiClient.HistoryDealGetString(ticket, ENUM_DEAL_PROPERTY_STRING.DEAL_SYMBOL);
+					if (String.IsNullOrWhiteSpace(instrument) || (instrument == symbol))
+					{
+						DateTime dateTime = ConvertMscTimeToDateTime(apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TIME_MSC));
+						double profit = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_PROFIT);
+						return (symbol, profit);
+					}
 				}
 			}
 			//histories.Sort((x, y) => { return x.dt.CompareTo(y.dt); });

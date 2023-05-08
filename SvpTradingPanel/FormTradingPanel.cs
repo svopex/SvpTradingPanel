@@ -743,11 +743,14 @@ namespace SvpTradingPanel
 				{
 					Task.Delay(5000); // Cekani na pripadne uzavreni vsech pozic.
 
-					double? latestProfit = MetatraderInstance.Instance.GetLatestProfit();
-					if (latestProfit != null)
+					orders = MetatraderInstance.Instance.GetMarketOrders();
+
+					(string instrument, double profit)? result = MetatraderInstance.Instance.GetLatestProfit();
+					if (result != null)
 					{
-						CallHue(latestProfit > 0);
+						CallHue(result.Value.profit > 0);
 					}
+
 					if (orders.Count > 0)
 					{ 
 						if (SlToBeAutomationMoveSlEnabled)

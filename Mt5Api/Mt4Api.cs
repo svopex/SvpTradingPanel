@@ -404,7 +404,7 @@ namespace Mt4Api
 			return GetPendingOrders().FirstOrDefault(x => x.Id == (int)ticket);
 		}
 
-		public Orders GetMarketOrders()
+		public Orders GetMarketOrders(bool allOrders = false)
 		{
 			Orders orders = new Orders();
 			List<MtOrder> mtOrders = apiClient.GetOrders(OrderSelectSource.MODE_TRADES);
@@ -423,7 +423,7 @@ namespace Mt4Api
 					order.SL = mtOrder.StopLoss;
 					order.Magic = (ulong)mtOrder.MagicNumber;
 					order.Comment = mtOrder.Comment;
-					if (Utilities.StrategyNumber == order.Magic && order.Instrument == Symbol)
+					if (Utilities.StrategyNumber == order.Magic && (order.Instrument == Symbol || allOrders))
 					{
 						orders.Add(order);
 					}
@@ -566,16 +566,16 @@ namespace Mt4Api
 			return false;
 		}
 
-		public double? GetLatestProfit()
+		public (string, double)? GetLatestProfit(string instrument = null)
 		{
 			int ordersHistoryTotal = apiClient.OrdersHistoryTotal();
 			Histories histories = new Histories();
 			for (int i = ordersHistoryTotal - 1; i >= 0; i--)
 			{
 				var order = apiClient.GetOrder(i, OrderSelectMode.SELECT_BY_POS, OrderSelectSource.MODE_HISTORY);
-				if (order.Operation == TradeOperation.OP_BUY || order.Operation == TradeOperation.OP_SELL)
+				if ((order.Operation == TradeOperation.OP_BUY || order.Operation == TradeOperation.OP_SELL) && ((instrument == order.Symbol) || String.IsNullOrWhiteSpace(instrument)))
 				{
-					return order.Profit;
+					return (order.Symbol, order.Profit);
 				}
 			}
 			return null;

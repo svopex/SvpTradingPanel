@@ -18,7 +18,7 @@ namespace Mt5Api
 		double SymbolLotStep();
 		int SymbolLotStepDigits();
 		int SymbolDigits();
-		Orders GetMarketOrders();
+		Orders GetMarketOrders(bool allOrders = false);
 		Orders GetPendingOrders();
 		ulong CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent);
 		ulong CreateMarketOrderSlPtPercent(double units, double slPercent, double ptPercent);
@@ -45,7 +45,7 @@ namespace Mt5Api
 		double GetActualAskPrice();
 		ulong CreateMarketOrderSlPt(double units, double Sl, double Pt);
 		bool IsOpenPosition();
-		double? GetLatestProfit();
+		(string, double)? GetLatestProfit(string instrument = null);
 		Histories GetLatestProfitHistory(DateTime from, DateTime to);
 
 		// Scalping WTRS
