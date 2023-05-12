@@ -740,7 +740,7 @@ namespace SvpTradingPanel
 
 				Orders orders = MetatraderInstance.Instance.GetMarketOrders(true);
 
-				if (SlToBeAutomationOrders.Count > orders.Count)
+				if (SlToBeAutomationOrders.Count != orders.Count)
 				{
 					Task.Delay(5000); // Cekani na pripadne uzavreni vsech pozic.
 
@@ -771,10 +771,10 @@ namespace SvpTradingPanel
 					SlToBeAutomationOrders = MetatraderInstance.Instance.GetMarketOrders(true);
 				}
 
-				if (!SlToBeAutomationOrders.Any())
-				{
-					SlToBeAutomation = false;
-				}
+				//if (!SlToBeAutomationOrders.Any())
+				//{
+				//	SlToBeAutomation = false;
+				//}
 			}
 			if (SlToBeAutomation)
 			{

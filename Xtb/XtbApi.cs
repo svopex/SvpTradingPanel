@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using xAPI.Codes;
 using xAPI.Commands;
+using xAPI.Records;
 using xAPI.Responses;
 using xAPI.Sync;
 
@@ -30,6 +32,7 @@ namespace Xtb
 		{
 			this.symbol = symbol;
 			this.slDistance = slDistance;
+			Init();
 		}
 
 		private double CalcPosition(bool buy, double position, double step)
@@ -148,12 +151,15 @@ namespace Xtb
 			}
 		}
 
-		private void Init()
+		public void Init()
 		{
 			connector = new SyncAPIConnector(serverData);
 			Credentials credentials = new Credentials(userId, password, "1", "XTB set orders");
 			LoginResponse loginResponse = APICommandFactory.ExecuteLoginCommand(connector, credentials, true);
+		}
 
+		private void FullInit()
+		{
 			var margin = APICommandFactory.ExecuteMarginLevelCommand(connector);
 			risk = margin.Equity!.Value * riskInPercent;
 
@@ -168,7 +174,7 @@ namespace Xtb
 
 		public void SellLimit(double price, double p1, double p2, double p3)
 		{
-			Init();
+			FullInit();
 
 			var position = CalcPosition(false, 0.01, 0.1);
 			position = CalcPosition(false, position, 0.01);
@@ -183,7 +189,7 @@ namespace Xtb
 
 		public void BuyLimit(double price, double p1, double p2, double p3)
 		{
-			Init();
+			FullInit();
 
 			var position = CalcPosition(true, 0.01, 0.1);
 			position = CalcPosition(true, position, 0.01);
@@ -193,12 +199,12 @@ namespace Xtb
 			if (p3 > 0)
 			{
 				CreateOrderLimit(true, price, 1.007, 0.995, precision, position * p3);
-			}			
+			}
 		}
 
 		public void Buy(double p1, double p2, double p3)
 		{
-			Init();
+			FullInit();
 
 			var position = CalcPosition(true, 0.01, 0.1);
 			position = CalcPosition(true, position, 0.01);
@@ -208,12 +214,12 @@ namespace Xtb
 			if (p3 > 0)
 			{
 				CreateOrder(true, 1.007, 0.995, precision, position * p3);
-			}			
+			}
 		}
 
 		public void Sell(double p1, double p2, double p3)
 		{
-			Init();
+			FullInit();
 
 			var position = CalcPosition(false, 0.01, 0.1);
 			position = CalcPosition(false, position, 0.01);
@@ -228,7 +234,7 @@ namespace Xtb
 
 		public (double, double) CalculateProfit()
 		{
-			Init();
+			FullInit();
 			TradesResponse tradesResponse = APICommandFactory.ExecuteTradesCommand(connector, false);
 			double profit = 0;
 			double loss = 0;
@@ -247,9 +253,67 @@ namespace Xtb
 
 		public string GetAccountCurrency()
 		{
-			Init();
+			FullInit();
 			var result = APICommandFactory.ExecuteCurrentUserDataCommand(connector);
 			return result.Currency;
+		}
+
+		public List<Order> GetMarketOrders()
+		{
+			List<Order> orders = new List<Order>();
+
+			TradesResponse tradesResponse = APICommandFactory.ExecuteTradesCommand(connector, true);
+
+			foreach (var tradeRecord in tradesResponse.TradeRecords)
+			{
+				Order order = new Order();
+				order.Id = tradeRecord.Order!.Value;
+				order.SL = tradeRecord.Sl!.Value;
+				order.PT = tradeRecord.Tp!.Value;
+				order.OpenPrice = tradeRecord.Open_price!.Value;
+				order.Instrument = tradeRecord.Symbol;
+				order.Units = tradeRecord.Volume!.Value;
+				if ((tradeRecord.Cmd!.Value == TRADE_OPERATION_CODE.BUY.Code) || (tradeRecord.Cmd!.Value == TRADE_OPERATION_CODE.SELL.Code))
+				{
+					orders.Add(order);
+				}
+			}
+			return orders;
+		}
+
+		public void SetPositionSlAndPt(Order order)
+		{
+			APICommandFactory.ExecuteTradeTransactionCommand(
+			connector,
+				order.OpenPrice > order.PT ? TRADE_OPERATION_CODE.SELL : TRADE_OPERATION_CODE.BUY,
+				TRADE_TRANSACTION_TYPE.ORDER_MODIFY,
+				order.OpenPrice,
+				order.SL,
+				order.PT,
+				order.Instrument,
+				order.Units,
+				order.Id,
+				null,
+				null);
+		}
+
+		public (string, double) GetLatestProfit(string instrument)
+		{
+			TradesResponse tradesResponse = APICommandFactory.ExecuteTradesCommand(connector, false);
+			var tradeRecords =
+				tradesResponse.TradeRecords
+				.Where(x => x.Closed!.Value && instrument == x.Symbol)
+				.OrderByDescending(x => x.Close_time)
+				.ToList();
+		
+			if (tradeRecords.Any())
+			{
+				return (instrument, tradeRecords[0].Profit!.Value);
+			}
+			else
+			{
+				return (instrument, 0);
+			}
 		}
 	}
 }
