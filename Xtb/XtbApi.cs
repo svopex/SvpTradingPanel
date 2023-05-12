@@ -17,7 +17,7 @@ namespace Xtb
 	{
 		private Server serverData = Servers.DEMO;
 		private string userId = "14734282";
-		private string password = "HarryPotter6951!";
+		private string password = "***";
 		private double riskInPercent = 0.01;
 
 		private string symbol = "USDJPY";
