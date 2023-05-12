@@ -48,6 +48,10 @@
 			progressBarSlToBe = new ProgressBar();
 			progressBarSlPtMonitoring = new ProgressBar();
 			timer = new System.Windows.Forms.Timer(components);
+			trackBarPositionUsing = new TrackBar();
+			labelPositionUsing = new Label();
+			labelPositionUsingPercent = new Label();
+			((System.ComponentModel.ISupportInitialize)trackBarPositionUsing).BeginInit();
 			SuspendLayout();
 			// 
 			// labelSymbol
@@ -84,7 +88,7 @@
 			// 
 			// buttonBuy631
 			// 
-			buttonBuy631.Location = new Point(12, 171);
+			buttonBuy631.Location = new Point(12, 232);
 			buttonBuy631.Name = "buttonBuy631";
 			buttonBuy631.Size = new Size(201, 72);
 			buttonBuy631.TabIndex = 10;
@@ -94,7 +98,7 @@
 			// 
 			// buttonSell631
 			// 
-			buttonSell631.Location = new Point(245, 171);
+			buttonSell631.Location = new Point(245, 232);
 			buttonSell631.Name = "buttonSell631";
 			buttonSell631.Size = new Size(201, 72);
 			buttonSell631.TabIndex = 11;
@@ -139,7 +143,7 @@
 			// 
 			// buttonBuy541
 			// 
-			buttonBuy541.Location = new Point(12, 261);
+			buttonBuy541.Location = new Point(12, 322);
 			buttonBuy541.Name = "buttonBuy541";
 			buttonBuy541.Size = new Size(201, 72);
 			buttonBuy541.TabIndex = 12;
@@ -149,7 +153,7 @@
 			// 
 			// buttonSell541
 			// 
-			buttonSell541.Location = new Point(245, 261);
+			buttonSell541.Location = new Point(245, 322);
 			buttonSell541.Name = "buttonSell541";
 			buttonSell541.Size = new Size(201, 72);
 			buttonSell541.TabIndex = 13;
@@ -159,7 +163,7 @@
 			// 
 			// buttonBuy64
 			// 
-			buttonBuy64.Location = new Point(12, 349);
+			buttonBuy64.Location = new Point(12, 410);
 			buttonBuy64.Name = "buttonBuy64";
 			buttonBuy64.Size = new Size(201, 72);
 			buttonBuy64.TabIndex = 14;
@@ -169,7 +173,7 @@
 			// 
 			// buttonSell64
 			// 
-			buttonSell64.Location = new Point(245, 349);
+			buttonSell64.Location = new Point(245, 410);
 			buttonSell64.Name = "buttonSell64";
 			buttonSell64.Size = new Size(201, 72);
 			buttonSell64.TabIndex = 15;
@@ -179,7 +183,7 @@
 			// 
 			// buttonSlToBe
 			// 
-			buttonSlToBe.Location = new Point(505, 171);
+			buttonSlToBe.Location = new Point(505, 232);
 			buttonSlToBe.Name = "buttonSlToBe";
 			buttonSlToBe.Size = new Size(264, 84);
 			buttonSlToBe.TabIndex = 30;
@@ -189,7 +193,7 @@
 			// 
 			// buttonSlPtMonitoring
 			// 
-			buttonSlPtMonitoring.Location = new Point(505, 337);
+			buttonSlPtMonitoring.Location = new Point(505, 398);
 			buttonSlPtMonitoring.Name = "buttonSlPtMonitoring";
 			buttonSlPtMonitoring.Size = new Size(264, 84);
 			buttonSlPtMonitoring.TabIndex = 32;
@@ -199,14 +203,14 @@
 			// 
 			// progressBarSlToBe
 			// 
-			progressBarSlToBe.Location = new Point(505, 261);
+			progressBarSlToBe.Location = new Point(505, 322);
 			progressBarSlToBe.Name = "progressBarSlToBe";
 			progressBarSlToBe.Size = new Size(264, 40);
 			progressBarSlToBe.TabIndex = 33;
 			// 
 			// progressBarSlPtMonitoring
 			// 
-			progressBarSlPtMonitoring.Location = new Point(505, 427);
+			progressBarSlPtMonitoring.Location = new Point(505, 488);
 			progressBarSlPtMonitoring.Name = "progressBarSlPtMonitoring";
 			progressBarSlPtMonitoring.Size = new Size(264, 40);
 			progressBarSlPtMonitoring.TabIndex = 34;
@@ -216,11 +220,45 @@
 			timer.Enabled = true;
 			timer.Tick += timer_Tick;
 			// 
+			// trackBarPositionUsing
+			// 
+			trackBarPositionUsing.LargeChange = 10;
+			trackBarPositionUsing.Location = new Point(165, 146);
+			trackBarPositionUsing.Maximum = 250;
+			trackBarPositionUsing.Minimum = 1;
+			trackBarPositionUsing.Name = "trackBarPositionUsing";
+			trackBarPositionUsing.Size = new Size(671, 80);
+			trackBarPositionUsing.SmallChange = 5;
+			trackBarPositionUsing.TabIndex = 8;
+			trackBarPositionUsing.Value = 1;
+			trackBarPositionUsing.ValueChanged += trackBarPositionUsing_ValueChanged;
+			// 
+			// labelPositionUsing
+			// 
+			labelPositionUsing.AutoSize = true;
+			labelPositionUsing.Location = new Point(12, 146);
+			labelPositionUsing.Name = "labelPositionUsing";
+			labelPositionUsing.Size = new Size(147, 30);
+			labelPositionUsing.TabIndex = 35;
+			labelPositionUsing.Text = "Pos. utilization";
+			// 
+			// labelPositionUsingPercent
+			// 
+			labelPositionUsingPercent.AutoSize = true;
+			labelPositionUsingPercent.Location = new Point(12, 176);
+			labelPositionUsingPercent.Name = "labelPositionUsingPercent";
+			labelPositionUsingPercent.Size = new Size(63, 30);
+			labelPositionUsingPercent.TabIndex = 36;
+			labelPositionUsingPercent.Text = "100%";
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(12F, 30F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(847, 499);
+			ClientSize = new Size(847, 546);
+			Controls.Add(labelPositionUsingPercent);
+			Controls.Add(labelPositionUsing);
+			Controls.Add(trackBarPositionUsing);
 			Controls.Add(progressBarSlPtMonitoring);
 			Controls.Add(progressBarSlToBe);
 			Controls.Add(buttonSlPtMonitoring);
@@ -242,6 +280,7 @@
 			Name = "Form1";
 			Text = "XTB";
 			Load += Form1_Load;
+			((System.ComponentModel.ISupportInitialize)trackBarPositionUsing).EndInit();
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -267,5 +306,8 @@
 		private ProgressBar progressBarSlToBe;
 		private ProgressBar progressBarSlPtMonitoring;
 		private System.Windows.Forms.Timer timer;
+		private TrackBar trackBarPositionUsing;
+		private Label labelPositionUsing;
+		private Label labelPositionUsingPercent;
 	}
 }

@@ -80,7 +80,7 @@ namespace Xtb
 				if (Double.TryParse(textBoxSlDistance.Text, out slDistance))
 				{
 					XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, slDistance);
-					xtbApi.BuyLimit(limitPrice, p1, p2, p3);
+					xtbApi.BuyLimit(limitPrice, p1 * GetTrackBarPositionUsingPercent() / 100, p2 * GetTrackBarPositionUsingPercent() / 100, p3 * GetTrackBarPositionUsingPercent() / 100);
 				}
 			}
 			else
@@ -89,7 +89,7 @@ namespace Xtb
 				if (Double.TryParse(textBoxSlDistance.Text, out slDistance))
 				{
 					XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, slDistance);
-					xtbApi.Buy(p1, p2, p3);
+					xtbApi.Buy(p1 * GetTrackBarPositionUsingPercent() / 100, p2 * GetTrackBarPositionUsingPercent() / 100, p3 * GetTrackBarPositionUsingPercent() / 100);
 				}
 			}
 		}
@@ -105,7 +105,7 @@ namespace Xtb
 				if (Double.TryParse(textBoxSlDistance.Text, out slDistance))
 				{
 					XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, slDistance);
-					xtbApi.SellLimit(limitPrice, p1, p2, p3);
+					xtbApi.SellLimit(limitPrice, p1 * GetTrackBarPositionUsingPercent() / 100, p2 * GetTrackBarPositionUsingPercent() / 100, p3 * GetTrackBarPositionUsingPercent() / 100);
 				}
 			}
 			else
@@ -114,7 +114,7 @@ namespace Xtb
 				if (Double.TryParse(textBoxSlDistance.Text, out slDistance))
 				{
 					XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, slDistance);
-					xtbApi.Sell(p1, p2, p3);
+					xtbApi.Sell(p1 * GetTrackBarPositionUsingPercent() / 100, p2 * GetTrackBarPositionUsingPercent() / 100, p3 * GetTrackBarPositionUsingPercent() / 100);
 				}
 			}
 		}
@@ -122,10 +122,11 @@ namespace Xtb
 		private void buttonCalculate_Click(object sender, EventArgs e)
 		{
 			DisableSlToBeAutomation();
-			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
+			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0, true);
 			(double, double) result = xtbApi.CalculateProfit();
 			var accountCurrency = xtbApi.GetAccountCurrency();
-			labelRRR.Text = $"RRR: {Math.Round(result.Item1 / result.Item2, 2)}\r\nProfit: {Math.Round(result.Item1, 2)} {accountCurrency}\r\nLoss: {Math.Round(result.Item2, 2)} {accountCurrency}";
+			string fullSl = "Full SL loss: " + Math.Round(xtbApi.GetRisk() * GetTrackBarPositionUsingPercent() / 100, 2) + " " + accountCurrency;
+			labelRRR.Text = $"RRR: {Math.Round(result.Item1 / result.Item2, 2)}\r\nProfit: {Math.Round(result.Item1, 2)} {accountCurrency}\r\nLoss: {Math.Round(result.Item2, 2)} {accountCurrency}\r\nFull SL: {fullSl} {accountCurrency}";
 		}
 
 		private void buttonSlToBe_Click(object sender, EventArgs e)
@@ -146,8 +147,11 @@ namespace Xtb
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			DisableSlToBeAutomation(); 
+			DisableSlToBeAutomation();
 			timer.Interval = 1000;
+
+			trackBarPositionUsing.Value = 50;
+			trackBarPositionUsing_ValueChanged(null, null);
 		}
 
 		private void DisableSlToBeAutomation()
@@ -225,6 +229,33 @@ namespace Xtb
 				//	DisableSlToBeAutomation();
 				//}
 			}
+		}
+
+		private double GetTrackBarPositionUsingPercent()
+		{
+			return trackBarPositionUsing.Value;
+			/*
+						switch (trackBarPositionUsing.Value)
+						{
+							case 0: return 10;
+							case 1: return 25;
+							case 2: return 50;
+							case 3: return 75;
+							case 4: return 100;
+							case 5: return 125;
+							case 6: return 150;
+							case 7: return 175;
+							case 8: return 200;
+							case 9: return 225;
+							case 10: return 250;
+							default: throw new Exception();
+						}
+			*/
+		}
+
+		private void trackBarPositionUsing_ValueChanged(object? sender, EventArgs? e)
+		{
+			labelPositionUsingPercent.Text = GetTrackBarPositionUsingPercent().ToString() + " %";
 		}
 	}
 }

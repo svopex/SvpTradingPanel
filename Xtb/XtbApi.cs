@@ -19,6 +19,7 @@ namespace Xtb
 		private string userId = "14734282";
 		private string password = "***";
 		private double riskInPercent = 0.01;
+		private double BrokerMarginEquityCoefficient = 4;
 
 		private string symbol = "USDJPY";
 		private double slDistance = 185;
@@ -28,11 +29,15 @@ namespace Xtb
 		private SymbolResponse? symbolsResponse = null;
 		private int precision;
 
-		public XtbApi(string symbol, double slDistance)
+		public XtbApi(string symbol, double slDistance, bool fullInit = false)
 		{
 			this.symbol = symbol;
 			this.slDistance = slDistance;
 			Init();
+			if (fullInit)
+			{
+				FullInit();
+			}
 		}
 
 		private double CalcPosition(bool buy, double position, double step)
@@ -158,10 +163,15 @@ namespace Xtb
 			LoginResponse loginResponse = APICommandFactory.ExecuteLoginCommand(connector, credentials, true);
 		}
 
+		public double GetRisk()
+		{
+			return risk;
+		}
+
 		private void FullInit()
 		{
 			var margin = APICommandFactory.ExecuteMarginLevelCommand(connector);
-			risk = margin.Equity!.Value * riskInPercent;
+			risk = margin.Equity!.Value * riskInPercent * BrokerMarginEquityCoefficient;
 
 			symbolsResponse = APICommandFactory.ExecuteSymbolCommand(connector, symbol);
 			precision = (int)Math.Round((double)symbolsResponse.Symbol.Precision!.Value, 0);
@@ -180,7 +190,10 @@ namespace Xtb
 			position = CalcPosition(false, position, 0.01);
 
 			CreateOrderLimit(false, price, 0.997, 1.005, precision, position * p1);
-			CreateOrderLimit(false, price, 0.995, 1.005, precision, position * p2);
+			if (p2 > 0)
+			{
+				CreateOrderLimit(false, price, 0.995, 1.005, precision, position * p2);
+			}
 			if (p3 > 0)
 			{
 				CreateOrderLimit(false, price, 0.993, 1.005, precision, position * p3);
@@ -195,7 +208,10 @@ namespace Xtb
 			position = CalcPosition(true, position, 0.01);
 
 			CreateOrderLimit(true, price, 1.003, 0.995, precision, position * p1);
-			CreateOrderLimit(true, price, 1.005, 0.995, precision, position * p2);
+			if (p2 > 0)
+			{
+				CreateOrderLimit(true, price, 1.005, 0.995, precision, position * p2);
+			}
 			if (p3 > 0)
 			{
 				CreateOrderLimit(true, price, 1.007, 0.995, precision, position * p3);
@@ -210,7 +226,10 @@ namespace Xtb
 			position = CalcPosition(true, position, 0.01);
 
 			CreateOrder(true, 1.003, 0.995, precision, position * p1);
-			CreateOrder(true, 1.005, 0.995, precision, position * p2);
+			if (p2 > 0)
+			{
+				CreateOrder(true, 1.005, 0.995, precision, position * p2);
+			}
 			if (p3 > 0)
 			{
 				CreateOrder(true, 1.007, 0.995, precision, position * p3);
@@ -225,7 +244,10 @@ namespace Xtb
 			position = CalcPosition(false, position, 0.01);
 
 			CreateOrder(false, 0.997, 1.005, precision, position * p1);
-			CreateOrder(false, 0.995, 1.005, precision, position * p2);
+			if (p2 > 0)
+			{
+				CreateOrder(false, 0.995, 1.005, precision, position * p2);
+			}
 			if (p3 > 0)
 			{
 				CreateOrder(false, 0.993, 1.005, precision, position * p3);
@@ -234,7 +256,6 @@ namespace Xtb
 
 		public (double, double) CalculateProfit()
 		{
-			FullInit();
 			TradesResponse tradesResponse = APICommandFactory.ExecuteTradesCommand(connector, false);
 			double profit = 0;
 			double loss = 0;
@@ -253,7 +274,6 @@ namespace Xtb
 
 		public string GetAccountCurrency()
 		{
-			FullInit();
 			var result = APICommandFactory.ExecuteCurrentUserDataCommand(connector);
 			return result.Currency;
 		}
