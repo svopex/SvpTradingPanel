@@ -36,6 +36,8 @@
 			buttonSell = new Button();
 			labelLimitPrice = new Label();
 			textBoxLimitPrice = new TextBox();
+			buttonCalculate = new Button();
+			labelRRR = new Label();
 			SuspendLayout();
 			// 
 			// labelSymbol
@@ -72,7 +74,7 @@
 			// 
 			// buttonBuy
 			// 
-			buttonBuy.Location = new Point(109, 188);
+			buttonBuy.Location = new Point(12, 171);
 			buttonBuy.Name = "buttonBuy";
 			buttonBuy.Size = new Size(201, 109);
 			buttonBuy.TabIndex = 4;
@@ -82,7 +84,7 @@
 			// 
 			// buttonSell
 			// 
-			buttonSell.Location = new Point(436, 188);
+			buttonSell.Location = new Point(219, 171);
 			buttonSell.Name = "buttonSell";
 			buttonSell.Size = new Size(201, 109);
 			buttonSell.TabIndex = 5;
@@ -106,11 +108,32 @@
 			textBoxLimitPrice.Size = new Size(175, 35);
 			textBoxLimitPrice.TabIndex = 7;
 			// 
+			// buttonCalculate
+			// 
+			buttonCalculate.Location = new Point(624, 171);
+			buttonCalculate.Name = "buttonCalculate";
+			buttonCalculate.Size = new Size(201, 109);
+			buttonCalculate.TabIndex = 8;
+			buttonCalculate.Text = "Calculate";
+			buttonCalculate.UseVisualStyleBackColor = true;
+			buttonCalculate.Click += buttonCalculate_Click;
+			// 
+			// labelRRR
+			// 
+			labelRRR.AutoSize = true;
+			labelRRR.Location = new Point(334, 11);
+			labelRRR.Name = "labelRRR";
+			labelRRR.Size = new Size(71, 30);
+			labelRRR.TabIndex = 9;
+			labelRRR.Text = "RRR: -";
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(12F, 30F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(759, 367);
+			ClientSize = new Size(837, 367);
+			Controls.Add(labelRRR);
+			Controls.Add(buttonCalculate);
 			Controls.Add(textBoxLimitPrice);
 			Controls.Add(labelLimitPrice);
 			Controls.Add(buttonSell);
@@ -135,5 +158,7 @@
 		private Button buttonSell;
 		private Label labelLimitPrice;
 		private TextBox textBoxLimitPrice;
+		private Button buttonCalculate;
+		private Label labelRRR;
 	}
 }

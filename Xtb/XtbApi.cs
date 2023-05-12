@@ -166,52 +166,75 @@ namespace Xtb
 			}
 		}
 
-		public void SellLimit(double price)
+		public void SellLimit(double price, double p1, double p2, double p3)
 		{
 			Init();
 
 			var position = CalcPosition(false, 0.01, 0.1);
 			position = CalcPosition(false, position, 0.01);
 
-			CreateOrderLimit(false, price, 0.997, 1.005, precision, position * 0.6);
-			CreateOrderLimit(false, price, 0.995, 1.005, precision, position * 0.3);
-			CreateOrderLimit(false, price, 0.993, 1.005, precision, position * 0.1);
+			CreateOrderLimit(false, price, 0.997, 1.005, precision, position * p1);
+			CreateOrderLimit(false, price, 0.995, 1.005, precision, position * p2);
+			CreateOrderLimit(false, price, 0.993, 1.005, precision, position * p3);
 		}
 
-		public void BuyLimit(double price)
+		public void BuyLimit(double price, double p1, double p2, double p3)
 		{
 			Init();
 
 			var position = CalcPosition(true, 0.01, 0.1);
 			position = CalcPosition(true, position, 0.01);
 
-			CreateOrderLimit(true, price, 1.003, 0.995, precision, position * 0.6);
-			CreateOrderLimit(true, price, 1.005, 0.995, precision, position * 0.3);
-			CreateOrderLimit(true, price, 1.007, 0.995, precision, position * 0.1);
+			CreateOrderLimit(true, price, 1.003, 0.995, precision, position * p1);
+			CreateOrderLimit(true, price, 1.005, 0.995, precision, position * p2);
+			CreateOrderLimit(true, price, 1.007, 0.995, precision, position * p3);
 		}
 
-		public void Buy()
+		public void Buy(double p1, double p2, double p3)
 		{
 			Init();
 
 			var position = CalcPosition(true, 0.01, 0.1);
 			position = CalcPosition(true, position, 0.01);
 
-			CreateOrder(true, 1.003, 0.995, precision, position * 0.6);
-			CreateOrder(true, 1.005, 0.995, precision, position * 0.3);
-			CreateOrder(true, 1.007, 0.995, precision, position * 0.1);
+			CreateOrder(true, 1.003, 0.995, precision, position * p1);
+			CreateOrder(true, 1.005, 0.995, precision, position * p2);
+			CreateOrder(true, 1.007, 0.995, precision, position * p3);
 		}
 
-		public void Sell()
+		public void Sell(double p1, double p2, double p3)
 		{
 			Init();
 
 			var position = CalcPosition(false, 0.01, 0.1);
 			position = CalcPosition(false, position, 0.01);
 
-			CreateOrder(false, 0.997, 1.005, precision, position * 0.6);
-			CreateOrder(false, 0.995, 1.005, precision, position * 0.3);
-			CreateOrder(false, 0.993, 1.005, precision, position * 0.1);
+			CreateOrder(false, 0.997, 1.005, precision, position * p1);
+			CreateOrder(false, 0.995, 1.005, precision, position * p2);
+			CreateOrder(false, 0.993, 1.005, precision, position * p3);
+		}
+
+		public (double, double) CalculateProfit()
+		{
+			Init();
+			TradesResponse tradesResponse = APICommandFactory.ExecuteTradesCommand(connector, false);
+			double profit = 0;
+			double loss = 0;
+			foreach (var tradeRecord in tradesResponse.TradeRecords)
+			{
+				var result = APICommandFactory.ExecuteProfitCalculationCommand(connector, symbol, tradeRecord.Volume, tradeRecord.Open_price > tradeRecord.Tp ? TRADE_OPERATION_CODE.SELL : TRADE_OPERATION_CODE.BUY, tradeRecord.Open_price, tradeRecord.Tp);
+				profit += result.Profit!.Value;
+				result = APICommandFactory.ExecuteProfitCalculationCommand(connector, symbol, tradeRecord.Volume, tradeRecord.Open_price > tradeRecord.Sl ? TRADE_OPERATION_CODE.SELL : TRADE_OPERATION_CODE.BUY, tradeRecord.Open_price, tradeRecord.Sl);
+				loss += result.Profit!.Value;
+			}
+			return (profit, loss);
+		}
+
+		public string GetAccountCurrency()
+		{
+			Init();
+			var result = APICommandFactory.ExecuteCurrentUserDataCommand(connector);
+			return result.Currency;
 		}
 	}
 }
