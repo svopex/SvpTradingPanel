@@ -32,12 +32,16 @@
 			textBoxSymbol = new TextBox();
 			labelSlDistance = new Label();
 			textBoxSlDistance = new TextBox();
-			buttonBuy = new Button();
-			buttonSell = new Button();
+			buttonBuy631 = new Button();
+			buttonSell631 = new Button();
 			labelLimitPrice = new Label();
 			textBoxLimitPrice = new TextBox();
 			buttonCalculate = new Button();
 			labelRRR = new Label();
+			buttonBuy541 = new Button();
+			buttonSell541 = new Button();
+			buttonBuy64 = new Button();
+			buttonSell64 = new Button();
 			SuspendLayout();
 			// 
 			// labelSymbol
@@ -72,25 +76,25 @@
 			textBoxSlDistance.Size = new Size(175, 35);
 			textBoxSlDistance.TabIndex = 3;
 			// 
-			// buttonBuy
+			// buttonBuy631
 			// 
-			buttonBuy.Location = new Point(12, 171);
-			buttonBuy.Name = "buttonBuy";
-			buttonBuy.Size = new Size(201, 109);
-			buttonBuy.TabIndex = 4;
-			buttonBuy.Text = "Buy";
-			buttonBuy.UseVisualStyleBackColor = true;
-			buttonBuy.Click += buttonBuy_Click;
+			buttonBuy631.Location = new Point(12, 171);
+			buttonBuy631.Name = "buttonBuy631";
+			buttonBuy631.Size = new Size(201, 72);
+			buttonBuy631.TabIndex = 4;
+			buttonBuy631.Text = "Buy 60% 30% 10%";
+			buttonBuy631.UseVisualStyleBackColor = true;
+			buttonBuy631.Click += buttonBuy631_Click;
 			// 
-			// buttonSell
+			// buttonSell631
 			// 
-			buttonSell.Location = new Point(219, 171);
-			buttonSell.Name = "buttonSell";
-			buttonSell.Size = new Size(201, 109);
-			buttonSell.TabIndex = 5;
-			buttonSell.Text = "Sell";
-			buttonSell.UseVisualStyleBackColor = true;
-			buttonSell.Click += buttonSell_Click;
+			buttonSell631.Location = new Point(245, 171);
+			buttonSell631.Name = "buttonSell631";
+			buttonSell631.Size = new Size(201, 72);
+			buttonSell631.TabIndex = 5;
+			buttonSell631.Text = "Sell 60% 30% 10%";
+			buttonSell631.UseVisualStyleBackColor = true;
+			buttonSell631.Click += buttonSell631_Click;
 			// 
 			// labelLimitPrice
 			// 
@@ -127,17 +131,61 @@
 			labelRRR.TabIndex = 9;
 			labelRRR.Text = "RRR: -";
 			// 
+			// buttonBuy541
+			// 
+			buttonBuy541.Location = new Point(12, 261);
+			buttonBuy541.Name = "buttonBuy541";
+			buttonBuy541.Size = new Size(201, 72);
+			buttonBuy541.TabIndex = 10;
+			buttonBuy541.Text = "Buy 50% 40% 10%";
+			buttonBuy541.UseVisualStyleBackColor = true;
+			buttonBuy541.Click += buttonBuy541_Click;
+			// 
+			// buttonSell541
+			// 
+			buttonSell541.Location = new Point(245, 261);
+			buttonSell541.Name = "buttonSell541";
+			buttonSell541.Size = new Size(201, 72);
+			buttonSell541.TabIndex = 11;
+			buttonSell541.Text = "Sell 50% 40% 10%";
+			buttonSell541.UseVisualStyleBackColor = true;
+			buttonSell541.Click += buttonSell541_Click;
+			// 
+			// buttonBuy64
+			// 
+			buttonBuy64.Location = new Point(12, 349);
+			buttonBuy64.Name = "buttonBuy64";
+			buttonBuy64.Size = new Size(201, 72);
+			buttonBuy64.TabIndex = 12;
+			buttonBuy64.Text = "Buy 60% 40%";
+			buttonBuy64.UseVisualStyleBackColor = true;
+			buttonBuy64.Click += buttonBuy64_Click;
+			// 
+			// buttonSell64
+			// 
+			buttonSell64.Location = new Point(245, 349);
+			buttonSell64.Name = "buttonSell64";
+			buttonSell64.Size = new Size(201, 72);
+			buttonSell64.TabIndex = 13;
+			buttonSell64.Text = "Sell 60% 40%";
+			buttonSell64.UseVisualStyleBackColor = true;
+			buttonSell64.Click += buttonSell64_Click;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(12F, 30F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(837, 367);
+			ClientSize = new Size(848, 439);
+			Controls.Add(buttonSell64);
+			Controls.Add(buttonBuy64);
+			Controls.Add(buttonSell541);
+			Controls.Add(buttonBuy541);
 			Controls.Add(labelRRR);
 			Controls.Add(buttonCalculate);
 			Controls.Add(textBoxLimitPrice);
 			Controls.Add(labelLimitPrice);
-			Controls.Add(buttonSell);
-			Controls.Add(buttonBuy);
+			Controls.Add(buttonSell631);
+			Controls.Add(buttonBuy631);
 			Controls.Add(textBoxSlDistance);
 			Controls.Add(labelSlDistance);
 			Controls.Add(textBoxSymbol);
@@ -154,11 +202,15 @@
 		private TextBox textBoxSymbol;
 		private Label labelSlDistance;
 		private TextBox textBoxSlDistance;
-		private Button buttonBuy;
-		private Button buttonSell;
+		private Button buttonBuy631;
+		private Button buttonSell631;
 		private Label labelLimitPrice;
 		private TextBox textBoxLimitPrice;
 		private Button buttonCalculate;
 		private Label labelRRR;
+		private Button buttonBuy541;
+		private Button buttonSell541;
+		private Button buttonBuy64;
+		private Button buttonSell64;
 	}
 }

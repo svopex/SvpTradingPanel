@@ -175,7 +175,10 @@ namespace Xtb
 
 			CreateOrderLimit(false, price, 0.997, 1.005, precision, position * p1);
 			CreateOrderLimit(false, price, 0.995, 1.005, precision, position * p2);
-			CreateOrderLimit(false, price, 0.993, 1.005, precision, position * p3);
+			if (p3 > 0)
+			{
+				CreateOrderLimit(false, price, 0.993, 1.005, precision, position * p3);
+			}
 		}
 
 		public void BuyLimit(double price, double p1, double p2, double p3)
@@ -187,7 +190,10 @@ namespace Xtb
 
 			CreateOrderLimit(true, price, 1.003, 0.995, precision, position * p1);
 			CreateOrderLimit(true, price, 1.005, 0.995, precision, position * p2);
-			CreateOrderLimit(true, price, 1.007, 0.995, precision, position * p3);
+			if (p3 > 0)
+			{
+				CreateOrderLimit(true, price, 1.007, 0.995, precision, position * p3);
+			}			
 		}
 
 		public void Buy(double p1, double p2, double p3)
@@ -199,7 +205,10 @@ namespace Xtb
 
 			CreateOrder(true, 1.003, 0.995, precision, position * p1);
 			CreateOrder(true, 1.005, 0.995, precision, position * p2);
-			CreateOrder(true, 1.007, 0.995, precision, position * p3);
+			if (p3 > 0)
+			{
+				CreateOrder(true, 1.007, 0.995, precision, position * p3);
+			}			
 		}
 
 		public void Sell(double p1, double p2, double p3)
@@ -211,7 +220,10 @@ namespace Xtb
 
 			CreateOrder(false, 0.997, 1.005, precision, position * p1);
 			CreateOrder(false, 0.995, 1.005, precision, position * p2);
-			CreateOrder(false, 0.993, 1.005, precision, position * p3);
+			if (p3 > 0)
+			{
+				CreateOrder(false, 0.993, 1.005, precision, position * p3);
+			}
 		}
 
 		public (double, double) CalculateProfit()
