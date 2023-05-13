@@ -17,7 +17,7 @@ namespace Xtb
 	{
 		private Server serverData = Servers.DEMO;
 		private string userId = "14734282";
-		private string password = "***";
+		private string password = "Xtb2013!";
 		private double riskInPercent = 0.005;
 		private double BrokerMarginEquityCoefficient = 1;
 
@@ -280,7 +280,7 @@ namespace Xtb
 			return result.Currency;
 		}
 
-		public List<Order> GetMarketOrders()
+		public List<Order> GetMarketOrders(bool allSymbols)
 		{
 			List<Order> orders = new List<Order>();
 
@@ -295,28 +295,170 @@ namespace Xtb
 				order.OpenPrice = tradeRecord.Open_price!.Value;
 				order.Instrument = tradeRecord.Symbol;
 				order.Units = tradeRecord.Volume!.Value;
+				order.Buy = tradeRecord.Cmd == TRADE_OPERATION_CODE.BUY.Code;
 				if ((tradeRecord.Cmd!.Value == TRADE_OPERATION_CODE.BUY.Code) || (tradeRecord.Cmd!.Value == TRADE_OPERATION_CODE.SELL.Code))
 				{
-					orders.Add(order);
+					if (allSymbols || (order.Instrument == symbol))
+					{
+						orders.Add(order);
+					}
 				}
 			}
 			return orders;
+		}
+
+		public List<Order> GetPendingOrders(bool allSymbols)
+		{
+			List<Order> orders = new List<Order>();
+
+			TradesResponse tradesResponse = APICommandFactory.ExecuteTradesCommand(connector, true);
+
+			foreach (var tradeRecord in tradesResponse.TradeRecords)
+			{
+				Order order = new Order();
+				order.Id = tradeRecord.Order!.Value;
+				order.SL = tradeRecord.Sl!.Value;
+				order.PT = tradeRecord.Tp!.Value;
+				order.OpenPrice = tradeRecord.Open_price!.Value;
+				order.Instrument = tradeRecord.Symbol;
+				order.Units = tradeRecord.Volume!.Value;
+				order.Buy = tradeRecord.Cmd == TRADE_OPERATION_CODE.BUY_LIMIT.Code;
+				if ((tradeRecord.Cmd!.Value == TRADE_OPERATION_CODE.BUY_LIMIT.Code) || (tradeRecord.Cmd!.Value == TRADE_OPERATION_CODE.SELL_LIMIT.Code))
+				{
+					if (allSymbols || (order.Instrument == symbol))
+					{
+						orders.Add(order);
+					}
+				}
+			}
+			return orders;
+		}
+
+		public void ClosePendingOrder(Order order)
+		{
+			APICommandFactory.ExecuteTradeTransactionCommand(
+			connector,
+				order.Buy ? TRADE_OPERATION_CODE.BUY : TRADE_OPERATION_CODE.SELL,
+				TRADE_TRANSACTION_TYPE.ORDER_DELETE,
+				NormalizeDouble(order.OpenPrice),
+				NormalizeDouble(order.SL),
+				NormalizeDouble(order.PT),
+				order.Instrument,
+				order.Units,
+				order.Id,
+				null,
+				null);
+		}
+
+		public void CloseMarketOrder(Order order)
+		{
+			APICommandFactory.ExecuteTradeTransactionCommand(
+			connector,
+				order.Buy ? TRADE_OPERATION_CODE.BUY : TRADE_OPERATION_CODE.SELL,
+				TRADE_TRANSACTION_TYPE.ORDER_CLOSE,
+				NormalizeDouble(order.OpenPrice),
+				NormalizeDouble(order.SL),
+				NormalizeDouble(order.PT),
+				order.Instrument,
+				order.Units,
+				order.Id,
+				null,
+				null);
+		}
+
+		public void ModifyPendingOrder(Order order)
+		{
+			APICommandFactory.ExecuteTradeTransactionCommand(
+			connector,
+				order.Buy ? TRADE_OPERATION_CODE.BUY_LIMIT : TRADE_OPERATION_CODE.SELL_LIMIT,
+				TRADE_TRANSACTION_TYPE.ORDER_MODIFY,
+				NormalizeDouble(order.OpenPrice),
+				NormalizeDouble(order.SL),
+				NormalizeDouble(order.PT),
+				order.Instrument,
+				order.Units,
+				order.Id,
+				null,
+				null);
 		}
 
 		public void SetPositionSlAndPt(Order order)
 		{
 			APICommandFactory.ExecuteTradeTransactionCommand(
 			connector,
-				order.OpenPrice > order.PT ? TRADE_OPERATION_CODE.SELL : TRADE_OPERATION_CODE.BUY,
+				order.Buy ? TRADE_OPERATION_CODE.BUY : TRADE_OPERATION_CODE.SELL,
 				TRADE_TRANSACTION_TYPE.ORDER_MODIFY,
-				order.OpenPrice,
-				order.SL,
-				order.PT,
+				NormalizeDouble(order.OpenPrice),
+				NormalizeDouble(order.SL),
+				NormalizeDouble(order.PT),
 				order.Instrument,
 				order.Units,
 				order.Id,
 				null,
 				null);
+		}
+
+		private double NormalizeDouble(double p)
+		{
+			return Math.Round(p, precision);
+		}
+
+		private void FillSlPt(Order order, double SlRelative, double PtRelative)
+		{
+			if (SlRelative != 0)
+			{
+				if (order.Units > 0)
+				{
+					order.SL = NormalizeDouble(order.OpenPrice - SlRelative);
+				}
+				else
+				{
+					order.SL = NormalizeDouble(order.OpenPrice + SlRelative);
+				}
+			}
+			if (PtRelative != 0)
+			{
+				if (order.Units > 0)
+				{
+					order.PT = NormalizeDouble(order.OpenPrice + PtRelative);
+				}
+				else
+				{
+					order.PT = NormalizeDouble(order.OpenPrice - PtRelative);
+				}
+			}
+		}
+
+		public void SetPendingOrderSlAndPtPercent(Order order, double slPercent, double ptPercent)
+		{
+			double slRelative = 0;
+			double ptRelative = 0;
+			if (slPercent != 0)
+			{
+				slRelative = order.OpenPrice * slPercent / 100;
+			}
+			if (ptPercent != 0)
+			{
+				ptRelative = order.OpenPrice * ptPercent / 100;
+			}
+			FillSlPt(order, slRelative, ptRelative);
+			ModifyPendingOrder(order);
+		}
+
+		public void SetPositionSlAndPtPercent(Order order, double slPercent, double ptPercent)
+		{
+			double slRelative = 0;
+			double ptRelative = 0;
+			if (slPercent != 0)
+			{
+				slRelative = order.OpenPrice * slPercent / 100;
+			}
+			if (ptPercent != 0)
+			{
+				ptRelative = order.OpenPrice * ptPercent / 100;
+			}
+			FillSlPt(order, slRelative, ptRelative);
+			SetPositionSlAndPt(order);
 		}
 
 		public (string, double) GetLatestProfit(string instrument)

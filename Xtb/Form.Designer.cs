@@ -60,6 +60,16 @@
 			buttonSell60 = new Button();
 			buttonSell30 = new Button();
 			buttonSell10 = new Button();
+			buttonJoinSl = new Button();
+			checkBoxMovePendingOrder = new CheckBox();
+			buttonResetTp = new Button();
+			buttonSlUpMax = new Button();
+			buttonSlDownMax = new Button();
+			buttonSlDown = new Button();
+			buttonSlUp = new Button();
+			buttonSlDownMin = new Button();
+			buttonSlUpMin = new Button();
+			buttonCloseAll = new Button();
 			((System.ComponentModel.ISupportInitialize)trackBarPositionUsing).BeginInit();
 			SuspendLayout();
 			// 
@@ -97,20 +107,20 @@
 			// 
 			// buttonBuy631
 			// 
-			buttonBuy631.Location = new Point(12, 232);
+			buttonBuy631.Location = new Point(12, 265);
 			buttonBuy631.Name = "buttonBuy631";
 			buttonBuy631.Size = new Size(201, 72);
-			buttonBuy631.TabIndex = 10;
+			buttonBuy631.TabIndex = 30;
 			buttonBuy631.Text = "Buy 60% 30% 10%";
 			buttonBuy631.UseVisualStyleBackColor = true;
 			buttonBuy631.Click += buttonBuy631_Click;
 			// 
 			// buttonSell631
 			// 
-			buttonSell631.Location = new Point(245, 232);
+			buttonSell631.Location = new Point(245, 265);
 			buttonSell631.Name = "buttonSell631";
 			buttonSell631.Size = new Size(201, 72);
-			buttonSell631.TabIndex = 11;
+			buttonSell631.TabIndex = 31;
 			buttonSell631.Text = "Sell 60% 30% 10%";
 			buttonSell631.UseVisualStyleBackColor = true;
 			buttonSell631.Click += buttonSell631_Click;
@@ -136,7 +146,7 @@
 			buttonCalculate.Location = new Point(635, 14);
 			buttonCalculate.Name = "buttonCalculate";
 			buttonCalculate.Size = new Size(201, 109);
-			buttonCalculate.TabIndex = 21;
+			buttonCalculate.TabIndex = 10;
 			buttonCalculate.Text = "Calculate";
 			buttonCalculate.UseVisualStyleBackColor = true;
 			buttonCalculate.Click += buttonCalculate_Click;
@@ -147,82 +157,82 @@
 			labelRRR.Location = new Point(334, 11);
 			labelRRR.Name = "labelRRR";
 			labelRRR.Size = new Size(71, 30);
-			labelRRR.TabIndex = 20;
+			labelRRR.TabIndex = 9;
 			labelRRR.Text = "RRR: -";
 			// 
 			// buttonBuy541
 			// 
-			buttonBuy541.Location = new Point(12, 310);
+			buttonBuy541.Location = new Point(12, 343);
 			buttonBuy541.Name = "buttonBuy541";
 			buttonBuy541.Size = new Size(201, 72);
-			buttonBuy541.TabIndex = 12;
+			buttonBuy541.TabIndex = 32;
 			buttonBuy541.Text = "Buy 50% 40% 10%";
 			buttonBuy541.UseVisualStyleBackColor = true;
 			buttonBuy541.Click += buttonBuy541_Click;
 			// 
 			// buttonSell541
 			// 
-			buttonSell541.Location = new Point(245, 310);
+			buttonSell541.Location = new Point(245, 343);
 			buttonSell541.Name = "buttonSell541";
 			buttonSell541.Size = new Size(201, 72);
-			buttonSell541.TabIndex = 13;
+			buttonSell541.TabIndex = 33;
 			buttonSell541.Text = "Sell 50% 40% 10%";
 			buttonSell541.UseVisualStyleBackColor = true;
 			buttonSell541.Click += buttonSell541_Click;
 			// 
 			// buttonBuy64
 			// 
-			buttonBuy64.Location = new Point(12, 388);
+			buttonBuy64.Location = new Point(12, 421);
 			buttonBuy64.Name = "buttonBuy64";
 			buttonBuy64.Size = new Size(201, 72);
-			buttonBuy64.TabIndex = 14;
+			buttonBuy64.TabIndex = 34;
 			buttonBuy64.Text = "Buy 60% 40%";
 			buttonBuy64.UseVisualStyleBackColor = true;
 			buttonBuy64.Click += buttonBuy64_Click;
 			// 
 			// buttonSell64
 			// 
-			buttonSell64.Location = new Point(245, 388);
+			buttonSell64.Location = new Point(245, 421);
 			buttonSell64.Name = "buttonSell64";
 			buttonSell64.Size = new Size(201, 72);
-			buttonSell64.TabIndex = 15;
+			buttonSell64.TabIndex = 35;
 			buttonSell64.Text = "Sell 60% 40%";
 			buttonSell64.UseVisualStyleBackColor = true;
 			buttonSell64.Click += buttonSell64_Click;
 			// 
 			// buttonSlToBe
 			// 
-			buttonSlToBe.Location = new Point(505, 232);
+			buttonSlToBe.Location = new Point(505, 265);
 			buttonSlToBe.Name = "buttonSlToBe";
-			buttonSlToBe.Size = new Size(264, 84);
-			buttonSlToBe.TabIndex = 30;
+			buttonSlToBe.Size = new Size(428, 84);
+			buttonSlToBe.TabIndex = 80;
 			buttonSlToBe.Text = "SL to BE automation after first PT";
 			buttonSlToBe.UseVisualStyleBackColor = true;
 			buttonSlToBe.Click += buttonSlToBe_Click;
 			// 
 			// buttonSlPtMonitoring
 			// 
-			buttonSlPtMonitoring.Location = new Point(505, 398);
+			buttonSlPtMonitoring.Location = new Point(505, 431);
 			buttonSlPtMonitoring.Name = "buttonSlPtMonitoring";
-			buttonSlPtMonitoring.Size = new Size(264, 84);
-			buttonSlPtMonitoring.TabIndex = 32;
+			buttonSlPtMonitoring.Size = new Size(428, 84);
+			buttonSlPtMonitoring.TabIndex = 82;
 			buttonSlPtMonitoring.Text = "SL/PT monitoring";
 			buttonSlPtMonitoring.UseVisualStyleBackColor = true;
 			buttonSlPtMonitoring.Click += buttonSlPtMonitoring_Click;
 			// 
 			// progressBarSlToBe
 			// 
-			progressBarSlToBe.Location = new Point(505, 322);
+			progressBarSlToBe.Location = new Point(505, 355);
 			progressBarSlToBe.Name = "progressBarSlToBe";
-			progressBarSlToBe.Size = new Size(264, 40);
-			progressBarSlToBe.TabIndex = 33;
+			progressBarSlToBe.Size = new Size(428, 40);
+			progressBarSlToBe.TabIndex = 81;
 			// 
 			// progressBarSlPtMonitoring
 			// 
-			progressBarSlPtMonitoring.Location = new Point(505, 488);
+			progressBarSlPtMonitoring.Location = new Point(505, 521);
 			progressBarSlPtMonitoring.Name = "progressBarSlPtMonitoring";
-			progressBarSlPtMonitoring.Size = new Size(264, 40);
-			progressBarSlPtMonitoring.TabIndex = 34;
+			progressBarSlPtMonitoring.Size = new Size(428, 40);
+			progressBarSlPtMonitoring.TabIndex = 83;
 			// 
 			// timer
 			// 
@@ -232,7 +242,7 @@
 			// trackBarPositionUsing
 			// 
 			trackBarPositionUsing.LargeChange = 10;
-			trackBarPositionUsing.Location = new Point(165, 146);
+			trackBarPositionUsing.Location = new Point(165, 179);
 			trackBarPositionUsing.Maximum = 250;
 			trackBarPositionUsing.Minimum = 1;
 			trackBarPositionUsing.Name = "trackBarPositionUsing";
@@ -245,19 +255,19 @@
 			// labelPositionUsing
 			// 
 			labelPositionUsing.AutoSize = true;
-			labelPositionUsing.Location = new Point(12, 146);
+			labelPositionUsing.Location = new Point(12, 179);
 			labelPositionUsing.Name = "labelPositionUsing";
 			labelPositionUsing.Size = new Size(147, 30);
-			labelPositionUsing.TabIndex = 35;
+			labelPositionUsing.TabIndex = 6;
 			labelPositionUsing.Text = "Pos. utilization";
 			// 
 			// labelPositionUsingPercent
 			// 
 			labelPositionUsingPercent.AutoSize = true;
-			labelPositionUsingPercent.Location = new Point(12, 176);
+			labelPositionUsingPercent.Location = new Point(12, 209);
 			labelPositionUsingPercent.Name = "labelPositionUsingPercent";
 			labelPositionUsingPercent.Size = new Size(52, 30);
-			labelPositionUsingPercent.TabIndex = 36;
+			labelPositionUsingPercent.TabIndex = 7;
 			labelPositionUsingPercent.Text = "50%";
 			// 
 			// timerRefreshTexts
@@ -267,89 +277,199 @@
 			// 
 			// buttonBuy100
 			// 
-			buttonBuy100.Location = new Point(12, 466);
+			buttonBuy100.Location = new Point(12, 499);
 			buttonBuy100.Name = "buttonBuy100";
 			buttonBuy100.Size = new Size(201, 72);
-			buttonBuy100.TabIndex = 37;
+			buttonBuy100.TabIndex = 50;
 			buttonBuy100.Text = "Buy 100%";
 			buttonBuy100.UseVisualStyleBackColor = true;
 			buttonBuy100.Click += buttonBuy100_Click;
 			// 
 			// buttonBuy60
 			// 
-			buttonBuy60.Location = new Point(12, 544);
+			buttonBuy60.Location = new Point(12, 577);
 			buttonBuy60.Name = "buttonBuy60";
 			buttonBuy60.Size = new Size(201, 72);
-			buttonBuy60.TabIndex = 38;
+			buttonBuy60.TabIndex = 52;
 			buttonBuy60.Text = "Buy 60%";
 			buttonBuy60.UseVisualStyleBackColor = true;
 			buttonBuy60.Click += buttonBuy60_Click;
 			// 
 			// buttonBuy30
 			// 
-			buttonBuy30.Location = new Point(12, 622);
+			buttonBuy30.Location = new Point(12, 655);
 			buttonBuy30.Name = "buttonBuy30";
 			buttonBuy30.Size = new Size(201, 72);
-			buttonBuy30.TabIndex = 39;
+			buttonBuy30.TabIndex = 54;
 			buttonBuy30.Text = "Buy 30%";
 			buttonBuy30.UseVisualStyleBackColor = true;
 			buttonBuy30.Click += buttonBuy30_Click;
 			// 
 			// buttonBuy10
 			// 
-			buttonBuy10.Location = new Point(12, 700);
+			buttonBuy10.Location = new Point(12, 733);
 			buttonBuy10.Name = "buttonBuy10";
 			buttonBuy10.Size = new Size(201, 72);
-			buttonBuy10.TabIndex = 40;
+			buttonBuy10.TabIndex = 56;
 			buttonBuy10.Text = "Buy 10%";
 			buttonBuy10.UseVisualStyleBackColor = true;
 			buttonBuy10.Click += buttonBuy10_Click;
 			// 
 			// buttonSell100
 			// 
-			buttonSell100.Location = new Point(245, 466);
+			buttonSell100.Location = new Point(245, 499);
 			buttonSell100.Name = "buttonSell100";
 			buttonSell100.Size = new Size(201, 72);
-			buttonSell100.TabIndex = 41;
+			buttonSell100.TabIndex = 51;
 			buttonSell100.Text = "Sell 100%";
 			buttonSell100.UseVisualStyleBackColor = true;
 			buttonSell100.Click += buttonSell100_Click;
 			// 
 			// buttonSell60
 			// 
-			buttonSell60.Location = new Point(245, 544);
+			buttonSell60.Location = new Point(245, 577);
 			buttonSell60.Name = "buttonSell60";
 			buttonSell60.Size = new Size(201, 72);
-			buttonSell60.TabIndex = 42;
+			buttonSell60.TabIndex = 53;
 			buttonSell60.Text = "Sell 60%";
 			buttonSell60.UseVisualStyleBackColor = true;
 			buttonSell60.Click += buttonSell60_Click;
 			// 
 			// buttonSell30
 			// 
-			buttonSell30.Location = new Point(245, 622);
+			buttonSell30.Location = new Point(245, 655);
 			buttonSell30.Name = "buttonSell30";
 			buttonSell30.Size = new Size(201, 72);
-			buttonSell30.TabIndex = 43;
+			buttonSell30.TabIndex = 55;
 			buttonSell30.Text = "Sell 30%";
 			buttonSell30.UseVisualStyleBackColor = true;
 			buttonSell30.Click += buttonSell30_Click;
 			// 
 			// buttonSell10
 			// 
-			buttonSell10.Location = new Point(245, 700);
+			buttonSell10.Location = new Point(245, 733);
 			buttonSell10.Name = "buttonSell10";
 			buttonSell10.Size = new Size(201, 72);
-			buttonSell10.TabIndex = 44;
+			buttonSell10.TabIndex = 57;
 			buttonSell10.Text = "Sell 10%";
 			buttonSell10.UseVisualStyleBackColor = true;
 			buttonSell10.Click += buttonSell10_Click;
+			// 
+			// buttonJoinSl
+			// 
+			buttonJoinSl.Location = new Point(655, 811);
+			buttonJoinSl.Name = "buttonJoinSl";
+			buttonJoinSl.Size = new Size(131, 77);
+			buttonJoinSl.TabIndex = 108;
+			buttonJoinSl.Text = "Join SL";
+			buttonJoinSl.UseVisualStyleBackColor = true;
+			buttonJoinSl.Click += buttonJoinSl_Click;
+			// 
+			// checkBoxMovePendingOrder
+			// 
+			checkBoxMovePendingOrder.AutoSize = true;
+			checkBoxMovePendingOrder.Location = new Point(518, 587);
+			checkBoxMovePendingOrder.Name = "checkBoxMovePendingOrder";
+			checkBoxMovePendingOrder.Size = new Size(297, 34);
+			checkBoxMovePendingOrder.TabIndex = 100;
+			checkBoxMovePendingOrder.Text = "Move pending order, not SL";
+			checkBoxMovePendingOrder.UseVisualStyleBackColor = true;
+			// 
+			// buttonResetTp
+			// 
+			buttonResetTp.Location = new Point(802, 811);
+			buttonResetTp.Name = "buttonResetTp";
+			buttonResetTp.Size = new Size(131, 77);
+			buttonResetTp.TabIndex = 109;
+			buttonResetTp.Text = "Reset TP";
+			buttonResetTp.UseVisualStyleBackColor = true;
+			buttonResetTp.Click += buttonResetTp_Click;
+			// 
+			// buttonSlUpMax
+			// 
+			buttonSlUpMax.Location = new Point(505, 638);
+			buttonSlUpMax.Name = "buttonSlUpMax";
+			buttonSlUpMax.Size = new Size(131, 77);
+			buttonSlUpMax.TabIndex = 101;
+			buttonSlUpMax.Text = "SL Up Max";
+			buttonSlUpMax.UseVisualStyleBackColor = true;
+			buttonSlUpMax.Click += buttonSlUpMax_Click;
+			// 
+			// buttonSlDownMax
+			// 
+			buttonSlDownMax.Location = new Point(505, 728);
+			buttonSlDownMax.Name = "buttonSlDownMax";
+			buttonSlDownMax.Size = new Size(131, 77);
+			buttonSlDownMax.TabIndex = 102;
+			buttonSlDownMax.Text = "SL Down Max";
+			buttonSlDownMax.UseVisualStyleBackColor = true;
+			buttonSlDownMax.Click += buttonSlDownMax_Click;
+			// 
+			// buttonSlDown
+			// 
+			buttonSlDown.Location = new Point(655, 728);
+			buttonSlDown.Name = "buttonSlDown";
+			buttonSlDown.Size = new Size(131, 77);
+			buttonSlDown.TabIndex = 104;
+			buttonSlDown.Text = "SL Down";
+			buttonSlDown.UseVisualStyleBackColor = true;
+			buttonSlDown.Click += buttonSlDown_Click;
+			// 
+			// buttonSlUp
+			// 
+			buttonSlUp.Location = new Point(655, 638);
+			buttonSlUp.Name = "buttonSlUp";
+			buttonSlUp.Size = new Size(131, 77);
+			buttonSlUp.TabIndex = 103;
+			buttonSlUp.Text = "SL Up";
+			buttonSlUp.UseVisualStyleBackColor = true;
+			buttonSlUp.Click += buttonSlUp_Click;
+			// 
+			// buttonSlDownMin
+			// 
+			buttonSlDownMin.Location = new Point(802, 728);
+			buttonSlDownMin.Name = "buttonSlDownMin";
+			buttonSlDownMin.Size = new Size(131, 77);
+			buttonSlDownMin.TabIndex = 106;
+			buttonSlDownMin.Text = "SL Down Min";
+			buttonSlDownMin.UseVisualStyleBackColor = true;
+			buttonSlDownMin.Click += buttonSlDownMin_Click;
+			// 
+			// buttonSlUpMin
+			// 
+			buttonSlUpMin.Location = new Point(802, 638);
+			buttonSlUpMin.Name = "buttonSlUpMin";
+			buttonSlUpMin.Size = new Size(131, 77);
+			buttonSlUpMin.TabIndex = 105;
+			buttonSlUpMin.Text = "SL Up Min";
+			buttonSlUpMin.UseVisualStyleBackColor = true;
+			buttonSlUpMin.Click += buttonSlUpMin_Click;
+			// 
+			// buttonCloseAll
+			// 
+			buttonCloseAll.Location = new Point(505, 811);
+			buttonCloseAll.Name = "buttonCloseAll";
+			buttonCloseAll.Size = new Size(131, 77);
+			buttonCloseAll.TabIndex = 107;
+			buttonCloseAll.Text = "CloseAll";
+			buttonCloseAll.UseVisualStyleBackColor = true;
+			buttonCloseAll.Click += buttonCloseAll_Click;
 			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(12F, 30F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(852, 789);
+			ClientSize = new Size(963, 932);
+			Controls.Add(buttonCloseAll);
+			Controls.Add(buttonSlDownMin);
+			Controls.Add(buttonSlUpMin);
+			Controls.Add(buttonSlDown);
+			Controls.Add(buttonSlUp);
+			Controls.Add(buttonSlDownMax);
+			Controls.Add(buttonSlUpMax);
+			Controls.Add(buttonResetTp);
+			Controls.Add(checkBoxMovePendingOrder);
+			Controls.Add(buttonJoinSl);
 			Controls.Add(buttonSell10);
 			Controls.Add(buttonSell30);
 			Controls.Add(buttonSell60);
@@ -420,5 +540,15 @@
 		private Button buttonSell60;
 		private Button buttonSell30;
 		private Button buttonSell10;
+		private Button buttonJoinSl;
+		private CheckBox checkBoxMovePendingOrder;
+		private Button buttonResetTp;
+		private Button buttonSlUpMax;
+		private Button buttonSlDownMax;
+		private Button buttonSlDown;
+		private Button buttonSlUp;
+		private Button buttonSlDownMin;
+		private Button buttonSlUpMin;
+		private Button buttonCloseAll;
 	}
 }
