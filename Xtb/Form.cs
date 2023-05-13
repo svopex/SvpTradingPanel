@@ -654,5 +654,12 @@ namespace Xtb
 				}
 			}
 		}
+
+		private void buttonEquity_Click(object sender, EventArgs e)
+		{
+			FormEquity formEquity = new FormEquity();
+			formEquity.Symbol = textBoxSymbol.Text;
+			formEquity.ShowDialog();
+		}
 	}
 }

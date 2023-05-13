@@ -10,6 +10,7 @@ using xAPI.Commands;
 using xAPI.Records;
 using xAPI.Responses;
 using xAPI.Sync;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace Xtb
 {
@@ -478,6 +479,47 @@ namespace Xtb
 			{
 				return (instrument, 0);
 			}
+		}
+
+		public static long ConvertToUnixTimestamp(DateTime date)
+		{
+			DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+			TimeSpan diff = date.ToUniversalTime() - origin;
+			return (long)Math.Floor(diff.TotalMilliseconds);
+		}
+
+		public static DateTime ConvertFromUnixTimestamp(long timestamp)
+		{
+			DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+			return origin.AddMilliseconds(timestamp);
+		}
+
+		public List<History> GetTradeHistory(DateTime dtFrom, DateTime dtTo)
+		{
+			var tradesResponse = APICommandFactory.ExecuteTradesHistoryCommand(connector, ConvertToUnixTimestamp(dtFrom), ConvertToUnixTimestamp(dtTo));
+
+			List<History> histories = new List<History>();
+
+			foreach (var tradeResponse in tradesResponse.TradeRecords)
+			{
+				History history = new History();
+				history.profit = tradeResponse.Profit!.Value;
+				history.commission = tradeResponse.Commission!.Value;
+				history.swap = tradeResponse.Storage!.Value;
+				if (tradeResponse.Closed!.Value)
+				{
+					history.dt = ConvertFromUnixTimestamp(tradeResponse.Close_time!.Value);
+					if (tradeResponse.Cmd!.Value != TRADE_OPERATION_CODE.BALANCE.Code)
+					{
+						if ((history.dt >= dtFrom) && (history.dt <= dtTo))
+						{
+							histories.Add(history);
+						}
+					}
+				}
+			}
+
+			return histories;
 		}
 	}
 }

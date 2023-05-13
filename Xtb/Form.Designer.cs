@@ -71,6 +71,7 @@
 			buttonSlDownMin = new Button();
 			buttonSlUpMin = new Button();
 			buttonCloseAll = new Button();
+			buttonEquity = new Button();
 			((System.ComponentModel.ISupportInitialize)trackBarPositionUsing).BeginInit();
 			SuspendLayout();
 			// 
@@ -456,11 +457,22 @@
 			buttonCloseAll.UseVisualStyleBackColor = true;
 			buttonCloseAll.Click += buttonCloseAll_Click;
 			// 
+			// buttonEquity
+			// 
+			buttonEquity.Location = new Point(12, 811);
+			buttonEquity.Name = "buttonEquity";
+			buttonEquity.Size = new Size(434, 77);
+			buttonEquity.TabIndex = 110;
+			buttonEquity.Text = "Equity";
+			buttonEquity.UseVisualStyleBackColor = true;
+			buttonEquity.Click += buttonEquity_Click;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(12F, 30F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(963, 932);
+			Controls.Add(buttonEquity);
 			Controls.Add(buttonCloseAll);
 			Controls.Add(buttonSlDownMin);
 			Controls.Add(buttonSlUpMin);
@@ -552,5 +564,6 @@
 		private Button buttonSlDownMin;
 		private Button buttonSlUpMin;
 		private Button buttonCloseAll;
+		private Button buttonEquity;
 	}
 }
