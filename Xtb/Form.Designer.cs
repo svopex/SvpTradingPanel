@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			labelSymbol = new Label();
 			textBoxSymbol = new TextBox();
 			labelSlDistance = new Label();
@@ -499,6 +500,7 @@
 			Controls.Add(labelSlDistance);
 			Controls.Add(textBoxSymbol);
 			Controls.Add(labelSymbol);
+			Icon = (Icon)resources.GetObject("$this.Icon");
 			Name = "Form1";
 			Text = "XTB";
 			Load += Form1_Load;
