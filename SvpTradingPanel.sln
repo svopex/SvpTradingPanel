@@ -13,9 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mt4ApiTester", "Mt4ApiTeste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wtrs", "Wtrs\Wtrs.csproj", "{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SvpTradingGraph", "SvpTradingGraph\SvpTradingGraph.csproj", "{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xtb", "Xtb\Xtb.csproj", "{75FD63A6-2117-464A-9950-F8750B70A89F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtb", "Xtb\Xtb.csproj", "{75FD63A6-2117-464A-9950-F8750B70A89F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +41,6 @@ Global
 		{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77C1AE3D-0C3A-4C33-9FF4-D96CA18755B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F73EC3D9-8F3A-415E-AD6D-3AFBF073A5C7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{75FD63A6-2117-464A-9950-F8750B70A89F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{75FD63A6-2117-464A-9950-F8750B70A89F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75FD63A6-2117-464A-9950-F8750B70A89F}.Release|Any CPU.ActiveCfg = Release|Any CPU

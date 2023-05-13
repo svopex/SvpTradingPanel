@@ -73,6 +73,7 @@
 			this.progressBarSlToBeAutomation = new System.Windows.Forms.ProgressBar();
 			this.buttonSlPtMonitoring = new System.Windows.Forms.Button();
 			this.progressBarSlPtMonitoring = new System.Windows.Forms.ProgressBar();
+			this.buttonEquity = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.trackBarPositionUsing)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -167,7 +168,7 @@
 			this.checkBoxAlwaysOnTop.Margin = new System.Windows.Forms.Padding(4);
 			this.checkBoxAlwaysOnTop.Name = "checkBoxAlwaysOnTop";
 			this.checkBoxAlwaysOnTop.Size = new System.Drawing.Size(160, 29);
-			this.checkBoxAlwaysOnTop.TabIndex = 3;
+			this.checkBoxAlwaysOnTop.TabIndex = 13;
 			this.checkBoxAlwaysOnTop.Text = "Always on top";
 			this.checkBoxAlwaysOnTop.UseVisualStyleBackColor = true;
 			this.checkBoxAlwaysOnTop.CheckedChanged += new System.EventHandler(this.checkBoxAlwaysOnTop_CheckedChanged);
@@ -279,7 +280,7 @@
 			this.labelConnected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelConnected.Name = "labelConnected";
 			this.labelConnected.Size = new System.Drawing.Size(123, 30);
-			this.labelConnected.TabIndex = 4;
+			this.labelConnected.TabIndex = 11;
 			this.labelConnected.Text = "**********";
 			this.labelConnected.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
@@ -345,7 +346,7 @@
 			this.labelRrr.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelRrr.Name = "labelRrr";
 			this.labelRrr.Size = new System.Drawing.Size(51, 25);
-			this.labelRrr.TabIndex = 33;
+			this.labelRrr.TabIndex = 7;
 			this.labelRrr.Text = "RRR";
 			// 
 			// timerRefreshLabels
@@ -361,7 +362,7 @@
 			this.labelLoss.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelLoss.Name = "labelLoss";
 			this.labelLoss.Size = new System.Drawing.Size(54, 25);
-			this.labelLoss.TabIndex = 34;
+			this.labelLoss.TabIndex = 8;
 			this.labelLoss.Text = "Loss";
 			// 
 			// labelProfit
@@ -371,7 +372,7 @@
 			this.labelProfit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelProfit.Name = "labelProfit";
 			this.labelProfit.Size = new System.Drawing.Size(56, 25);
-			this.labelProfit.TabIndex = 35;
+			this.labelProfit.TabIndex = 9;
 			this.labelProfit.Text = "Profit";
 			// 
 			// buttonOrderSell3
@@ -412,7 +413,7 @@
 			this.textBoxPrice.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxPrice.Name = "textBoxPrice";
 			this.textBoxPrice.Size = new System.Drawing.Size(134, 29);
-			this.textBoxPrice.TabIndex = 2;
+			this.textBoxPrice.TabIndex = 3;
 			// 
 			// checkBoxPendingOrder
 			// 
@@ -421,7 +422,7 @@
 			this.checkBoxPendingOrder.Margin = new System.Windows.Forms.Padding(4);
 			this.checkBoxPendingOrder.Name = "checkBoxPendingOrder";
 			this.checkBoxPendingOrder.Size = new System.Drawing.Size(160, 29);
-			this.checkBoxPendingOrder.TabIndex = 4;
+			this.checkBoxPendingOrder.TabIndex = 14;
 			this.checkBoxPendingOrder.Text = "Pending order";
 			this.checkBoxPendingOrder.UseVisualStyleBackColor = true;
 			this.checkBoxPendingOrder.CheckedChanged += new System.EventHandler(this.checkBoxPendingOrder_CheckedChanged);
@@ -457,7 +458,7 @@
 			this.trackBarPositionUsing.Name = "trackBarPositionUsing";
 			this.trackBarPositionUsing.Size = new System.Drawing.Size(939, 80);
 			this.trackBarPositionUsing.SmallChange = 5;
-			this.trackBarPositionUsing.TabIndex = 5;
+			this.trackBarPositionUsing.TabIndex = 6;
 			this.trackBarPositionUsing.Value = 1;
 			this.trackBarPositionUsing.ValueChanged += new System.EventHandler(this.trackBarPositionUsing_ValueChanged);
 			// 
@@ -468,7 +469,7 @@
 			this.labelPositionUsing.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelPositionUsing.Name = "labelPositionUsing";
 			this.labelPositionUsing.Size = new System.Drawing.Size(136, 25);
-			this.labelPositionUsing.TabIndex = 83;
+			this.labelPositionUsing.TabIndex = 4;
 			this.labelPositionUsing.Text = "&Pos. utilization";
 			// 
 			// labelPositionUsingPercent
@@ -477,7 +478,7 @@
 			this.labelPositionUsingPercent.Location = new System.Drawing.Point(57, 162);
 			this.labelPositionUsingPercent.Name = "labelPositionUsingPercent";
 			this.labelPositionUsingPercent.Size = new System.Drawing.Size(63, 25);
-			this.labelPositionUsingPercent.TabIndex = 84;
+			this.labelPositionUsingPercent.TabIndex = 5;
 			this.labelPositionUsingPercent.Text = "100%";
 			// 
 			// labelSlLoss
@@ -487,7 +488,7 @@
 			this.labelSlLoss.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelSlLoss.Name = "labelSlLoss";
 			this.labelSlLoss.Size = new System.Drawing.Size(56, 25);
-			this.labelSlLoss.TabIndex = 85;
+			this.labelSlLoss.TabIndex = 10;
 			this.labelSlLoss.Text = "Profit";
 			// 
 			// buttonSlToBeAutomation
@@ -524,11 +525,22 @@
 			this.progressBarSlPtMonitoring.Size = new System.Drawing.Size(540, 40);
 			this.progressBarSlPtMonitoring.TabIndex = 89;
 			// 
+			// buttonEquity
+			// 
+			this.buttonEquity.Location = new System.Drawing.Point(743, 45);
+			this.buttonEquity.Name = "buttonEquity";
+			this.buttonEquity.Size = new System.Drawing.Size(176, 66);
+			this.buttonEquity.TabIndex = 12;
+			this.buttonEquity.Text = "Equity";
+			this.buttonEquity.UseVisualStyleBackColor = true;
+			this.buttonEquity.Click += new System.EventHandler(this.buttonEquity_Click);
+			// 
 			// FormTradingPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1134, 802);
+			this.Controls.Add(this.buttonEquity);
 			this.Controls.Add(this.progressBarSlPtMonitoring);
 			this.Controls.Add(this.buttonSlPtMonitoring);
 			this.Controls.Add(this.progressBarSlToBeAutomation);
@@ -630,6 +642,7 @@
 		private System.Windows.Forms.ProgressBar progressBarSlToBeAutomation;
 		private System.Windows.Forms.Button buttonSlPtMonitoring;
 		private System.Windows.Forms.ProgressBar progressBarSlPtMonitoring;
+		private System.Windows.Forms.Button buttonEquity;
 	}
 }
 

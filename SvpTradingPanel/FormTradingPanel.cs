@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.Remoting.Messaging;
@@ -881,6 +882,13 @@ namespace SvpTradingPanel
 			SlToBeAutomationOrders = MetatraderInstance.Instance.GetMarketOrders(true);
 
 			SlToBeAutomationMoveSlEnabled = false;
+		}
+
+		private void buttonEquity_Click(object sender, EventArgs e)
+		{
+			FormEquity formEquity = new FormEquity();
+			formEquity.MainWindowTopMost = checkBoxAlwaysOnTop.Checked;
+			formEquity.ShowDialog();
 		}
 	}
 }

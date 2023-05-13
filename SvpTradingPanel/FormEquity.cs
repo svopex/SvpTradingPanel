@@ -14,11 +14,13 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Utils;
 
-namespace SvpTradingGraph
+namespace SvpTradingPanel
 {
-	public partial class Form : System.Windows.Forms.Form
+	public partial class FormEquity : System.Windows.Forms.Form
 	{
-		public Form()
+		public bool MainWindowTopMost { get; set; }
+
+		public FormEquity()
 		{
 			InitializeComponent();
 		}
@@ -105,6 +107,8 @@ namespace SvpTradingGraph
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+
 			bool connected = MetatraderInstance.Connect();
 
 			int counter = 0;
@@ -116,7 +120,9 @@ namespace SvpTradingGraph
 					System.Environment.Exit(0);
 				}
 			}
-		
+
+			this.TopMost = MainWindowTopMost;
+
 			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
 			textBoxYear.Text = DateTime.Now.Year.ToString();
