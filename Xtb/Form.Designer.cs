@@ -51,6 +51,15 @@
 			trackBarPositionUsing = new TrackBar();
 			labelPositionUsing = new Label();
 			labelPositionUsingPercent = new Label();
+			timerRefreshTexts = new System.Windows.Forms.Timer(components);
+			buttonBuy100 = new Button();
+			buttonBuy60 = new Button();
+			buttonBuy30 = new Button();
+			buttonBuy10 = new Button();
+			buttonSell100 = new Button();
+			buttonSell60 = new Button();
+			buttonSell30 = new Button();
+			buttonSell10 = new Button();
 			((System.ComponentModel.ISupportInitialize)trackBarPositionUsing).BeginInit();
 			SuspendLayout();
 			// 
@@ -143,7 +152,7 @@
 			// 
 			// buttonBuy541
 			// 
-			buttonBuy541.Location = new Point(12, 322);
+			buttonBuy541.Location = new Point(12, 310);
 			buttonBuy541.Name = "buttonBuy541";
 			buttonBuy541.Size = new Size(201, 72);
 			buttonBuy541.TabIndex = 12;
@@ -153,7 +162,7 @@
 			// 
 			// buttonSell541
 			// 
-			buttonSell541.Location = new Point(245, 322);
+			buttonSell541.Location = new Point(245, 310);
 			buttonSell541.Name = "buttonSell541";
 			buttonSell541.Size = new Size(201, 72);
 			buttonSell541.TabIndex = 13;
@@ -163,7 +172,7 @@
 			// 
 			// buttonBuy64
 			// 
-			buttonBuy64.Location = new Point(12, 410);
+			buttonBuy64.Location = new Point(12, 388);
 			buttonBuy64.Name = "buttonBuy64";
 			buttonBuy64.Size = new Size(201, 72);
 			buttonBuy64.TabIndex = 14;
@@ -173,7 +182,7 @@
 			// 
 			// buttonSell64
 			// 
-			buttonSell64.Location = new Point(245, 410);
+			buttonSell64.Location = new Point(245, 388);
 			buttonSell64.Name = "buttonSell64";
 			buttonSell64.Size = new Size(201, 72);
 			buttonSell64.TabIndex = 15;
@@ -230,7 +239,7 @@
 			trackBarPositionUsing.Size = new Size(671, 80);
 			trackBarPositionUsing.SmallChange = 5;
 			trackBarPositionUsing.TabIndex = 8;
-			trackBarPositionUsing.Value = 1;
+			trackBarPositionUsing.Value = 50;
 			trackBarPositionUsing.ValueChanged += trackBarPositionUsing_ValueChanged;
 			// 
 			// labelPositionUsing
@@ -247,15 +256,108 @@
 			labelPositionUsingPercent.AutoSize = true;
 			labelPositionUsingPercent.Location = new Point(12, 176);
 			labelPositionUsingPercent.Name = "labelPositionUsingPercent";
-			labelPositionUsingPercent.Size = new Size(63, 30);
+			labelPositionUsingPercent.Size = new Size(52, 30);
 			labelPositionUsingPercent.TabIndex = 36;
-			labelPositionUsingPercent.Text = "100%";
+			labelPositionUsingPercent.Text = "50%";
+			// 
+			// timerRefreshTexts
+			// 
+			timerRefreshTexts.Interval = 2000;
+			timerRefreshTexts.Tick += timerRefreshTexts_Tick;
+			// 
+			// buttonBuy100
+			// 
+			buttonBuy100.Location = new Point(12, 466);
+			buttonBuy100.Name = "buttonBuy100";
+			buttonBuy100.Size = new Size(201, 72);
+			buttonBuy100.TabIndex = 37;
+			buttonBuy100.Text = "Buy 100%";
+			buttonBuy100.UseVisualStyleBackColor = true;
+			buttonBuy100.Click += buttonBuy100_Click;
+			// 
+			// buttonBuy60
+			// 
+			buttonBuy60.Location = new Point(12, 544);
+			buttonBuy60.Name = "buttonBuy60";
+			buttonBuy60.Size = new Size(201, 72);
+			buttonBuy60.TabIndex = 38;
+			buttonBuy60.Text = "Buy 60%";
+			buttonBuy60.UseVisualStyleBackColor = true;
+			buttonBuy60.Click += buttonBuy60_Click;
+			// 
+			// buttonBuy30
+			// 
+			buttonBuy30.Location = new Point(12, 622);
+			buttonBuy30.Name = "buttonBuy30";
+			buttonBuy30.Size = new Size(201, 72);
+			buttonBuy30.TabIndex = 39;
+			buttonBuy30.Text = "Buy 30%";
+			buttonBuy30.UseVisualStyleBackColor = true;
+			buttonBuy30.Click += buttonBuy30_Click;
+			// 
+			// buttonBuy10
+			// 
+			buttonBuy10.Location = new Point(12, 700);
+			buttonBuy10.Name = "buttonBuy10";
+			buttonBuy10.Size = new Size(201, 72);
+			buttonBuy10.TabIndex = 40;
+			buttonBuy10.Text = "Buy 10%";
+			buttonBuy10.UseVisualStyleBackColor = true;
+			buttonBuy10.Click += buttonBuy10_Click;
+			// 
+			// buttonSell100
+			// 
+			buttonSell100.Location = new Point(245, 466);
+			buttonSell100.Name = "buttonSell100";
+			buttonSell100.Size = new Size(201, 72);
+			buttonSell100.TabIndex = 41;
+			buttonSell100.Text = "Sell 100%";
+			buttonSell100.UseVisualStyleBackColor = true;
+			buttonSell100.Click += buttonSell100_Click;
+			// 
+			// buttonSell60
+			// 
+			buttonSell60.Location = new Point(245, 544);
+			buttonSell60.Name = "buttonSell60";
+			buttonSell60.Size = new Size(201, 72);
+			buttonSell60.TabIndex = 42;
+			buttonSell60.Text = "Sell 60%";
+			buttonSell60.UseVisualStyleBackColor = true;
+			buttonSell60.Click += buttonSell60_Click;
+			// 
+			// buttonSell30
+			// 
+			buttonSell30.Location = new Point(245, 622);
+			buttonSell30.Name = "buttonSell30";
+			buttonSell30.Size = new Size(201, 72);
+			buttonSell30.TabIndex = 43;
+			buttonSell30.Text = "Sell 30%";
+			buttonSell30.UseVisualStyleBackColor = true;
+			buttonSell30.Click += buttonSell30_Click;
+			// 
+			// buttonSell10
+			// 
+			buttonSell10.Location = new Point(245, 700);
+			buttonSell10.Name = "buttonSell10";
+			buttonSell10.Size = new Size(201, 72);
+			buttonSell10.TabIndex = 44;
+			buttonSell10.Text = "Sell 10%";
+			buttonSell10.UseVisualStyleBackColor = true;
+			buttonSell10.Click += buttonSell10_Click;
 			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(12F, 30F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(847, 546);
+			ClientSize = new Size(852, 789);
+			Controls.Add(buttonSell10);
+			Controls.Add(buttonSell30);
+			Controls.Add(buttonSell60);
+			Controls.Add(buttonSell100);
+			Controls.Add(buttonBuy10);
+			Controls.Add(buttonBuy30);
+			Controls.Add(buttonBuy60);
+			Controls.Add(buttonBuy100);
 			Controls.Add(labelPositionUsingPercent);
 			Controls.Add(labelPositionUsing);
 			Controls.Add(trackBarPositionUsing);
@@ -309,5 +411,14 @@
 		private TrackBar trackBarPositionUsing;
 		private Label labelPositionUsing;
 		private Label labelPositionUsingPercent;
+		private System.Windows.Forms.Timer timerRefreshTexts;
+		private Button buttonBuy100;
+		private Button buttonBuy60;
+		private Button buttonBuy30;
+		private Button buttonBuy10;
+		private Button buttonSell100;
+		private Button buttonSell60;
+		private Button buttonSell30;
+		private Button buttonSell10;
 	}
 }

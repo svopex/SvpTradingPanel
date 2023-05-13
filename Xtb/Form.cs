@@ -119,14 +119,22 @@ namespace Xtb
 			}
 		}
 
+		private void RefreshTexts()
+		{
+			if (!String.IsNullOrWhiteSpace(textBoxSymbol.Text))
+			{
+				XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0, true);
+				(double, double) result = xtbApi.CalculateProfit();
+				var accountCurrency = xtbApi.GetAccountCurrency();
+				string fullSl = "Full SL loss: " + Math.Round(xtbApi.GetRisk() * GetTrackBarPositionUsingPercent() / 100, 2) + " " + accountCurrency;
+				labelRRR.Text = $"RRR: {Math.Round(result.Item1 / result.Item2, 2)}\r\nProfit: {Math.Round(result.Item1, 2)} {accountCurrency}\r\nLoss: {Math.Round(result.Item2, 2)} {accountCurrency}\r\n{fullSl}";
+			}
+		}
+
 		private void buttonCalculate_Click(object sender, EventArgs e)
 		{
 			DisableSlToBeAutomation();
-			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0, true);
-			(double, double) result = xtbApi.CalculateProfit();
-			var accountCurrency = xtbApi.GetAccountCurrency();
-			string fullSl = "Full SL loss: " + Math.Round(xtbApi.GetRisk() * GetTrackBarPositionUsingPercent() / 100, 2) + " " + accountCurrency;
-			labelRRR.Text = $"RRR: {Math.Round(result.Item1 / result.Item2, 2)}\r\nProfit: {Math.Round(result.Item1, 2)} {accountCurrency}\r\nLoss: {Math.Round(result.Item2, 2)} {accountCurrency}\r\nFull SL: {fullSl} {accountCurrency}";
+			RefreshTexts();
 		}
 
 		private void buttonSlToBe_Click(object sender, EventArgs e)
@@ -147,11 +155,10 @@ namespace Xtb
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+			timerRefreshTexts.Enabled = false;
+
 			DisableSlToBeAutomation();
 			timer.Interval = 1000;
-
-			trackBarPositionUsing.Value = 50;
-			trackBarPositionUsing_ValueChanged(null, null);
 		}
 
 		private void DisableSlToBeAutomation()
@@ -256,6 +263,53 @@ namespace Xtb
 		private void trackBarPositionUsing_ValueChanged(object? sender, EventArgs? e)
 		{
 			labelPositionUsingPercent.Text = GetTrackBarPositionUsingPercent().ToString() + " %";
+			//timerRefreshTexts.Enabled = true;
+		}
+
+		private void timerRefreshTexts_Tick(object sender, EventArgs e)
+		{
+			timerRefreshTexts.Enabled = false;
+			RefreshTexts();
+		}
+
+		private void buttonBuy100_Click(object sender, EventArgs e)
+		{
+			Buy(1, 0, 0);
+		}
+
+		private void buttonBuy60_Click(object sender, EventArgs e)
+		{
+			Buy(0.6, 0, 0);
+		}
+
+		private void buttonBuy30_Click(object sender, EventArgs e)
+		{
+			Buy(0.3, 0, 0);
+		}
+
+		private void buttonBuy10_Click(object sender, EventArgs e)
+		{
+			Buy(0.1, 0, 0);
+		}
+
+		private void buttonSell100_Click(object sender, EventArgs e)
+		{
+			Sell(1, 0, 0);
+		}
+
+		private void buttonSell60_Click(object sender, EventArgs e)
+		{
+			Sell(0.6, 0, 0);
+		}
+
+		private void buttonSell30_Click(object sender, EventArgs e)
+		{
+			Sell(0.3, 0, 0);
+		}
+
+		private void buttonSell10_Click(object sender, EventArgs e)
+		{
+			Sell(0.1, 0, 0);
 		}
 	}
 }

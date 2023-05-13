@@ -360,6 +360,11 @@ namespace SvpTradingPanel
 			RefreshData(orders);
 		}
 
+		/// <summary>
+		/// Pokud je nejaka limit order na nejakem miste, chceme prednostne, 
+		/// aby nova cena se nastavila na jiz existujici cenu.Teprve potom
+		/// chceme, aby se nastavila nejdale od ceny (IdealMaximumPrice).
+		/// </summary>
 		private double PriceAfterJoin(Orders orders)
 		{
 			if (orders.Any())
@@ -388,6 +393,11 @@ namespace SvpTradingPanel
 			return 0;
 		}
 
+		/// <summary>
+		/// Pokud je nejaky SL na nejakem miste, chceme prednostne, 
+		/// aby novy SL se nastavil na jiz existujici cenu. Teprve potom
+		/// chceme, aby se nastavil nejdale od ceny (IdealMaximumPrice).
+		/// </summary>
 		private double SlPriceAfterJoin(Orders orders)
 		{
 			if (orders.Any())
@@ -419,7 +429,7 @@ namespace SvpTradingPanel
 		private bool JoinPrice(Orders orders)
 		{
 			double idealMinimumPrice = IdealMaximumPrice(orders); // Minimalni cena (je nejdale od ceny).
-			double priceAfterJoin = PriceAfterJoin(orders); // Pokud ceny jsou vsechny stejne, vrati se hodnota tohoto stejneho SL, jinak se vraci nula.
+			double priceAfterJoin = PriceAfterJoin(orders); 
 			foreach (var order in orders)
 			{
 				double oldOpenPrice = order.OpenPrice;
@@ -442,7 +452,7 @@ namespace SvpTradingPanel
 		private bool JoinSl(Orders orders, bool position)
 		{
 			double idealMinimumSl = IdealMaximumSlPrice(orders); // Minimalni SL (je nejdale od ceny).
-			double slPriceAfterJoin = SlPriceAfterJoin(orders); // Pokud SL jsou vsechny stejne, vrati se hodnota tohoto stejneho SL, jinak se vraci nula.
+			double slPriceAfterJoin = SlPriceAfterJoin(orders); 
 			foreach (var order in orders)
 			{
 				double previousSl = order.SL;

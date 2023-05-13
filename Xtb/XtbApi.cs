@@ -18,8 +18,8 @@ namespace Xtb
 		private Server serverData = Servers.DEMO;
 		private string userId = "14734282";
 		private string password = "***";
-		private double riskInPercent = 0.01;
-		private double BrokerMarginEquityCoefficient = 4;
+		private double riskInPercent = 0.005;
+		private double BrokerMarginEquityCoefficient = 1;
 
 		private string symbol = "USDJPY";
 		private double slDistance = 185;
@@ -172,6 +172,8 @@ namespace Xtb
 		{
 			var margin = APICommandFactory.ExecuteMarginLevelCommand(connector);
 			risk = margin.Equity!.Value * riskInPercent * BrokerMarginEquityCoefficient;
+
+			//var rrr = APICommandFactory.ExecuteAllSymbolsCommand(connector);
 
 			symbolsResponse = APICommandFactory.ExecuteSymbolCommand(connector, symbol);
 			precision = (int)Math.Round((double)symbolsResponse.Symbol.Precision!.Value, 0);
