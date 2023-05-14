@@ -31,6 +31,7 @@
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
 			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEquity));
 			chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			labelYear = new Label();
 			textBoxYear = new TextBox();
@@ -103,6 +104,7 @@
 			Controls.Add(textBoxYear);
 			Controls.Add(labelYear);
 			Controls.Add(chart1);
+			Icon = (Icon)resources.GetObject("$this.Icon");
 			Name = "FormEquity";
 			Text = "Equity";
 			Load += FormEquity_Load;
