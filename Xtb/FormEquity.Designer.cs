@@ -47,30 +47,33 @@
 			chart1.ChartAreas.Add(chartArea1);
 			legend1.Name = "Legend1";
 			chart1.Legends.Add(legend1);
-			chart1.Location = new Point(-2, 58);
+			chart1.Location = new Point(-1, 29);
+			chart1.Margin = new Padding(2);
 			chart1.Name = "chart1";
 			series1.ChartArea = "ChartArea1";
 			series1.Legend = "Legend1";
 			series1.Name = "Series1";
 			chart1.Series.Add(series1);
-			chart1.Size = new Size(1964, 1063);
+			chart1.Size = new Size(982, 452);
 			chart1.TabIndex = 0;
 			chart1.Text = "chart";
 			// 
 			// labelYear
 			// 
 			labelYear.AutoSize = true;
-			labelYear.Location = new Point(12, 9);
+			labelYear.Location = new Point(7, 4);
+			labelYear.Margin = new Padding(2, 0, 2, 0);
 			labelYear.Name = "labelYear";
-			labelYear.Size = new Size(52, 30);
+			labelYear.Size = new Size(29, 15);
 			labelYear.TabIndex = 1;
 			labelYear.Text = "Year";
 			// 
 			// textBoxYear
 			// 
-			textBoxYear.Location = new Point(81, 6);
+			textBoxYear.Location = new Point(47, 3);
+			textBoxYear.Margin = new Padding(2);
 			textBoxYear.Name = "textBoxYear";
-			textBoxYear.Size = new Size(175, 35);
+			textBoxYear.Size = new Size(104, 23);
 			textBoxYear.TabIndex = 2;
 			textBoxYear.Leave += textBoxYear_Leave;
 			// 
@@ -78,9 +81,10 @@
 			// 
 			labelTaxForm.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
 			labelTaxForm.AutoSize = true;
-			labelTaxForm.Location = new Point(12, 1148);
+			labelTaxForm.Location = new Point(11, 492);
+			labelTaxForm.Margin = new Padding(2, 0, 2, 0);
 			labelTaxForm.Name = "labelTaxForm";
-			labelTaxForm.Size = new Size(68, 30);
+			labelTaxForm.Size = new Size(38, 15);
 			labelTaxForm.TabIndex = 3;
 			labelTaxForm.Text = "label1";
 			// 
@@ -88,23 +92,25 @@
 			// 
 			labelIncome.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
 			labelIncome.AutoSize = true;
-			labelIncome.Location = new Point(12, 1203);
+			labelIncome.Location = new Point(11, 516);
+			labelIncome.Margin = new Padding(2, 0, 2, 0);
 			labelIncome.Name = "labelIncome";
-			labelIncome.Size = new Size(68, 30);
+			labelIncome.Size = new Size(38, 15);
 			labelIncome.TabIndex = 4;
 			labelIncome.Text = "label1";
 			// 
 			// FormEquity
 			// 
-			AutoScaleDimensions = new SizeF(12F, 30F);
+			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1963, 1254);
+			ClientSize = new Size(982, 540);
 			Controls.Add(labelIncome);
 			Controls.Add(labelTaxForm);
 			Controls.Add(textBoxYear);
 			Controls.Add(labelYear);
 			Controls.Add(chart1);
 			Icon = (Icon)resources.GetObject("$this.Icon");
+			Margin = new Padding(2);
 			Name = "FormEquity";
 			Text = "Equity";
 			Load += FormEquity_Load;

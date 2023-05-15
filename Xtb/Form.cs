@@ -126,7 +126,7 @@ namespace Xtb
 		{
 			if (!String.IsNullOrWhiteSpace(textBoxSymbol.Text))
 			{
-				XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0, true);
+				XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
 				(double, double) result = xtbApi.CalculateProfit();
 				var accountCurrency = xtbApi.GetAccountCurrency();
 				string fullSl = "Full SL loss: " + Math.Round(xtbApi.GetRisk() * GetTrackBarPositionUsingPercent() / 100, 2) + " " + accountCurrency;
@@ -162,6 +162,9 @@ namespace Xtb
 
 			DisableSlToBeAutomation();
 			timer.Interval = 1000;
+
+			this.TopMost = true;
+			checkBoxAlwaysOnTop.Checked = true;
 
 			checkBoxMovePendingOrder.Checked = false;
 		}
@@ -659,7 +662,13 @@ namespace Xtb
 		{
 			FormEquity formEquity = new FormEquity();
 			formEquity.Symbol = textBoxSymbol.Text;
+			formEquity.TopMost = checkBoxAlwaysOnTop.Checked;
 			formEquity.ShowDialog();
+		}
+
+		private void checkBoxAlwaysOnTop_CheckedChanged(object sender, EventArgs e)
+		{
+			this.TopMost = checkBoxAlwaysOnTop.Checked;
 		}
 	}
 }

@@ -30,15 +30,13 @@ namespace Xtb
 		private SymbolResponse? symbolsResponse = null;
 		private int precision;
 
-		public XtbApi(string symbol, double slDistance, bool fullInit = false)
+		public XtbApi(string symbol, double slDistance)
 		{
 			this.symbol = symbol;
 			this.slDistance = slDistance;
+			
 			Init();
-			if (fullInit)
-			{
-				FullInit();
-			}
+			FullInit();
 		}
 
 		private double CalcPosition(bool buy, double position, double step)
@@ -50,7 +48,7 @@ namespace Xtb
 				while (true)
 				{
 					var profit = APICommandFactory.ExecuteProfitCalculationCommand(connector, symbol, position, TRADE_OPERATION_CODE.BUY, symbolsResponse.Symbol.Ask, symbolsResponse.Symbol.Bid + slDistance);
-					if ((risk - profitPrev.Profit!.Value > 0) && (risk - profit.Profit!.Value < 0))
+					if ((risk - profitPrev.Profit!.Value >= 0) && (risk - profit.Profit!.Value <= 0))
 					{
 						position -= step;
 						break;
@@ -72,7 +70,7 @@ namespace Xtb
 				while (true)
 				{
 					var profit = APICommandFactory.ExecuteProfitCalculationCommand(connector, symbol, position, TRADE_OPERATION_CODE.SELL, symbolsResponse.Symbol.Bid, symbolsResponse.Symbol.Ask - slDistance);
-					if ((risk - profitPrev.Profit!.Value > 0) && (risk - profit.Profit!.Value < 0))
+					if ((risk - profitPrev.Profit!.Value >= 0) && (risk - profit.Profit!.Value <= 0))
 					{
 						position -= step;
 						break;
@@ -185,12 +183,19 @@ namespace Xtb
 			}
 		}
 
+		private double CalcPosition(bool buy)
+		{
+			var position = CalcPosition(buy, 0.01, 0.4);
+			position = CalcPosition(buy, position, 0.2);
+			position = CalcPosition(buy, position, 0.1);
+			position = CalcPosition(buy, position, 0.05);
+			position = CalcPosition(buy, position, 0.01);
+			return position;
+		}
+
 		public void SellLimit(double price, double p1, double p2, double p3)
 		{
-			FullInit();
-
-			var position = CalcPosition(false, 0.01, 0.1);
-			position = CalcPosition(false, position, 0.01);
+			var position = CalcPosition(false);
 
 			CreateOrderLimit(false, price, 0.997, 1.005, precision, position * p1);
 			if (p2 > 0)
@@ -205,10 +210,7 @@ namespace Xtb
 
 		public void BuyLimit(double price, double p1, double p2, double p3)
 		{
-			FullInit();
-
-			var position = CalcPosition(true, 0.01, 0.1);
-			position = CalcPosition(true, position, 0.01);
+			var position = CalcPosition(true);
 
 			CreateOrderLimit(true, price, 1.003, 0.995, precision, position * p1);
 			if (p2 > 0)
@@ -223,10 +225,7 @@ namespace Xtb
 
 		public void Buy(double p1, double p2, double p3)
 		{
-			FullInit();
-
-			var position = CalcPosition(true, 0.01, 0.1);
-			position = CalcPosition(true, position, 0.01);
+			var position = CalcPosition(true);
 
 			CreateOrder(true, 1.003, 0.995, precision, position * p1);
 			if (p2 > 0)
@@ -241,10 +240,7 @@ namespace Xtb
 
 		public void Sell(double p1, double p2, double p3)
 		{
-			FullInit();
-
-			var position = CalcPosition(false, 0.01, 0.1);
-			position = CalcPosition(false, position, 0.01);
+			var position = CalcPosition(false);
 
 			CreateOrder(false, 0.997, 1.005, precision, position * p1);
 			if (p2 > 0)
