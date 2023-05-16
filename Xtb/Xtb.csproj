@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Utils\Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="xAPI">
       <HintPath>..\xAPI.dll</HintPath>
     </Reference>

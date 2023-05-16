@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Utils;
 using xAPI.Codes;
 using xAPI.Commands;
 using xAPI.Records;
@@ -16,9 +17,6 @@ namespace Xtb
 {
 	public class XtbApi
 	{
-		private Server serverData = Servers.DEMO;
-		private string userId = "14734282";
-		private string password = "Xtb2013!";
 		private double riskInPercent = 0.005;
 		private double BrokerMarginEquityCoefficient = 1;
 
@@ -157,8 +155,8 @@ namespace Xtb
 
 		public void Init()
 		{
-			connector = new SyncAPIConnector(serverData);
-			Credentials credentials = new Credentials(userId, password, "1", "XTB set orders");
+			connector = new SyncAPIConnector(Utilities.XtbServerType);
+			Credentials credentials = new Credentials(Utilities.XtbUserId, Utilities.XtbPassword, "1", "XTB set orders");
 			LoginResponse loginResponse = APICommandFactory.ExecuteLoginCommand(connector, credentials, true);
 		}
 

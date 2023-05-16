@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using xAPI.Sync;
 
 namespace Utils
 {
@@ -102,6 +103,54 @@ namespace Utils
 				else
 				{
 					return MetatraderType.All;
+				}
+			}
+		}
+
+		public static string XtbUserId
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > 3)
+				{
+					return args[1];
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
+		public static string XtbPassword
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > 3)
+				{
+					return args[2];
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
+		public static Server XtbServerType
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > 3)
+				{
+					return args[3] == "DEMO" ? Servers.DEMO : Servers.REAL;
+				}
+				else
+				{
+					return null;
 				}
 			}
 		}
