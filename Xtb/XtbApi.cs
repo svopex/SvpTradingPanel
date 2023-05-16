@@ -17,9 +17,6 @@ namespace Xtb
 {
 	public class XtbApi
 	{
-		private double riskInPercent = 0.005;
-		private double BrokerMarginEquityCoefficient = 1;
-
 		private string symbol = "USDJPY";
 		private double slDistance = 185;
 
@@ -168,7 +165,7 @@ namespace Xtb
 		private void FullInit()
 		{
 			var margin = APICommandFactory.ExecuteMarginLevelCommand(connector);
-			risk = margin.Equity!.Value * riskInPercent * BrokerMarginEquityCoefficient;
+			risk = margin.Equity!.Value * Utilities.XtbRiskInPercent * Utilities.XtbBrokerMarginEquityCoefficient;
 
 			//var rrr = APICommandFactory.ExecuteAllSymbolsCommand(connector);
 

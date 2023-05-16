@@ -112,7 +112,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 3)
+				if (args.Length > 5)
 				{
 					return args[1];
 				}
@@ -128,7 +128,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 3)
+				if (args.Length > 5)
 				{
 					return args[2];
 				}
@@ -144,13 +144,45 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 3)
+				if (args.Length > 5)
 				{
 					return args[3] == "DEMO" ? Servers.DEMO : Servers.REAL;
 				}
 				else
 				{
 					return null;
+				}
+			}
+		}
+
+		public static double XtbRiskInPercent
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > 5)
+				{
+					return Double.Parse(args[4]);
+				}
+				else
+				{
+					return 0.01;
+				}
+			}
+		}
+
+		public static double XtbBrokerMarginEquityCoefficient
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > 5)
+				{
+					return Double.Parse(args[5]);
+				}
+				else
+				{
+					return 0.01;
 				}
 			}
 		}
