@@ -2,7 +2,7 @@
   "profiles": {
     "Xtb": {
       "commandName": "Project",
-      "commandLineArgs": "14734282 Xtb2013! DEMO 0.01 1"
+      "commandLineArgs": "14734282 Xtb2013! DEMO 0.01 1 AAA 2214006 Xtb2013! REAL 0.005 1 AAA"
     }
   }
 }
