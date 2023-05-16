@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Utils;
 using xAPI.Codes;
 using xAPI.Commands;
 using xAPI.Sync;
@@ -167,6 +168,8 @@ namespace Xtb
 			checkBoxAlwaysOnTop.Checked = true;
 
 			checkBoxMovePendingOrder.Checked = false;
+
+			this.Text = "XTB - " + Utilities.XtbUserId + ", " + Utilities.XtbServerType.Description + ", " + Utilities.XtbRiskInPercent * 100 + "%";
 		}
 
 		private void DisableSlToBeAutomation()
@@ -663,6 +666,7 @@ namespace Xtb
 			FormEquity formEquity = new FormEquity();
 			formEquity.Symbol = textBoxSymbol.Text;
 			formEquity.TopMost = checkBoxAlwaysOnTop.Checked;
+			formEquity.Text = this.Text;
 			formEquity.ShowDialog();
 		}
 
