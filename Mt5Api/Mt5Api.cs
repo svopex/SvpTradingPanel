@@ -766,7 +766,7 @@ namespace Mt5Api
 			apiClient.HistorySelect(from, to);
 			int TotalDeals = apiClient.HistoryDealsTotal();
 			List<History> histories = new List<History>();
-			string latestComment = String.Empty;
+			List<DealHistory> dealHistories = new List<DealHistory>();
 			for (int i = 0; i < TotalDeals; i++)
 			{
 				ulong ticket = apiClient.HistoryDealGetTicket(i);
@@ -774,7 +774,13 @@ namespace Mt5Api
 				ENUM_DEAL_ENTRY dealEntry = (ENUM_DEAL_ENTRY)apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_ENTRY);
 				if ((dealType == ENUM_DEAL_TYPE.DEAL_TYPE_BUY || dealType == ENUM_DEAL_TYPE.DEAL_TYPE_SELL) && dealEntry == ENUM_DEAL_ENTRY.DEAL_ENTRY_IN)
 				{
-					latestComment = apiClient.HistoryDealGetString(ticket, ENUM_DEAL_PROPERTY_STRING.DEAL_COMMENT);
+					double volume = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_VOLUME);
+					string comment = apiClient.HistoryDealGetString(ticket, ENUM_DEAL_PROPERTY_STRING.DEAL_COMMENT);
+					dealHistories.Add(new DealHistory()
+					{
+						 Comment = comment,
+						 Volume = volume,
+					});
 				}
 				if ((dealType == ENUM_DEAL_TYPE.DEAL_TYPE_BUY || dealType == ENUM_DEAL_TYPE.DEAL_TYPE_SELL) && dealEntry == ENUM_DEAL_ENTRY.DEAL_ENTRY_OUT)
 				{
@@ -782,8 +788,16 @@ namespace Mt5Api
 					double profit = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_PROFIT);
 					double commission = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_COMMISSION) * 2;
 					double swap = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_SWAP);
-					//string comment = apiClient.HistoryDealGetString(ticket, ENUM_DEAL_PROPERTY_STRING.DEAL_COMMENT);
-					histories.Add(new History() { dt = dateTime, profit = profit, commission = commission, swap = swap, comment = latestComment });
+					double volume = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_VOLUME);
+					
+					var dealHistory = dealHistories.FirstOrDefault(x => x.Volume == volume);
+					string comment = (dealHistory == null) ? null : dealHistory.Comment;
+					if (dealHistory != null)
+					{
+						dealHistories.Remove(dealHistory);
+					}
+					
+					histories.Add(new History() { dt = dateTime, profit = profit, commission = commission, swap = swap, comment = comment });
 				}
 			}
 			//histories.Sort((x, y) => { return x.dt.CompareTo(y.dt); });
