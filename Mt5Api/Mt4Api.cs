@@ -252,7 +252,7 @@ namespace Mt4Api
 
 		public ulong CreatePendingOrderSlPtRelative(string instrument, double price, double units, ulong magic, string comment, double slRelative, double ptRelative)
 		{
-			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, comment, (int)Utilities.StrategyNumber);
+			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, comment, (int)magic);
 			Order order = GetPendingOrder(ticket);
 			double ptOld = order.PT;
 			double slOld = order.SL;
@@ -270,7 +270,7 @@ namespace Mt4Api
 		}
 		public ulong CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
 		{
-			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, comment, (int)Utilities.StrategyNumber);
+			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, comment, (int)magic);
 			Order order = GetPendingOrder(ticket);
 			double ptOld = order.PT;
 			double slOld = order.SL;

@@ -513,7 +513,7 @@ namespace Mt5Api
 
 		public ulong CreateMarketOrderSlPtRelative(double units, double slRelative, double ptRelative)
 		{
-			return CreateMarketOrderSlPtRelative(Symbol, units, Utilities.StrategyNumber, null, slRelative, ptRelative);
+			return CreateMarketOrderSlPtRelative(Symbol, units, Utilities.StrategyNumber, Utilities.StrategyName, slRelative, ptRelative);
 		}
 
 		public ulong CreateMarketOrderSlPtRelative(string instrument, double units, ulong magic, string comment, double SlRelative, double PtRelative)
