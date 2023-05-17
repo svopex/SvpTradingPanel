@@ -169,7 +169,7 @@ namespace Xtb
 
 			checkBoxMovePendingOrder.Checked = false;
 
-			this.Text = "XTB - " + Utilities.XtbUserId + ", " + Utilities.XtbServerType.Description + ", " + Utilities.XtbRiskInPercent * 100 + "%";
+			this.Text = "XTB - " + Utilities.XtbComment + ", " + Utilities.XtbUserId + ", " + Utilities.XtbServerType.Description + ", " + Utilities.XtbRiskInPercent * 100 + "%";
 		}
 
 		private void DisableSlToBeAutomation()

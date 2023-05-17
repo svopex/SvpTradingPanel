@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using Utils;
 
 namespace Xtb
 {
@@ -52,13 +53,15 @@ namespace Xtb
 		private void RefreshData()
 		{
 			XtbApi xtbApi = new XtbApi(Symbol!, 0);
-			var result = xtbApi.GetTradeHistory(new DateTime(GetYear(), 1, 1, 0, 0, 0), new DateTime(GetYear(), 12, 31, 23, 59, 59));
+			var results = xtbApi.GetTradeHistory(new DateTime(GetYear(), 1, 1, 0, 0, 0), new DateTime(GetYear(), 12, 31, 23, 59, 59));
+
+			results = results.Where(x => x.comment == Utilities.XtbComment || Utilities.XtbComment.ToLower() == "none").ToList();
 
 			chart1.Series.Clear();
 			labelIncome.Text = String.Empty;
 			labelTaxForm.Text = String.Empty;
 
-			if (result.Count() == 0)
+			if (results.Count() == 0)
 			{
 				return;
 			}
@@ -93,21 +96,21 @@ namespace Xtb
 			double spending = 0;
 			double commission = 0;
 			double swap = 0;
-			for (int i = 0; i < result.Count(); i++)
+			for (int i = 0; i < results.Count(); i++)
 			{
-				if (result[i].profit >= 0)
+				if (results[i].profit >= 0)
 				{
-					income += result[i].profit;
-					commission += result[i].commission;
-					swap += result[i].swap;
+					income += results[i].profit;
+					commission += results[i].commission;
+					swap += results[i].swap;
 				}
 				else
 				{
-					spending += result[i].profit;
-					commission += result[i].commission;
-					swap += result[i].swap;
+					spending += results[i].profit;
+					commission += results[i].commission;
+					swap += results[i].swap;
 				}
-				profit += result[i].profit;
+				profit += results[i].profit;
 
 				series1.Points.AddXY(i + 1, profit);
 				series2.Points.AddXY(i + 1, profit + commission + swap);

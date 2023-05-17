@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Utils;
 using xAPI.Codes;
 using xAPI.Commands;
@@ -96,7 +97,7 @@ namespace Xtb
 					symbol,
 					Math.Round(position, 2),
 					null,
-					null,
+					Utilities.XtbComment,
 					null);
 			}
 			else
@@ -111,8 +112,8 @@ namespace Xtb
 					symbol,
 					Math.Round(position, 2),
 					null,
-					null,
-					null);
+					Utilities.XtbComment,
+				null);
 			}
 		}
 
@@ -130,7 +131,7 @@ namespace Xtb
 					symbol,
 					Math.Round(position, 2),
 					null,
-					null,
+					Utilities.XtbComment,
 					null);
 			}
 			else
@@ -145,7 +146,7 @@ namespace Xtb
 					symbol,
 					Math.Round(position, 2),
 					null,
-					null,
+					Utilities.XtbComment,
 					null);
 			}
 		}
@@ -287,6 +288,7 @@ namespace Xtb
 				order.OpenPrice = tradeRecord.Open_price!.Value;
 				order.Instrument = tradeRecord.Symbol;
 				order.Units = tradeRecord.Volume!.Value;
+				order.Comment = tradeRecord.CustomComment;
 				order.Buy = tradeRecord.Cmd == TRADE_OPERATION_CODE.BUY.Code;
 				if ((tradeRecord.Cmd!.Value == TRADE_OPERATION_CODE.BUY.Code) || (tradeRecord.Cmd!.Value == TRADE_OPERATION_CODE.SELL.Code))
 				{
@@ -314,6 +316,7 @@ namespace Xtb
 				order.OpenPrice = tradeRecord.Open_price!.Value;
 				order.Instrument = tradeRecord.Symbol;
 				order.Units = tradeRecord.Volume!.Value;
+				order.Comment = tradeRecord.CustomComment;
 				order.Buy = tradeRecord.Cmd == TRADE_OPERATION_CODE.BUY_LIMIT.Code;
 				if ((tradeRecord.Cmd!.Value == TRADE_OPERATION_CODE.BUY_LIMIT.Code) || (tradeRecord.Cmd!.Value == TRADE_OPERATION_CODE.SELL_LIMIT.Code))
 				{
@@ -338,7 +341,7 @@ namespace Xtb
 				order.Instrument,
 				order.Units,
 				order.Id,
-				null,
+				order.Comment,
 				null);
 		}
 
@@ -354,7 +357,7 @@ namespace Xtb
 				order.Instrument,
 				order.Units,
 				order.Id,
-				null,
+				order.Comment,
 				null);
 		}
 
@@ -370,7 +373,7 @@ namespace Xtb
 				order.Instrument,
 				order.Units,
 				order.Id,
-				null,
+				order.Comment,
 				null);
 		}
 
@@ -386,7 +389,7 @@ namespace Xtb
 				order.Instrument,
 				order.Units,
 				order.Id,
-				null,
+				order.Comment,
 				null);
 		}
 
@@ -497,6 +500,7 @@ namespace Xtb
 				history.profit = tradeResponse.Profit!.Value;
 				history.commission = tradeResponse.Commission!.Value;
 				history.swap = tradeResponse.Storage!.Value;
+				history.comment = tradeResponse.CustomComment;
 				if (tradeResponse.Closed!.Value)
 				{
 					history.dt = ConvertFromUnixTimestamp(tradeResponse.Close_time!.Value);

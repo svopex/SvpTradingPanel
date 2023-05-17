@@ -107,12 +107,14 @@ namespace Utils
 			}
 		}
 
+		private const int XtbParameters = 6;
+
 		public static string XtbUserId
 		{
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > XtbParameters)
 				{
 					return args[1];
 				}
@@ -128,7 +130,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > XtbParameters)
 				{
 					return args[2];
 				}
@@ -144,7 +146,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > XtbParameters)
 				{
 					return args[3] == "DEMO" ? Servers.DEMO : Servers.REAL;
 				}
@@ -160,7 +162,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > XtbParameters)
 				{
 					return Double.Parse(args[4]);
 				}
@@ -176,13 +178,29 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > XtbParameters)
 				{
 					return Double.Parse(args[5]);
 				}
 				else
 				{
 					return 0.01;
+				}
+			}
+		}
+
+		public static string XtbComment
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > XtbParameters)
+				{
+					return args[6];
+				}
+				else
+				{
+					return null;
 				}
 			}
 		}
