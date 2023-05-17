@@ -10,7 +10,7 @@ namespace Utils
 {
 	public class Utilities
 	{
-		private const int Parameters = 6;
+		private const int Parameters = 5;
 
 		// Chci 1% risk na obchod.
 		public static double RiskToTrade
@@ -42,22 +42,6 @@ namespace Utils
 				else
 				{
 					return 4;
-				}
-			}
-		}
-
-		public static string Comment
-		{
-			get
-			{
-				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > Parameters)
-				{
-					return args[6];
-				}
-				else
-				{
-					return "none";
 				}
 			}
 		}

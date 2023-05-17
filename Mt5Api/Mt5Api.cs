@@ -335,7 +335,7 @@ namespace Mt5Api
 
 		public ulong CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
 		{
-			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, Utilities.Comment, slPercent, ptPercent);
+			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, Utilities.StrategyName, slPercent, ptPercent);
 		}
 
 		public ulong CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
@@ -359,7 +359,7 @@ namespace Mt5Api
 
 		public ulong CreatePendingOrderSlPtRelative(double price, double units, double SlRelative, double PtRelative)
 		{
-			return CreatePendingOrderSlPtRelative(Symbol, price, units, Utilities.StrategyNumber, Utilities.Comment, SlRelative, PtRelative);
+			return CreatePendingOrderSlPtRelative(Symbol, price, units, Utilities.StrategyNumber, Utilities.StrategyName, SlRelative, PtRelative);
 		}
 
 		public ulong CreatePendingOrderSlPtRelative(string instrument, double price, double units, ulong magic, string comment, double SlRelative, double PtRelative)
@@ -486,7 +486,7 @@ namespace Mt5Api
 
 		public ulong CreateMarketOrderSlPtPercent(double units, double slPercent, double ptPercent)
 		{
-			return CreateMarketOrderSlPtPercent(Symbol, units, Utilities.StrategyNumber, Utilities.Comment, slPercent, ptPercent).ticket;
+			return CreateMarketOrderSlPtPercent(Symbol, units, Utilities.StrategyNumber, Utilities.StrategyName, slPercent, ptPercent).ticket;
 		}
 
 		public (bool result, ulong ticket, uint retCode, string comment) CreateMarketOrderSlPtPercent(string instrument, double units, ulong magic, string comment, double slPercent, double ptPercent)
@@ -538,7 +538,7 @@ namespace Mt5Api
 			mqlTradeRequest.Magic = Utilities.StrategyNumber;
 			// Todle zde musi byt kvuli ICMARKETS, jinak objednavky nechodi
 			mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
-			mqlTradeRequest.Comment = Utilities.Comment;
+			mqlTradeRequest.Comment = Utilities.StrategyName;
 			mqlTradeRequest.Sl = Sl;
 			mqlTradeRequest.Tp = Pt;
 			MqlTradeResult mqlTradeResult;

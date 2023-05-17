@@ -247,7 +247,7 @@ namespace Mt4Api
 
 		public ulong CreatePendingOrderSlPtRelative(double price, double units, double slRelative, double ptRelative)
 		{
-			return CreatePendingOrderSlPtRelative(Symbol, price, units, Utilities.StrategyNumber, Utilities.Comment, slRelative, ptRelative);
+			return CreatePendingOrderSlPtRelative(Symbol, price, units, Utilities.StrategyNumber, Utilities.StrategyName, slRelative, ptRelative);
 		}
 
 		public ulong CreatePendingOrderSlPtRelative(string instrument, double price, double units, ulong magic, string comment, double slRelative, double ptRelative)
@@ -266,7 +266,7 @@ namespace Mt4Api
 
 		public ulong CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
 		{
-			return CreatePendingOrderSlPtPercent(Symbol, price, units, 0, Utilities.Comment, slPercent, ptPercent);
+			return CreatePendingOrderSlPtPercent(Symbol, price, units, 0, Utilities.StrategyName, slPercent, ptPercent);
 		}
 		public ulong CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
 		{
@@ -367,7 +367,7 @@ namespace Mt4Api
 
 		public ulong CreateMarketOrderSlPt(double units, double Sl, double Pt)
 		{
-			int orderId = apiClient.OrderSend(Symbol, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, Sl, Pt, Utilities.Comment, (int)Utilities.StrategyNumber);
+			int orderId = apiClient.OrderSend(Symbol, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, Sl, Pt, Utilities.StrategyName, (int)Utilities.StrategyNumber);
 			return (ulong)orderId;
 		}
 
