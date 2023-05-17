@@ -171,6 +171,7 @@ namespace Mt5Api
 			mqlTradeRequest.Sl = order.SL;
 			mqlTradeRequest.Tp = order.PT;
 			mqlTradeRequest.Price = order.OpenPrice;
+			mqlTradeRequest.Comment = order.Comment;
 			//mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
 			MqlTradeResult mqlTradeResult;
 			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
@@ -230,6 +231,7 @@ namespace Mt5Api
 			mqlTradeRequest.Magic = order.Magic;
 			mqlTradeRequest.Sl = order.SL;
 			mqlTradeRequest.Tp = order.PT;
+			mqlTradeRequest.Comment = order.Comment;
 			//mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
 			MqlTradeResult mqlTradeResult;
 			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
@@ -306,6 +308,7 @@ namespace Mt5Api
 			mqlTradeRequest.Stoplimit = NormalizeDouble(Symbol, order.OpenPrice);
 			mqlTradeRequest.Sl = order.SL;
 			mqlTradeRequest.Tp = order.PT;
+			mqlTradeRequest.Comment = order.Comment;
 			MqlTradeResult mqlTradeResult;
 			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
 		}
@@ -332,7 +335,7 @@ namespace Mt5Api
 
 		public ulong CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
 		{
-			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, null, slPercent, ptPercent);
+			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, Utilities.Comment, slPercent, ptPercent);
 		}
 
 		public ulong CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
@@ -356,7 +359,7 @@ namespace Mt5Api
 
 		public ulong CreatePendingOrderSlPtRelative(double price, double units, double SlRelative, double PtRelative)
 		{
-			return CreatePendingOrderSlPtRelative(Symbol, price, units, Utilities.StrategyNumber, null, SlRelative, PtRelative);
+			return CreatePendingOrderSlPtRelative(Symbol, price, units, Utilities.StrategyNumber, Utilities.Comment, SlRelative, PtRelative);
 		}
 
 		public ulong CreatePendingOrderSlPtRelative(string instrument, double price, double units, ulong magic, string comment, double SlRelative, double PtRelative)
@@ -483,7 +486,7 @@ namespace Mt5Api
 
 		public ulong CreateMarketOrderSlPtPercent(double units, double slPercent, double ptPercent)
 		{
-			return CreateMarketOrderSlPtPercent(Symbol, units, Utilities.StrategyNumber, null, slPercent, ptPercent).ticket;
+			return CreateMarketOrderSlPtPercent(Symbol, units, Utilities.StrategyNumber, Utilities.Comment, slPercent, ptPercent).ticket;
 		}
 
 		public (bool result, ulong ticket, uint retCode, string comment) CreateMarketOrderSlPtPercent(string instrument, double units, ulong magic, string comment, double slPercent, double ptPercent)
@@ -535,7 +538,7 @@ namespace Mt5Api
 			mqlTradeRequest.Magic = Utilities.StrategyNumber;
 			// Todle zde musi byt kvuli ICMARKETS, jinak objednavky nechodi
 			mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
-			//mqlTradeRequest.Comment = comment;
+			mqlTradeRequest.Comment = Utilities.Comment;
 			mqlTradeRequest.Sl = Sl;
 			mqlTradeRequest.Tp = Pt;
 			MqlTradeResult mqlTradeResult;
@@ -553,7 +556,7 @@ namespace Mt5Api
 			mqlTradeRequest.Magic = magic;
 			// Todle zde musi byt kvuli ICMARKETS, jinak objednavky nechodi
 			mqlTradeRequest.Type_filling = ENUM_ORDER_TYPE_FILLING.ORDER_FILLING_IOC;
-			//mqlTradeRequest.Comment = comment;
+			mqlTradeRequest.Comment = comment;
 			MqlTradeResult mqlTradeResult;
 			bool result = apiClient.OrderSend(mqlTradeRequest, out mqlTradeResult);
 			return (result, mqlTradeResult.Order, mqlTradeResult.Retcode, mqlTradeResult.Comment);
@@ -737,7 +740,7 @@ namespace Mt5Api
 		{
 			apiClient.HistorySelect(apiClient.TimeCurrent().AddDays(-7), apiClient.TimeCurrent());
 			int TotalDeals = apiClient.HistoryDealsTotal();
-			Histories histories = new Histories();
+			List<History> histories = new List<History>();
 			for (int i = TotalDeals - 1; i >= 0; i--)
 			{
 				ulong ticket = apiClient.HistoryDealGetTicket(i);
@@ -758,23 +761,29 @@ namespace Mt5Api
 			return null;
 		}
 
-		public Histories GetLatestProfitHistory(DateTime from, DateTime to)
+		public List<History> GetLatestProfitHistory(DateTime from, DateTime to)
 		{
 			apiClient.HistorySelect(from, to);
 			int TotalDeals = apiClient.HistoryDealsTotal();
-			Histories histories = new Histories();
+			List<History> histories = new List<History>();
+			string latestComment = String.Empty;
 			for (int i = 0; i < TotalDeals; i++)
 			{
 				ulong ticket = apiClient.HistoryDealGetTicket(i);
 				ENUM_DEAL_TYPE dealType = (ENUM_DEAL_TYPE)apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TYPE);
 				ENUM_DEAL_ENTRY dealEntry = (ENUM_DEAL_ENTRY)apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_ENTRY);
+				if ((dealType == ENUM_DEAL_TYPE.DEAL_TYPE_BUY || dealType == ENUM_DEAL_TYPE.DEAL_TYPE_SELL) && dealEntry == ENUM_DEAL_ENTRY.DEAL_ENTRY_IN)
+				{
+					latestComment = apiClient.HistoryDealGetString(ticket, ENUM_DEAL_PROPERTY_STRING.DEAL_COMMENT);
+				}
 				if ((dealType == ENUM_DEAL_TYPE.DEAL_TYPE_BUY || dealType == ENUM_DEAL_TYPE.DEAL_TYPE_SELL) && dealEntry == ENUM_DEAL_ENTRY.DEAL_ENTRY_OUT)
 				{
 					DateTime dateTime = ConvertMscTimeToDateTime(apiClient.HistoryDealGetInteger(ticket, ENUM_DEAL_PROPERTY_INTEGER.DEAL_TIME_MSC));
 					double profit = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_PROFIT);
 					double commission = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_COMMISSION) * 2;
 					double swap = apiClient.HistoryDealGetDouble(ticket, ENUM_DEAL_PROPERTY_DOUBLE.DEAL_SWAP);
-					histories.Add(new History() { dt = dateTime, profit = profit, commission = commission, swap = swap });
+					//string comment = apiClient.HistoryDealGetString(ticket, ENUM_DEAL_PROPERTY_STRING.DEAL_COMMENT);
+					histories.Add(new History() { dt = dateTime, profit = profit, commission = commission, swap = swap, comment = latestComment });
 				}
 			}
 			//histories.Sort((x, y) => { return x.dt.CompareTo(y.dt); });

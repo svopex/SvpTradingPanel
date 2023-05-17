@@ -10,13 +10,15 @@ namespace Utils
 {
 	public class Utilities
 	{
+		private const int Parameters = 6;
+
 		// Chci 1% risk na obchod.
 		public static double RiskToTrade
 		{
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > Parameters)
 				{
 					return Double.Parse(args[4]);
 				}
@@ -33,7 +35,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > Parameters)
 				{
 					return Int32.Parse(args[5]);
 				}
@@ -44,13 +46,29 @@ namespace Utils
 			}
 		}
 
+		public static string Comment
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > Parameters)
+				{
+					return args[6];
+				}
+				else
+				{
+					return "none";
+				}
+			}
+		}
+
 		public static string Host => "localhost";
 		public static int PortMt4
 		{
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > Parameters)
 				{
 					return Int32.Parse(args[2]);
 				}
@@ -65,7 +83,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > Parameters)
 				{
 					return Int32.Parse(args[2]);
 				}
@@ -80,7 +98,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > Parameters)
 				{
 					return args[3];
 				}
@@ -96,7 +114,7 @@ namespace Utils
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > 5)
+				if (args.Length > Parameters)
 				{
 					return (args[1].ToLower() == "mt4") ? MetatraderType.Mt4 : MetatraderType.Mt5;
 				}

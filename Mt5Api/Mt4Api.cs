@@ -247,12 +247,12 @@ namespace Mt4Api
 
 		public ulong CreatePendingOrderSlPtRelative(double price, double units, double slRelative, double ptRelative)
 		{
-			return CreatePendingOrderSlPtRelative(Symbol, price, units, Utilities.StrategyNumber, null, slRelative, ptRelative);
+			return CreatePendingOrderSlPtRelative(Symbol, price, units, Utilities.StrategyNumber, Utilities.Comment, slRelative, ptRelative);
 		}
 
 		public ulong CreatePendingOrderSlPtRelative(string instrument, double price, double units, ulong magic, string comment, double slRelative, double ptRelative)
 		{
-			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, null, (int)Utilities.StrategyNumber);
+			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, comment, (int)Utilities.StrategyNumber);
 			Order order = GetPendingOrder(ticket);
 			double ptOld = order.PT;
 			double slOld = order.SL;
@@ -266,11 +266,11 @@ namespace Mt4Api
 
 		public ulong CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
 		{
-			return CreatePendingOrderSlPtPercent(Symbol, price, units, 0, null, slPercent, ptPercent);
+			return CreatePendingOrderSlPtPercent(Symbol, price, units, 0, Utilities.Comment, slPercent, ptPercent);
 		}
 		public ulong CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
 		{
-			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, null, (int)Utilities.StrategyNumber);
+			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, comment, (int)Utilities.StrategyNumber);
 			Order order = GetPendingOrder(ticket);
 			double ptOld = order.PT;
 			double slOld = order.SL;
@@ -367,7 +367,7 @@ namespace Mt4Api
 
 		public ulong CreateMarketOrderSlPt(double units, double Sl, double Pt)
 		{
-			int orderId = apiClient.OrderSend(Symbol, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, Sl, Pt, null, (int)Utilities.StrategyNumber);
+			int orderId = apiClient.OrderSend(Symbol, units > 0 ? TradeOperation.OP_BUY : TradeOperation.OP_SELL, Math.Abs(units), 0, slippage, Sl, Pt, Utilities.Comment, (int)Utilities.StrategyNumber);
 			return (ulong)orderId;
 		}
 
@@ -569,7 +569,7 @@ namespace Mt4Api
 		public (string, double)? GetLatestProfit(string instrument = null)
 		{
 			int ordersHistoryTotal = apiClient.OrdersHistoryTotal();
-			Histories histories = new Histories();
+			List<History> histories = new List<History>();
 			for (int i = ordersHistoryTotal - 1; i >= 0; i--)
 			{
 				var order = apiClient.GetOrder(i, OrderSelectMode.SELECT_BY_POS, OrderSelectSource.MODE_HISTORY);
@@ -581,10 +581,10 @@ namespace Mt4Api
 			return null;
 		}
 
-		public Histories GetLatestProfitHistory(DateTime from, DateTime to)
+		public List<History> GetLatestProfitHistory(DateTime from, DateTime to)
 		{
 			int ordersHistoryTotal = apiClient.OrdersHistoryTotal();
-			Histories histories = new Histories();
+			List<History> histories = new List<History>();
 			for (int i = 0; i < ordersHistoryTotal ; i++)
 			{
 				var order = apiClient.GetOrder(i, OrderSelectMode.SELECT_BY_POS, OrderSelectSource.MODE_HISTORY);
@@ -592,7 +592,7 @@ namespace Mt4Api
 				{
 					if (order.CloseTime >= from && order.CloseTime <= to)
 					{
-						histories.Add(new History() { dt = order.CloseTime, profit = order.Profit, commission = order.Commission, swap = order.Swap });
+						histories.Add(new History() { dt = order.CloseTime, profit = order.Profit, commission = order.Commission, swap = order.Swap, comment = order.Comment });
 					}
 				}
 			}

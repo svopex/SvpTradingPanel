@@ -10,10 +10,6 @@ namespace Mt5Api
 		public double profit { get; set; }
 		public double swap { get; set; }
 		public double commission { get; set; }
-	}
-
-	public class Histories : List<History>
-	{
-
+		public string comment { get; set; }
 	}
 }
