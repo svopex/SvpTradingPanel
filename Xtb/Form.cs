@@ -233,7 +233,7 @@ namespace Xtb
 							(string instrument, double profit)? result = xtbApi.GetLatestProfit(instrument!);
 							if (result != null)
 							{
-								CallHue(result.Value.profit > 0);
+								CallHue(result.Value.profit >= 0);
 							}
 
 							if (SlToBeAutomationMoveSlEnabled && (ordersByInstrument.Count > 0))

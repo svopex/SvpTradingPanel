@@ -474,9 +474,9 @@ namespace Xtb
 			SetPositionSlAndPt(order);
 		}
 
-		public (string, double) GetLatestProfit(string instrument)
+		public (string, double) GetLatestProfit(string instrument, int daysBack = 7)
 		{
-			TradesResponse tradesResponse = APICommandFactory.ExecuteTradesCommand(connector, false);
+			var tradesResponse = APICommandFactory.ExecuteTradesHistoryCommand(connector, ConvertToUnixTimestamp(DateTime.Now.AddDays(-daysBack)), 0, false);
 			var tradeRecords =
 				tradesResponse.TradeRecords
 				.Where(x => x.Closed!.Value && instrument == x.Symbol)
