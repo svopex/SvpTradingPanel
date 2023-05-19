@@ -144,6 +144,10 @@ namespace Xtb
 		private void buttonSlToBe_Click(object sender, EventArgs e)
 		{
 			SlToBeAutomation = !SlToBeAutomation;
+			if (!SlToBeAutomation)
+			{
+				DisableSlToBeAutomation();
+			}
 			SlToBeAutomationMoveSlEnabled = true;
 			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
 			SlToBeAutomationOrders = xtbApi.GetMarketOrders(true);
@@ -152,6 +156,10 @@ namespace Xtb
 		private void buttonSlPtMonitoring_Click(object sender, EventArgs e)
 		{
 			SlToBeAutomation = !SlToBeAutomation;
+			if (!SlToBeAutomation)
+			{
+				DisableSlToBeAutomation();
+			}
 			SlToBeAutomationMoveSlEnabled = false;
 			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
 			SlToBeAutomationOrders = xtbApi.GetMarketOrders(true);

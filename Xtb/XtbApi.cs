@@ -25,6 +25,7 @@ namespace Xtb
 		private SyncAPIConnector? connector = null;
 		private SymbolResponse? symbolsResponse = null;
 		private int precision;
+		private int valuePrecision;
 
 		public XtbApi(string symbol, double slDistance)
 		{
@@ -83,7 +84,7 @@ namespace Xtb
 			}
 		}
 
-		private void CreateOrderLimit(bool buy, double price, double ptDistance, double slDistance, int precision, double position)
+		private void CreateOrderLimit(bool buy, double price, double ptDistance, double slDistance, double position)
 		{
 			if (buy)
 			{
@@ -92,10 +93,10 @@ namespace Xtb
 					TRADE_OPERATION_CODE.BUY_LIMIT,
 					TRADE_TRANSACTION_TYPE.ORDER_OPEN,
 					price,
-					Math.Round(price * slDistance, precision),
-					Math.Round(price * ptDistance, precision),
+					PriceNormalize(price * slDistance),
+					PriceNormalize(price * ptDistance),
 					symbol,
-					Math.Round(position, 2),
+					UnitsNormalize(position),
 					null,
 					Utilities.XtbComment,
 					null);
@@ -107,17 +108,17 @@ namespace Xtb
 					TRADE_OPERATION_CODE.SELL_LIMIT,
 					TRADE_TRANSACTION_TYPE.ORDER_OPEN,
 					price,
-					Math.Round(price * slDistance, precision),
-					Math.Round(price * ptDistance, precision),
+					PriceNormalize(price * slDistance),
+					PriceNormalize(price * ptDistance),
 					symbol,
-					Math.Round(position, 2),
+					UnitsNormalize(position),
 					null,
 					Utilities.XtbComment,
 				null);
 			}
 		}
 
-		private void CreateOrder(bool buy, double ptDistance, double slDistance, int precision, double position)
+		private void CreateOrder(bool buy, double ptDistance, double slDistance, double position)
 		{
 			if (buy)
 			{
@@ -126,10 +127,10 @@ namespace Xtb
 					TRADE_OPERATION_CODE.BUY,
 					TRADE_TRANSACTION_TYPE.ORDER_OPEN,
 					symbolsResponse!.Symbol.Ask,
-					Math.Round(symbolsResponse.Symbol.Bid!.Value * slDistance, precision),
-					Math.Round(symbolsResponse.Symbol.Bid!.Value * ptDistance, precision),
+					PriceNormalize(symbolsResponse.Symbol.Bid!.Value * slDistance),
+					PriceNormalize(symbolsResponse.Symbol.Bid!.Value * ptDistance),
 					symbol,
-					Math.Round(position, 2),
+					UnitsNormalize(position),
 					null,
 					Utilities.XtbComment,
 					null);
@@ -141,10 +142,10 @@ namespace Xtb
 					TRADE_OPERATION_CODE.SELL,
 					TRADE_TRANSACTION_TYPE.ORDER_OPEN,
 					symbolsResponse!.Symbol.Bid,
-					Math.Round(symbolsResponse.Symbol.Ask!.Value * slDistance, precision),
-					Math.Round(symbolsResponse.Symbol.Ask!.Value * ptDistance, precision),
+					PriceNormalize(symbolsResponse.Symbol.Ask!.Value * slDistance),
+					PriceNormalize(symbolsResponse.Symbol.Ask!.Value * ptDistance),
 					symbol,
-					Math.Round(position, 2),
+					UnitsNormalize(position),
 					null,
 					Utilities.XtbComment,
 					null);
@@ -177,6 +178,18 @@ namespace Xtb
 			{
 				slDistance = slDistance / 10;
 			}
+
+			valuePrecision = 0;
+			double lotMin = symbolsResponse.Symbol.LotMin!.Value;
+			while (true)
+			{
+				if (lotMin >= 1)
+				{
+					break;
+				}
+				valuePrecision++;
+				lotMin = lotMin * 10;
+			}		
 		}
 
 		private double CalcPosition(bool buy)
@@ -193,14 +206,14 @@ namespace Xtb
 		{
 			var position = CalcPosition(false);
 
-			CreateOrderLimit(false, price, 0.997, 1.005, precision, position * p1);
+			CreateOrderLimit(false, price, 0.997, 1.005, position * p1);
 			if (p2 > 0)
 			{
-				CreateOrderLimit(false, price, 0.995, 1.005, precision, position * p2);
+				CreateOrderLimit(false, price, 0.995, 1.005, position * p2);
 			}
 			if (p3 > 0)
 			{
-				CreateOrderLimit(false, price, 0.993, 1.005, precision, position * p3);
+				CreateOrderLimit(false, price, 0.993, 1.005, position * p3);
 			}
 		}
 
@@ -208,14 +221,14 @@ namespace Xtb
 		{
 			var position = CalcPosition(true);
 
-			CreateOrderLimit(true, price, 1.003, 0.995, precision, position * p1);
+			CreateOrderLimit(true, price, 1.003, 0.995, position * p1);
 			if (p2 > 0)
 			{
-				CreateOrderLimit(true, price, 1.005, 0.995, precision, position * p2);
+				CreateOrderLimit(true, price, 1.005, 0.995, position * p2);
 			}
 			if (p3 > 0)
 			{
-				CreateOrderLimit(true, price, 1.007, 0.995, precision, position * p3);
+				CreateOrderLimit(true, price, 1.007, 0.995, position * p3);
 			}
 		}
 
@@ -223,14 +236,14 @@ namespace Xtb
 		{
 			var position = CalcPosition(true);
 
-			CreateOrder(true, 1.003, 0.995, precision, position * p1);
+			CreateOrder(true, 1.003, 0.995, position * p1);
 			if (p2 > 0)
 			{
-				CreateOrder(true, 1.005, 0.995, precision, position * p2);
+				CreateOrder(true, 1.005, 0.995, position * p2);
 			}
 			if (p3 > 0)
 			{
-				CreateOrder(true, 1.007, 0.995, precision, position * p3);
+				CreateOrder(true, 1.007, 0.995, position * p3);
 			}
 		}
 
@@ -238,14 +251,14 @@ namespace Xtb
 		{
 			var position = CalcPosition(false);
 
-			CreateOrder(false, 0.997, 1.005, precision, position * p1);
+			CreateOrder(false, 0.997, 1.005, position * p1);
 			if (p2 > 0)
 			{
-				CreateOrder(false, 0.995, 1.005, precision, position * p2);
+				CreateOrder(false, 0.995, 1.005, position * p2);
 			}
 			if (p3 > 0)
 			{
-				CreateOrder(false, 0.993, 1.005, precision, position * p3);
+				CreateOrder(false, 0.993, 1.005, position * p3);
 			}
 		}
 
@@ -335,11 +348,11 @@ namespace Xtb
 			connector,
 				order.Buy ? TRADE_OPERATION_CODE.BUY : TRADE_OPERATION_CODE.SELL,
 				TRADE_TRANSACTION_TYPE.ORDER_DELETE,
-				NormalizeDouble(order.OpenPrice),
-				NormalizeDouble(order.SL),
-				NormalizeDouble(order.PT),
+				PriceNormalize(order.OpenPrice),
+				PriceNormalize(order.SL),
+				PriceNormalize(order.PT),
 				order.Instrument,
-				order.Units,
+				UnitsNormalize(order.Units),
 				order.Id,
 				order.Comment,
 				null);
@@ -351,11 +364,11 @@ namespace Xtb
 			connector,
 				order.Buy ? TRADE_OPERATION_CODE.BUY : TRADE_OPERATION_CODE.SELL,
 				TRADE_TRANSACTION_TYPE.ORDER_CLOSE,
-				NormalizeDouble(order.OpenPrice),
-				NormalizeDouble(order.SL),
-				NormalizeDouble(order.PT),
+				PriceNormalize(order.OpenPrice),
+				PriceNormalize(order.SL),
+				PriceNormalize(order.PT),
 				order.Instrument,
-				order.Units,
+				UnitsNormalize(order.Units),
 				order.Id,
 				order.Comment,
 				null);
@@ -367,11 +380,11 @@ namespace Xtb
 			connector,
 				order.Buy ? TRADE_OPERATION_CODE.BUY_LIMIT : TRADE_OPERATION_CODE.SELL_LIMIT,
 				TRADE_TRANSACTION_TYPE.ORDER_MODIFY,
-				NormalizeDouble(order.OpenPrice),
-				NormalizeDouble(order.SL),
-				NormalizeDouble(order.PT),
+				PriceNormalize(order.OpenPrice),
+				PriceNormalize(order.SL),
+				PriceNormalize(order.PT),
 				order.Instrument,
-				order.Units,
+				UnitsNormalize(order.Units),
 				order.Id,
 				order.Comment,
 				null);
@@ -383,20 +396,25 @@ namespace Xtb
 			connector,
 				order.Buy ? TRADE_OPERATION_CODE.BUY : TRADE_OPERATION_CODE.SELL,
 				TRADE_TRANSACTION_TYPE.ORDER_MODIFY,
-				NormalizeDouble(order.OpenPrice),
-				NormalizeDouble(order.SL),
-				NormalizeDouble(order.PT),
+				PriceNormalize(order.OpenPrice),
+				PriceNormalize(order.SL),
+				PriceNormalize(order.PT),
 				order.Instrument,
-				order.Units,
+				UnitsNormalize(order.Units),
 				order.Id,
 				order.Comment,
 				null);
 		}
 
-		private double NormalizeDouble(double p)
+		private double PriceNormalize(double p)
 		{
 			return Math.Round(p, precision);
 		}
+
+		private double UnitsNormalize(double p)
+		{
+			return Math.Round(p, valuePrecision);
+		}		
 
 		private void FillSlPt(Order order, double SlRelative, double PtRelative)
 		{
@@ -404,22 +422,22 @@ namespace Xtb
 			{
 				if (order.Units > 0)
 				{
-					order.SL = NormalizeDouble(order.OpenPrice - SlRelative);
+					order.SL = PriceNormalize(order.OpenPrice - SlRelative);
 				}
 				else
 				{
-					order.SL = NormalizeDouble(order.OpenPrice + SlRelative);
+					order.SL = PriceNormalize(order.OpenPrice + SlRelative);
 				}
 			}
 			if (PtRelative != 0)
 			{
 				if (order.Units > 0)
 				{
-					order.PT = NormalizeDouble(order.OpenPrice + PtRelative);
+					order.PT = PriceNormalize(order.OpenPrice + PtRelative);
 				}
 				else
 				{
-					order.PT = NormalizeDouble(order.OpenPrice - PtRelative);
+					order.PT = PriceNormalize(order.OpenPrice - PtRelative);
 				}
 			}
 		}
