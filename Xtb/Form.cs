@@ -81,7 +81,7 @@ namespace Xtb
 				double slDistance;
 				if (Double.TryParse(textBoxSlDistance.Text, out slDistance))
 				{
-					XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, slDistance);
+					XtbApi xtbApi = new XtbApi(Symbol(), slDistance);
 					xtbApi.BuyLimit(limitPrice, p1 * GetTrackBarPositionUsingPercent() / 100, p2 * GetTrackBarPositionUsingPercent() / 100, p3 * GetTrackBarPositionUsingPercent() / 100);
 				}
 			}
@@ -90,7 +90,7 @@ namespace Xtb
 				double slDistance;
 				if (Double.TryParse(textBoxSlDistance.Text, out slDistance))
 				{
-					XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, slDistance);
+					XtbApi xtbApi = new XtbApi(Symbol(), slDistance);
 					xtbApi.Buy(p1 * GetTrackBarPositionUsingPercent() / 100, p2 * GetTrackBarPositionUsingPercent() / 100, p3 * GetTrackBarPositionUsingPercent() / 100);
 				}
 			}
@@ -107,7 +107,7 @@ namespace Xtb
 				double slDistance;
 				if (Double.TryParse(textBoxSlDistance.Text, out slDistance))
 				{
-					XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, slDistance);
+					XtbApi xtbApi = new XtbApi(Symbol(), slDistance);
 					xtbApi.SellLimit(limitPrice, p1 * GetTrackBarPositionUsingPercent() / 100, p2 * GetTrackBarPositionUsingPercent() / 100, p3 * GetTrackBarPositionUsingPercent() / 100);
 				}
 			}
@@ -116,7 +116,7 @@ namespace Xtb
 				double slDistance;
 				if (Double.TryParse(textBoxSlDistance.Text, out slDistance))
 				{
-					XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, slDistance);
+					XtbApi xtbApi = new XtbApi(Symbol(), slDistance);
 					xtbApi.Sell(p1 * GetTrackBarPositionUsingPercent() / 100, p2 * GetTrackBarPositionUsingPercent() / 100, p3 * GetTrackBarPositionUsingPercent() / 100);
 				}
 			}
@@ -125,13 +125,13 @@ namespace Xtb
 
 		private void RefreshTexts()
 		{
-			if (!String.IsNullOrWhiteSpace(textBoxSymbol.Text))
+			if (!String.IsNullOrWhiteSpace(Symbol()))
 			{
-				XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
+				XtbApi xtbApi = new XtbApi(Symbol(), 0);
 				(double, double) result = xtbApi.CalculateProfit();
 				var accountCurrency = xtbApi.GetAccountCurrency();
 				string fullSl = "Full SL loss: " + Math.Round(xtbApi.GetRisk() * GetTrackBarPositionUsingPercent() / 100, 2) + " " + accountCurrency;
-				labelRRR.Text = $"Symbol: {textBoxSymbol.Text}\r\nRRR: {Math.Round(result.Item1 / result.Item2, 2)}\r\nProfit: {Math.Round(result.Item1, 2)} {accountCurrency}\r\nLoss: {Math.Round(result.Item2, 2)} {accountCurrency}\r\n{fullSl}";
+				labelRRR.Text = $"Symbol: {Symbol()}\r\nRRR: {Math.Round(result.Item1 / result.Item2, 2)}\r\nProfit: {Math.Round(result.Item1, 2)} {accountCurrency}\r\nLoss: {Math.Round(result.Item2, 2)} {accountCurrency}\r\n{fullSl}";
 			}
 		}
 
@@ -149,7 +149,7 @@ namespace Xtb
 				DisableSlToBeAutomation();
 			}
 			SlToBeAutomationMoveSlEnabled = true;
-			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
+			XtbApi xtbApi = new XtbApi(Symbol(), 0);
 			SlToBeAutomationOrders = xtbApi.GetMarketOrders(true);
 		}
 
@@ -161,7 +161,7 @@ namespace Xtb
 				DisableSlToBeAutomation();
 			}
 			SlToBeAutomationMoveSlEnabled = false;
-			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
+			XtbApi xtbApi = new XtbApi(Symbol(), 0);
 			SlToBeAutomationOrders = xtbApi.GetMarketOrders(true);
 		}
 
@@ -214,7 +214,7 @@ namespace Xtb
 					}
 				}
 
-				XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
+				XtbApi xtbApi = new XtbApi(Symbol(), 0);
 				xtbApi.Init();
 
 				var orders = xtbApi.GetMarketOrders(true);
@@ -492,7 +492,7 @@ namespace Xtb
 
 		private void JoinSl()
 		{
-			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
+			XtbApi xtbApi = new XtbApi(Symbol(), 0);
 			if (checkBoxMovePendingOrder.Checked)
 			{
 
@@ -526,7 +526,7 @@ namespace Xtb
 
 		private void buttonResetTp_Click(object sender, EventArgs e)
 		{
-			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
+			XtbApi xtbApi = new XtbApi(Symbol(), 0);
 			List<Order> orders = xtbApi.GetMarketOrders(false);
 			if (orders.Any())
 			{
@@ -547,7 +547,7 @@ namespace Xtb
 
 		private void SlUp(double movement)
 		{
-			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
+			XtbApi xtbApi = new XtbApi(Symbol(), 0);
 			List<Order> orders;
 			if (checkBoxMovePendingOrder.Checked)
 			{
@@ -583,7 +583,7 @@ namespace Xtb
 
 		private void SlDown(double movement)
 		{
-			XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
+			XtbApi xtbApi = new XtbApi(Symbol(), 0);
 			List<Order> orders;
 			if (checkBoxMovePendingOrder.Checked)
 			{
@@ -652,9 +652,9 @@ namespace Xtb
 			DialogResult dialogResult = MessageBox.Show("Do you really close all orders?", "SvpTradePanel", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
 			if (dialogResult == DialogResult.Yes)
 			{
-				XtbApi xtbApi = new XtbApi(textBoxSymbol.Text, 0);
+				XtbApi xtbApi = new XtbApi(Symbol(), 0);
 
-				SlToBeAutomation = false;
+				DisableSlToBeAutomation();
 
 				List<Order> orders = xtbApi.GetMarketOrders(false);
 				foreach (var order in orders)
@@ -672,7 +672,7 @@ namespace Xtb
 		private void buttonEquity_Click(object sender, EventArgs e)
 		{
 			FormEquity formEquity = new FormEquity();
-			formEquity.Symbol = textBoxSymbol.Text;
+			formEquity.Symbol = Symbol();
 			formEquity.TopMost = checkBoxAlwaysOnTop.Checked;
 			formEquity.Text = this.Text;
 			formEquity.ShowDialog();
@@ -681,6 +681,11 @@ namespace Xtb
 		private void checkBoxAlwaysOnTop_CheckedChanged(object sender, EventArgs e)
 		{
 			this.TopMost = checkBoxAlwaysOnTop.Checked;
+		}
+
+		private string Symbol()
+		{
+			return textBoxSymbol.Text.Trim().ToUpper();
 		}
 	}
 }

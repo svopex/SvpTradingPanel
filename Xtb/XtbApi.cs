@@ -420,7 +420,7 @@ namespace Xtb
 		{
 			if (SlRelative != 0)
 			{
-				if (order.Units > 0)
+				if (order.Buy)
 				{
 					order.SL = PriceNormalize(order.OpenPrice - SlRelative);
 				}
@@ -431,7 +431,7 @@ namespace Xtb
 			}
 			if (PtRelative != 0)
 			{
-				if (order.Units > 0)
+				if (order.Buy)
 				{
 					order.PT = PriceNormalize(order.OpenPrice + PtRelative);
 				}
