@@ -266,8 +266,9 @@ namespace Mt4Api
 
 		public ulong CreatePendingOrderSlPtPercent(double price, double units, double slPercent, double ptPercent)
 		{
-			return CreatePendingOrderSlPtPercent(Symbol, price, units, 0, Utilities.StrategyName, slPercent, ptPercent);
+			return CreatePendingOrderSlPtPercent(Symbol, price, units, Utilities.StrategyNumber, Utilities.StrategyName, slPercent, ptPercent);
 		}
+
 		public ulong CreatePendingOrderSlPtPercent(string instrument, double price, double units, ulong magic, string comment, double slPercent, double ptPercent)
 		{
 			ulong ticket = (ulong)CreatePendingOrder(instrument, price, units, comment, (int)magic);

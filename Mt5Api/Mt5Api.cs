@@ -10,6 +10,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using Utils;
 
@@ -152,7 +153,7 @@ namespace Mt5Api
 
 		public double GetMarketOrderPrice(long marketOrderId)
 		{
-			if (apiClient.PositionSelectByTicket((ulong)marketOrderId))
+			if (PositionSelectByTicket((ulong)marketOrderId))
 			{
 				return apiClient.PositionGetDouble(ENUM_POSITION_PROPERTY_DOUBLE.POSITION_PRICE_OPEN);
 			}
@@ -396,9 +397,27 @@ namespace Mt5Api
 			return CreatePendingOrderSlPtRelative(instrument, price, units, magic, comment, 0, 0);
 		}
 
+		private bool OrderSelectByTicket(ulong ticket)
+		{
+			int counter = 0;
+			while (true)
+			{
+				bool result = apiClient.OrderSelect(ticket);
+				if (result)
+				{
+					return true;
+				}
+				Thread.Sleep(100);
+				if (counter++ > 10)
+				{
+					return false;
+				}
+			}
+		}
+
 		public Order GetPendingOrder(ulong ticket)
 		{
-			apiClient.OrderSelect(ticket);
+			OrderSelectByTicket(ticket);
 
 			Order order = new Order();
 
@@ -567,9 +586,27 @@ namespace Mt5Api
 			return new DateTime(time * 10000).AddYears(1969);
 		}
 
+		private bool PositionSelectByTicket(ulong ticket)
+		{
+			int counter = 0;
+			while (true)
+			{
+				bool result = apiClient.PositionSelectByTicket(ticket);
+				if (result)
+				{
+					return true;
+				}
+				Thread.Sleep(100);
+				if (counter++ > 10)
+				{
+					return false;
+				}
+			}
+		}
+
 		public Order GetMarketOrder(ulong ticket)
 		{
-			apiClient.PositionSelectByTicket(ticket);
+			PositionSelectByTicket(ticket);
 
 			Order Order = new Order();
 
