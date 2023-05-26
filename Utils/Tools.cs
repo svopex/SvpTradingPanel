@@ -10,7 +10,23 @@ namespace Utils
 {
 	public class Utilities
 	{
-		private const int Parameters = 5;
+		private const int Parameters = 6;
+
+		public static double AccountEquity
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > Parameters)
+				{
+					return Double.Parse(args[4]);
+				}
+				else
+				{
+					return 0;
+				}
+			}
+		}
 
 		// Chci 1% risk na obchod.
 		public static double RiskToTrade
@@ -20,7 +36,7 @@ namespace Utils
 				string[] args = Environment.GetCommandLineArgs();
 				if (args.Length > Parameters)
 				{
-					return Double.Parse(args[4]);
+					return Double.Parse(args[5]);
 				}
 				else
 				{
@@ -37,7 +53,7 @@ namespace Utils
 				string[] args = Environment.GetCommandLineArgs();
 				if (args.Length > Parameters)
 				{
-					return Int32.Parse(args[5]);
+					return Int32.Parse(args[6]);
 				}
 				else
 				{
@@ -109,7 +125,7 @@ namespace Utils
 			}
 		}
 
-		private const int XtbParameters = 6;
+		private const int XtbParameters = 7;
 
 		public static string XtbUserId
 		{
@@ -159,6 +175,38 @@ namespace Utils
 			}
 		}
 
+		public static string XtbComment
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > XtbParameters)
+				{
+					return args[4];
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
+		public static double XtbAccountEquity
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > XtbParameters)
+				{
+					return Double.Parse(args[5]);
+				}
+				else
+				{
+					return 0;
+				}
+			}
+		}
+
 		public static double XtbRiskInPercent
 		{
 			get
@@ -166,7 +214,7 @@ namespace Utils
 				string[] args = Environment.GetCommandLineArgs();
 				if (args.Length > XtbParameters)
 				{
-					return Double.Parse(args[4]);
+					return Double.Parse(args[6]);
 				}
 				else
 				{
@@ -182,27 +230,11 @@ namespace Utils
 				string[] args = Environment.GetCommandLineArgs();
 				if (args.Length > XtbParameters)
 				{
-					return Double.Parse(args[5]);
+					return Double.Parse(args[7]);
 				}
 				else
 				{
 					return 0.01;
-				}
-			}
-		}
-
-		public static string XtbComment
-		{
-			get
-			{
-				string[] args = Environment.GetCommandLineArgs();
-				if (args.Length > XtbParameters)
-				{
-					return args[6];
-				}
-				else
-				{
-					return null;
 				}
 			}
 		}

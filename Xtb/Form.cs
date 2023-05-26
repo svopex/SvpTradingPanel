@@ -177,7 +177,7 @@ namespace Xtb
 
 			checkBoxMovePendingOrder.Checked = false;
 
-			this.Text = "XTB - " + Utilities.XtbComment + ", " + Utilities.XtbUserId + ", " + Utilities.XtbServerType.Description + ", " + Utilities.XtbRiskInPercent * 100 + "%, " + Utilities.XtbBrokerMarginEquityCoefficient + "x";
+			this.Text = "XTB - " + Utilities.XtbComment + ", " + Utilities.XtbUserId + ", " + Utilities.XtbServerType.Description + ", " + ((Utilities.XtbAccountEquity == 0) ? String.Empty : (Utilities.XtbAccountEquity + ", ")) + Utilities.XtbRiskInPercent * 100 + "%, " + Utilities.XtbBrokerMarginEquityCoefficient + "x";
 		}
 
 		private void DisableSlToBeAutomation()

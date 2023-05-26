@@ -93,7 +93,7 @@ namespace SvpTradingPanel
 		private double RiskValue()
 		{
 			// na uctu mam pouze 1/4 toho, co chci obchodovat, kvuli mozne kradezi. Pouzivam paku.			
-			double accountEquity = MetatraderInstance.Instance.AccountEquity();
+			double accountEquity = Utilities.AccountEquity == 0 ? MetatraderInstance.Instance.AccountEquity() : Utilities.AccountEquity;
 			return accountEquity * Utilities.BrokerMarginEquityCoefficient * Utilities.RiskToTrade;
 		}
 
@@ -695,7 +695,7 @@ namespace SvpTradingPanel
 
 			timerRefreshLabels.Interval = 1000;
 
-			this.Text = "SvpTradingPanel - " + Utilities.StrategyName + ", " + Utilities.RiskToTrade * 100 + "%, " + Utilities.BrokerMarginEquityCoefficient + "x";
+			this.Text = "SvpTradingPanel - " + Utilities.StrategyName + ", " + (Utilities.AccountEquity == 0 ? String.Empty : Utilities.AccountEquity + ", ") + Utilities.RiskToTrade * 100 + "%, " + Utilities.BrokerMarginEquityCoefficient + "x";
 		}
 
 		private void CallHue(bool Pt)

@@ -164,10 +164,23 @@ namespace Xtb
 			return risk;
 		}
 
+		public double GetAccountEquity()
+		{
+			var margin = APICommandFactory.ExecuteMarginLevelCommand(connector);
+			if (Utilities.XtbAccountEquity == 0)
+			{
+				return margin.Equity!.Value;
+			}
+			else
+			{
+				return Utilities.XtbAccountEquity;
+			}
+		}
+
 		private void FullInit()
 		{
 			var margin = APICommandFactory.ExecuteMarginLevelCommand(connector);
-			risk = margin.Equity!.Value * Utilities.XtbRiskInPercent * Utilities.XtbBrokerMarginEquityCoefficient;
+			risk = GetAccountEquity() * Utilities.XtbRiskInPercent * Utilities.XtbBrokerMarginEquityCoefficient;
 
 			//var rrr = APICommandFactory.ExecuteAllSymbolsCommand(connector);
 
