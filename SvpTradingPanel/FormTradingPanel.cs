@@ -690,7 +690,7 @@ namespace SvpTradingPanel
 			SlToBeAutomation = false;
 			progressBarSlToBeAutomation.Value = 0;
 
-			trackBarPositionUsing.Value = 50;
+			trackBarPositionUsing.Value = 100;
 			trackBarPositionUsing_ValueChanged(null, null);
 
 			timerRefreshLabels.Interval = 1000;

@@ -267,7 +267,7 @@
 			trackBarPositionUsing.Size = new Size(670, 80);
 			trackBarPositionUsing.SmallChange = 5;
 			trackBarPositionUsing.TabIndex = 8;
-			trackBarPositionUsing.Value = 50;
+			trackBarPositionUsing.Value = 100;
 			trackBarPositionUsing.ValueChanged += trackBarPositionUsing_ValueChanged;
 			// 
 			// labelPositionUsing
@@ -284,9 +284,9 @@
 			labelPositionUsingPercent.AutoSize = true;
 			labelPositionUsingPercent.Location = new Point(12, 208);
 			labelPositionUsingPercent.Name = "labelPositionUsingPercent";
-			labelPositionUsingPercent.Size = new Size(52, 30);
+			labelPositionUsingPercent.Size = new Size(63, 30);
 			labelPositionUsingPercent.TabIndex = 7;
-			labelPositionUsingPercent.Text = "50%";
+			labelPositionUsingPercent.Text = "100%";
 			// 
 			// timerRefreshTexts
 			// 
