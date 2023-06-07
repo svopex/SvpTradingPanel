@@ -755,7 +755,9 @@ namespace SvpTradingPanel
 				{
 					Task.Delay(5000); // Cekani na pripadne uzavreni vsech pozic.
 
-					foreach(var instrument in SlToBeAutomationOrders.Select(x => x.Instrument).Distinct())
+					orders = MetatraderInstance.Instance.GetMarketOrders(true);
+
+					foreach (var instrument in SlToBeAutomationOrders.Select(x => x.Instrument).Distinct())
 					{
 						var slToBeAutomationOrdersByInstrument = SlToBeAutomationOrders.Where(x => x.Instrument == instrument).ToList();
 						var ordersByInstrument = MetatraderInstance.Instance.GetMarketOrders(true).Where(x => x.Instrument == instrument).ToList();
@@ -782,10 +784,10 @@ namespace SvpTradingPanel
 					SlToBeAutomationOrders = MetatraderInstance.Instance.GetMarketOrders(true);
 				}
 
-				//if (!SlToBeAutomationOrders.Any())
-				//{
-				//	SlToBeAutomation = false;
-				//}
+				if (!SlToBeAutomationOrders.Any())
+				{
+					SlToBeAutomation = false;
+				}
 			}
 			if (SlToBeAutomation)
 			{

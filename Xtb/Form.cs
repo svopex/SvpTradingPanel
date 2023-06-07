@@ -223,6 +223,8 @@ namespace Xtb
 				{
 					Task.Delay(5000); // Cekani na pripadne uzavreni vsech pozic.
 
+					orders = xtbApi.GetMarketOrders(true);
+
 					foreach (var instrument in SlToBeAutomationOrders.Select(x => x.Instrument).Distinct())
 					{
 						var slToBeAutomationOrdersByInstrument = SlToBeAutomationOrders.Where(x => x.Instrument == instrument).ToList();
@@ -250,10 +252,10 @@ namespace Xtb
 					SlToBeAutomationOrders = xtbApi.GetMarketOrders(true);
 				}
 
-				//if (!SlToBeAutomationOrders.Any())
-				//{
-				//	DisableSlToBeAutomation();
-				//}
+				if (!SlToBeAutomationOrders.Any())
+				{
+					DisableSlToBeAutomation();
+				}
 			}
 		}
 
