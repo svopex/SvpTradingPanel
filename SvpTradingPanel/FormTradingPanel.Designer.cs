@@ -544,7 +544,7 @@
 			this.labelSymbol.Name = "labelSymbol";
 			this.labelSymbol.Size = new System.Drawing.Size(430, 85);
 			this.labelSymbol.TabIndex = 90;
-			this.labelSymbol.Text = "Symbol";
+			this.labelSymbol.Text = "? Symbol ?";
 			// 
 			// FormTradingPanel
 			// 
