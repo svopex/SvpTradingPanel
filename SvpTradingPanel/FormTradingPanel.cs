@@ -50,6 +50,7 @@ namespace SvpTradingPanel
 			labelLoss.Text = "Loss: " + Math.Round(loss, 2) + " " + currency;
 			labelProfit.Text = "Profit: " + Math.Round(profit, 2) + " " + currency;
 			RefreshLabelSlLoss();
+			labelSymbol.Text = MetatraderInstance.Instance.Symbol;
 		}
 
 		private double? GetPrice(bool buy)
