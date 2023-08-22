@@ -46,18 +46,18 @@ namespace Utils
 		}
 
 		// Na uctu mam realne 1/4 hodnoty uctu (kvuli nebezpeci krachu brokera).
-		public static int BrokerMarginEquityCoefficient
+		public static double BrokerMarginEquityCoefficient
 		{
 			get
 			{
 				string[] args = Environment.GetCommandLineArgs();
 				if (args.Length > Parameters)
 				{
-					return Int32.Parse(args[6]);
+					return Double.Parse(args[6]);
 				}
 				else
 				{
-					return 4;
+					return 1;
 				}
 			}
 		}
@@ -234,7 +234,7 @@ namespace Utils
 				}
 				else
 				{
-					return 0.01;
+					return 1;
 				}
 			}
 		}
