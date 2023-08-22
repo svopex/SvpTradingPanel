@@ -167,6 +167,8 @@ namespace Xtb
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+			trackBarPositionUsing.Value = Utils.Utilities.TrackBarPositionUsing;
+
 			timerRefreshTexts.Enabled = false;
 
 			DisableSlToBeAutomation();

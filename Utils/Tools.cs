@@ -10,7 +10,23 @@ namespace Utils
 {
 	public class Utilities
 	{
-		private const int Parameters = 6;
+		private const int Parameters = 7;		
+
+		public static int TrackBarPositionUsing
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > Parameters)
+				{
+					return Int32.Parse(args[7]);
+				}
+				else
+				{
+					return 100;
+				}
+			}
+		}
 
 		public static double AccountEquity
 		{
