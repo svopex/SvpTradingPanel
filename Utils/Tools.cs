@@ -256,7 +256,7 @@ namespace Utils
 			}
 		}
 
-		public static ulong StrategyNumber => 6877;
+		public static ulong StrategyNumber => 0;
         public static ErrorMessageToEnum ErrorMessageDestination => ErrorMessageToEnum.none;
     }
 }
