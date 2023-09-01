@@ -696,7 +696,7 @@ namespace SvpTradingPanel
 
 			timerRefreshLabels.Interval = 1000;
 
-			this.Text = "SvpTradingPanel - " + Utilities.StrategyName + ", " + (Utilities.AccountEquity == 0 ? String.Empty : Utilities.AccountEquity + ", ") + Utilities.RiskToTrade * 100 + "%, " + Utilities.BrokerMarginEquityCoefficient + "x";
+			this.Text = "SvpTradingPanel - " + (String.IsNullOrWhiteSpace(Utilities.StrategyName) ? "strategy name not defined" : Utilities.StrategyName) + ", " + (Utilities.AccountEquity == 0 ? String.Empty : Utilities.AccountEquity + ", ") + Utilities.RiskToTrade * 100 + "%, " + Utilities.BrokerMarginEquityCoefficient + "x";
 		}
 
 		private void CallHue(bool Pt)
