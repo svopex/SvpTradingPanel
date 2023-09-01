@@ -109,6 +109,7 @@ namespace Utils
 				}
 			}
 		}
+
 		public static string StrategyName
 		{
 			get
@@ -116,11 +117,11 @@ namespace Utils
 				string[] args = Environment.GetCommandLineArgs();
 				if (args.Length > Parameters)
 				{
-					return args[3];
+					return (args[3].ToLower() == "-") ? null : args[3];
 				}
 				else
 				{
-					return "Default";
+					return null;
 				}
 			}
 		}
