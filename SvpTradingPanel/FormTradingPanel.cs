@@ -776,7 +776,14 @@ namespace SvpTradingPanel
 								foreach (var order in ordersByInstrument)
 								{
 									order.SL = order.OpenPrice;
-									MetatraderInstance.Instance.SetPositionSlAndPt(order);
+									try
+									{
+										MetatraderInstance.Instance.SetPositionSlAndPt(order);
+									}
+									catch
+									{
+										// nothing to do.
+									}									
 								}
 							}
 						}
