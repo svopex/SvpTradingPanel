@@ -674,6 +674,8 @@ namespace SvpTradingPanel
 
 		private void FormTradingPanel_Load(object sender, EventArgs e)
 		{
+			checkBoxBlink.Checked = true;
+
 			this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
 			bool connected = MetatraderInstance.Connect();
@@ -768,7 +770,10 @@ namespace SvpTradingPanel
 							(string instrument, double profit)? result = MetatraderInstance.Instance.GetLatestProfit(instrument);
 							if (result != null)
 							{
-								CallHue(result.Value.profit >= 2);
+								if (checkBoxBlink.Checked)
+								{
+									CallHue(result.Value.profit >= 2);
+								}
 							}
 
 							if (SlToBeAutomationMoveSlEnabled && (ordersByInstrument.Count > 0))
