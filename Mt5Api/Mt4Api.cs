@@ -322,7 +322,7 @@ namespace Mt4Api
 
 		public ulong CreateMarketOrderSlPtPercent(double units, double slPercent, double ptPercent)
 		{
-			ulong ticket = (ulong)CreateMarketOrder(Symbol, units, null, (int)Utilities.StrategyNumber);
+			ulong ticket = (ulong)CreateMarketOrder(Symbol, units, Utilities.StrategyName, (int)Utilities.StrategyNumber);
 			Order order = GetMarketOrder(ticket);
 			double oldSl = order.SL;
 			double oldPt = order.PT;
