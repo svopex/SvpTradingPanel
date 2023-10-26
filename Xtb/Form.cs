@@ -621,32 +621,32 @@ namespace Xtb
 
 		private void buttonSlUpMax_Click(object sender, EventArgs e)
 		{
-			SlUp(0.0025);
+			SlUp(0.00125);
 		}
 
 		private void buttonSlDownMax_Click(object sender, EventArgs e)
 		{
-			SlDown(0.0025);
+			SlDown(0.00125);
 		}
 
 		private void buttonSlUp_Click(object sender, EventArgs e)
 		{
-			SlUp(0.001);
+			SlUp(0.0005);
 		}
 
 		private void buttonSlDown_Click(object sender, EventArgs e)
 		{
-			SlDown(0.001);
+			SlDown(0.0005);
 		}
 
 		private void buttonSlUpMin_Click(object sender, EventArgs e)
 		{
-			SlUp(0.00025);
+			SlUp(0.000125);
 		}
 
 		private void buttonSlDownMin_Click(object sender, EventArgs e)
 		{
-			SlDown(0.00025);
+			SlDown(0.000125);
 		}
 
 		private void buttonCloseAll_Click(object sender, EventArgs e)
