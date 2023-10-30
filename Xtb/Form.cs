@@ -167,6 +167,8 @@ namespace Xtb
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+			checkBoxBlink.Checked = true;
+
 			timerRefreshTexts.Enabled = false;
 
 			DisableSlToBeAutomation();
@@ -235,7 +237,10 @@ namespace Xtb
 							(string instrument, double profit)? result = xtbApi.GetLatestProfit(instrument!);
 							if (result != null)
 							{
-								CallHue(result.Value.profit >= 2);
+								if (checkBoxBlink.Checked)
+								{
+									CallHue(result.Value.profit >= 2);
+								}
 							}
 
 							if (SlToBeAutomationMoveSlEnabled && (ordersByInstrument.Count > 0))
