@@ -851,13 +851,16 @@ namespace SvpTradingPanel
 				switch (SlToBeAutomationType)
 				{
 					case SlTypeEnum.Monitoring:
-						progressBarSlPtMonitoring.Value = 0;
+						progressBarSlToBeAutomation.Value = 0;
+						progressBarSlToHalfAutomation.Value = 0;
 						break;
 					case SlTypeEnum.BreakEven:
-						progressBarSlToBeAutomation.Value = 0;
+						progressBarSlToHalfAutomation.Value = 0;
+						progressBarSlPtMonitoring.Value = 0;
 						break;
 					case SlTypeEnum.Half:
-						progressBarSlToHalfAutomation.Value = 0;
+						progressBarSlToBeAutomation.Value = 0;
+						progressBarSlPtMonitoring.Value = 0;
 						break;
 				}
 			}
