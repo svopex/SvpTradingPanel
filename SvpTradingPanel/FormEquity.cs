@@ -41,7 +41,7 @@ namespace SvpTradingPanel
 		{
 			List<History> results = MetatraderInstance.Instance.GetLatestProfitHistory(new DateTime(GetYear(), 1, 1, 0, 0, 0), new DateTime(GetYear(), 12, 31, 23, 59, 59));
 
-			results = results.Where(x => x.comment == Utilities.StrategyName || Utilities.StrategyName.ToLower() == "none").ToList();
+			results = results.Where(x => !String.IsNullOrWhiteSpace(x.comment) && (x.comment.StartsWith(Utilities.StrategyName) || Utilities.StrategyName.ToLower() == "none")).ToList();
 
 			chart1.Series.Clear();
 			labelIncome.Text = String.Empty;
