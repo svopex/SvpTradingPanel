@@ -819,11 +819,11 @@ namespace SvpTradingPanel
 								{
 									if (order.Units > 0)
 									{
-										order.SL = (order.OpenPrice - order.SL) / 2;
+										order.SL = order.OpenPrice - (order.OpenPrice - order.SL) / 2;
 									}
 									else
 									{
-										order.SL = (order.SL - order.OpenPrice) / 2;
+										order.SL = order.OpenPrice + (order.SL - order.OpenPrice) / 2;
 									}									
 									try
 									{
