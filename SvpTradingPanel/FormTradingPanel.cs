@@ -23,7 +23,15 @@ namespace SvpTradingPanel
 		private const int SlToBeAutomationProgressIncrementConstant = 20;
 		private bool SlToBeAutomation { get; set; }
 		private Orders SlToBeAutomationOrders { get; set; }
-		private bool SlToBeAutomationMoveSlEnabled { get; set; }
+
+		private enum SlTypeEnum
+		{
+			Monitoring,
+			BreakEven,
+			Half
+		}
+
+		private SlTypeEnum SlToBeAutomationType { get; set; }
 
 		public FormTradingPanel()
 		{
@@ -692,6 +700,8 @@ namespace SvpTradingPanel
 			
 			SlToBeAutomation = false;
 			progressBarSlToBeAutomation.Value = 0;
+			progressBarSlToHalfAutomation.Value = 0;
+			progressBarSlPtMonitoring.Value = 0;
 
 			trackBarPositionUsing.Value = Utils.Utilities.TrackBarPositionUsing;
 			trackBarPositionUsing_ValueChanged(null, null);
@@ -729,27 +739,38 @@ namespace SvpTradingPanel
 		{
 			if (SlToBeAutomation)
 			{
-				if (SlToBeAutomationMoveSlEnabled)
+				switch (SlToBeAutomationType)
 				{
-					if (progressBarSlToBeAutomation.Value == 100)
-					{
-						progressBarSlToBeAutomation.Value = 0;
-					}
-					else
-					{
-						progressBarSlToBeAutomation.Value += SlToBeAutomationProgressIncrementConstant;
-					}
-				}
-				else
-				{
-					if (progressBarSlPtMonitoring.Value == 100)
-					{
-						progressBarSlPtMonitoring.Value = 0;
-					}
-					else
-					{
-						progressBarSlPtMonitoring.Value += SlToBeAutomationProgressIncrementConstant;
-					}
+					case SlTypeEnum.Monitoring:
+						if (progressBarSlPtMonitoring.Value == 100)
+						{
+							progressBarSlPtMonitoring.Value = 0;
+						}
+						else
+						{
+							progressBarSlPtMonitoring.Value += SlToBeAutomationProgressIncrementConstant;
+						}
+						break;
+					case SlTypeEnum.BreakEven:
+						if (progressBarSlToBeAutomation.Value == 100)
+						{
+							progressBarSlToBeAutomation.Value = 0;
+						}
+						else
+						{
+							progressBarSlToBeAutomation.Value += SlToBeAutomationProgressIncrementConstant;
+						}
+						break;
+					case SlTypeEnum.Half:
+						if (progressBarSlToHalfAutomation.Value == 100)
+						{
+							progressBarSlToHalfAutomation.Value = 0;
+						}
+						else
+						{
+							progressBarSlToHalfAutomation.Value += SlToBeAutomationProgressIncrementConstant;
+						}
+						break;
 				}
 
 				Orders orders = MetatraderInstance.Instance.GetMarketOrders(true);
@@ -776,7 +797,7 @@ namespace SvpTradingPanel
 								}
 							}
 
-							if (SlToBeAutomationMoveSlEnabled && (ordersByInstrument.Count > 0))
+							if (SlToBeAutomationType == SlTypeEnum.BreakEven && (ordersByInstrument.Count > 0))
 							{
 								foreach (var order in ordersByInstrument)
 								{
@@ -789,6 +810,29 @@ namespace SvpTradingPanel
 									{
 										// nothing to do.
 									}									
+								}
+							}
+
+							if (SlToBeAutomationType == SlTypeEnum.Half && (ordersByInstrument.Count > 0))
+							{
+								foreach (var order in ordersByInstrument)
+								{
+									if (order.Units > 0)
+									{
+										order.SL = (order.OpenPrice - order.SL) / 2;
+									}
+									else
+									{
+										order.SL = (order.SL - order.OpenPrice) / 2;
+									}									
+									try
+									{
+										MetatraderInstance.Instance.SetPositionSlAndPt(order);
+									}
+									catch
+									{
+										// nothing to do.
+									}
 								}
 							}
 						}
@@ -804,19 +848,24 @@ namespace SvpTradingPanel
 			}
 			if (SlToBeAutomation)
 			{
-				if (SlToBeAutomationMoveSlEnabled)
+				switch (SlToBeAutomationType)
 				{
-					progressBarSlPtMonitoring.Value = 0;
-				}
-				else
-				{
-					progressBarSlToBeAutomation.Value = 0;
+					case SlTypeEnum.Monitoring:
+						progressBarSlPtMonitoring.Value = 0;
+						break;
+					case SlTypeEnum.BreakEven:
+						progressBarSlToBeAutomation.Value = 0;
+						break;
+					case SlTypeEnum.Half:
+						progressBarSlToHalfAutomation.Value = 0;
+						break;
 				}
 			}
 			else
 			{
 				progressBarSlToBeAutomation.Value = 0;
 				progressBarSlPtMonitoring.Value = 0;
+				progressBarSlToHalfAutomation.Value = 0;
 			}
 		}
 
@@ -887,7 +936,16 @@ namespace SvpTradingPanel
 
 			SlToBeAutomationOrders = MetatraderInstance.Instance.GetMarketOrders(true);
 
-			SlToBeAutomationMoveSlEnabled = true;
+			SlToBeAutomationType = SlTypeEnum.BreakEven;
+		}
+
+		private void buttonSlToHalfAutomation_Click(object sender, EventArgs e)
+		{
+			SlToBeAutomation = !SlToBeAutomation;
+
+			SlToBeAutomationOrders = MetatraderInstance.Instance.GetMarketOrders(true);
+
+			SlToBeAutomationType = SlTypeEnum.Half;
 		}
 
 		private void buttonSlPtMonitoring_Click(object sender, EventArgs e)
@@ -896,7 +954,7 @@ namespace SvpTradingPanel
 
 			SlToBeAutomationOrders = MetatraderInstance.Instance.GetMarketOrders(true);
 
-			SlToBeAutomationMoveSlEnabled = false;
+			SlToBeAutomationType = SlTypeEnum.Monitoring;
 		}
 
 		private void buttonEquity_Click(object sender, EventArgs e)
