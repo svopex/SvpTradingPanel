@@ -550,7 +550,7 @@
 			// 
 			AutoScaleDimensions = new SizeF(13F, 32F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1063, 1146);
+			ClientSize = new Size(1030, 1134);
 			Controls.Add(progressBarSlToHalf);
 			Controls.Add(buttonSlToHalf);
 			Controls.Add(checkBoxBlink);
