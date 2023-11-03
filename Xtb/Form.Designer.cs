@@ -74,6 +74,8 @@
 			buttonEquity = new Button();
 			checkBoxAlwaysOnTop = new CheckBox();
 			checkBoxBlink = new CheckBox();
+			progressBarSlToHalf = new ProgressBar();
+			buttonSlToHalf = new Button();
 			((System.ComponentModel.ISupportInitialize)trackBarPositionUsing).BeginInit();
 			SuspendLayout();
 			// 
@@ -221,13 +223,13 @@
 			buttonSlToBe.Name = "buttonSlToBe";
 			buttonSlToBe.Size = new Size(465, 90);
 			buttonSlToBe.TabIndex = 80;
-			buttonSlToBe.Text = "SL to BE automation after first PT";
+			buttonSlToBe.Text = "SL to BE automation after PT";
 			buttonSlToBe.UseVisualStyleBackColor = true;
 			buttonSlToBe.Click += buttonSlToBe_Click;
 			// 
 			// buttonSlPtMonitoring
 			// 
-			buttonSlPtMonitoring.Location = new Point(548, 476);
+			buttonSlPtMonitoring.Location = new Point(548, 629);
 			buttonSlPtMonitoring.Margin = new Padding(3, 4, 3, 4);
 			buttonSlPtMonitoring.Name = "buttonSlPtMonitoring";
 			buttonSlPtMonitoring.Size = new Size(465, 90);
@@ -246,7 +248,7 @@
 			// 
 			// progressBarSlPtMonitoring
 			// 
-			progressBarSlPtMonitoring.Location = new Point(548, 570);
+			progressBarSlPtMonitoring.Location = new Point(548, 723);
 			progressBarSlPtMonitoring.Margin = new Padding(3, 4, 3, 4);
 			progressBarSlPtMonitoring.Name = "progressBarSlPtMonitoring";
 			progressBarSlPtMonitoring.Size = new Size(465, 43);
@@ -384,7 +386,7 @@
 			// 
 			// buttonJoinSl
 			// 
-			buttonJoinSl.Location = new Point(710, 881);
+			buttonJoinSl.Location = new Point(708, 1035);
 			buttonJoinSl.Margin = new Padding(3, 4, 3, 4);
 			buttonJoinSl.Name = "buttonJoinSl";
 			buttonJoinSl.Size = new Size(141, 81);
@@ -396,7 +398,7 @@
 			// checkBoxMovePendingOrder
 			// 
 			checkBoxMovePendingOrder.AutoSize = true;
-			checkBoxMovePendingOrder.Location = new Point(561, 642);
+			checkBoxMovePendingOrder.Location = new Point(559, 796);
 			checkBoxMovePendingOrder.Margin = new Padding(3, 4, 3, 4);
 			checkBoxMovePendingOrder.Name = "checkBoxMovePendingOrder";
 			checkBoxMovePendingOrder.Size = new Size(346, 36);
@@ -406,7 +408,7 @@
 			// 
 			// buttonResetTp
 			// 
-			buttonResetTp.Location = new Point(869, 881);
+			buttonResetTp.Location = new Point(867, 1035);
 			buttonResetTp.Margin = new Padding(3, 4, 3, 4);
 			buttonResetTp.Name = "buttonResetTp";
 			buttonResetTp.Size = new Size(141, 81);
@@ -417,7 +419,7 @@
 			// 
 			// buttonSlUpMax
 			// 
-			buttonSlUpMax.Location = new Point(548, 695);
+			buttonSlUpMax.Location = new Point(546, 849);
 			buttonSlUpMax.Margin = new Padding(3, 4, 3, 4);
 			buttonSlUpMax.Name = "buttonSlUpMax";
 			buttonSlUpMax.Size = new Size(141, 81);
@@ -428,7 +430,7 @@
 			// 
 			// buttonSlDownMax
 			// 
-			buttonSlDownMax.Location = new Point(548, 791);
+			buttonSlDownMax.Location = new Point(546, 945);
 			buttonSlDownMax.Margin = new Padding(3, 4, 3, 4);
 			buttonSlDownMax.Name = "buttonSlDownMax";
 			buttonSlDownMax.Size = new Size(141, 81);
@@ -439,7 +441,7 @@
 			// 
 			// buttonSlDown
 			// 
-			buttonSlDown.Location = new Point(710, 791);
+			buttonSlDown.Location = new Point(708, 945);
 			buttonSlDown.Margin = new Padding(3, 4, 3, 4);
 			buttonSlDown.Name = "buttonSlDown";
 			buttonSlDown.Size = new Size(141, 81);
@@ -450,7 +452,7 @@
 			// 
 			// buttonSlUp
 			// 
-			buttonSlUp.Location = new Point(710, 695);
+			buttonSlUp.Location = new Point(708, 849);
 			buttonSlUp.Margin = new Padding(3, 4, 3, 4);
 			buttonSlUp.Name = "buttonSlUp";
 			buttonSlUp.Size = new Size(141, 81);
@@ -461,7 +463,7 @@
 			// 
 			// buttonSlDownMin
 			// 
-			buttonSlDownMin.Location = new Point(869, 791);
+			buttonSlDownMin.Location = new Point(867, 945);
 			buttonSlDownMin.Margin = new Padding(3, 4, 3, 4);
 			buttonSlDownMin.Name = "buttonSlDownMin";
 			buttonSlDownMin.Size = new Size(141, 81);
@@ -472,7 +474,7 @@
 			// 
 			// buttonSlUpMin
 			// 
-			buttonSlUpMin.Location = new Point(869, 695);
+			buttonSlUpMin.Location = new Point(867, 849);
 			buttonSlUpMin.Margin = new Padding(3, 4, 3, 4);
 			buttonSlUpMin.Name = "buttonSlUpMin";
 			buttonSlUpMin.Size = new Size(141, 81);
@@ -483,7 +485,7 @@
 			// 
 			// buttonCloseAll
 			// 
-			buttonCloseAll.Location = new Point(548, 881);
+			buttonCloseAll.Location = new Point(546, 1035);
 			buttonCloseAll.Margin = new Padding(3, 4, 3, 4);
 			buttonCloseAll.Name = "buttonCloseAll";
 			buttonCloseAll.Size = new Size(141, 81);
@@ -525,11 +527,32 @@
 			checkBoxBlink.Text = "Blink by Hue bulb";
 			checkBoxBlink.UseVisualStyleBackColor = true;
 			// 
+			// progressBarSlToHalf
+			// 
+			progressBarSlToHalf.Location = new Point(543, 561);
+			progressBarSlToHalf.Margin = new Padding(3, 4, 3, 4);
+			progressBarSlToHalf.Name = "progressBarSlToHalf";
+			progressBarSlToHalf.Size = new Size(465, 43);
+			progressBarSlToHalf.TabIndex = 114;
+			// 
+			// buttonSlToHalf
+			// 
+			buttonSlToHalf.Location = new Point(543, 463);
+			buttonSlToHalf.Margin = new Padding(3, 4, 3, 4);
+			buttonSlToHalf.Name = "buttonSlToHalf";
+			buttonSlToHalf.Size = new Size(465, 90);
+			buttonSlToHalf.TabIndex = 113;
+			buttonSlToHalf.Text = "SL to half automation after PT";
+			buttonSlToHalf.UseVisualStyleBackColor = true;
+			buttonSlToHalf.Click += buttonSlToHalf_Click;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(13F, 32F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1043, 994);
+			ClientSize = new Size(1063, 1146);
+			Controls.Add(progressBarSlToHalf);
+			Controls.Add(buttonSlToHalf);
 			Controls.Add(checkBoxBlink);
 			Controls.Add(checkBoxAlwaysOnTop);
 			Controls.Add(buttonEquity);
@@ -630,5 +653,7 @@
 		private Button buttonEquity;
 		private CheckBox checkBoxAlwaysOnTop;
 		private CheckBox checkBoxBlink;
+		private ProgressBar progressBarSlToHalf;
+		private Button buttonSlToHalf;
 	}
 }

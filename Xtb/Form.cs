@@ -11,7 +11,14 @@ namespace Xtb
 	{
 		private const int SlToBeAutomationProgressIncrementConstant = 20;
 		private bool SlToBeAutomation { get; set; }
-		private bool SlToBeAutomationMoveSlEnabled { get; set; }
+
+		private enum SlTypeEnum
+		{
+			Monitoring,
+			BreakEven,
+			Half
+		}
+		private SlTypeEnum SlToBeAutomationType { get; set; }
 		private List<Order>? SlToBeAutomationOrders { get; set; }
 
 		public Form1()
@@ -148,7 +155,19 @@ namespace Xtb
 			{
 				DisableSlToBeAutomation();
 			}
-			SlToBeAutomationMoveSlEnabled = true;
+			SlToBeAutomationType = SlTypeEnum.BreakEven;
+			XtbApi xtbApi = new XtbApi(Symbol(), 0);
+			SlToBeAutomationOrders = xtbApi.GetMarketOrders(true);
+		}
+
+		private void buttonSlToHalf_Click(object sender, EventArgs e)
+		{
+			SlToBeAutomation = !SlToBeAutomation;
+			if (!SlToBeAutomation)
+			{
+				DisableSlToBeAutomation();
+			}
+			SlToBeAutomationType = SlTypeEnum.Half;
 			XtbApi xtbApi = new XtbApi(Symbol(), 0);
 			SlToBeAutomationOrders = xtbApi.GetMarketOrders(true);
 		}
@@ -160,7 +179,7 @@ namespace Xtb
 			{
 				DisableSlToBeAutomation();
 			}
-			SlToBeAutomationMoveSlEnabled = false;
+			SlToBeAutomationType = SlTypeEnum.Monitoring;
 			XtbApi xtbApi = new XtbApi(Symbol(), 0);
 			SlToBeAutomationOrders = xtbApi.GetMarketOrders(true);
 		}
@@ -186,6 +205,7 @@ namespace Xtb
 		{
 			SlToBeAutomation = false;
 			progressBarSlPtMonitoring.Value = 0;
+			progressBarSlToHalf.Value = 0;
 			progressBarSlToBe.Value = 0;
 		}
 
@@ -193,27 +213,38 @@ namespace Xtb
 		{
 			if (SlToBeAutomation)
 			{
-				if (SlToBeAutomationMoveSlEnabled)
+				switch (SlToBeAutomationType)
 				{
-					if (progressBarSlToBe.Value == 100)
-					{
-						progressBarSlToBe.Value = 0;
-					}
-					else
-					{
-						progressBarSlToBe.Value += SlToBeAutomationProgressIncrementConstant;
-					}
-				}
-				else
-				{
-					if (progressBarSlPtMonitoring.Value == 100)
-					{
-						progressBarSlPtMonitoring.Value = 0;
-					}
-					else
-					{
-						progressBarSlPtMonitoring.Value += SlToBeAutomationProgressIncrementConstant;
-					}
+					case SlTypeEnum.Monitoring:
+						if (progressBarSlPtMonitoring.Value == 100)
+						{
+							progressBarSlPtMonitoring.Value = 0;
+						}
+						else
+						{
+							progressBarSlPtMonitoring.Value += SlToBeAutomationProgressIncrementConstant;
+						}
+						break;
+					case SlTypeEnum.BreakEven:
+						if (progressBarSlToBe.Value == 100)
+						{
+							progressBarSlToBe.Value = 0;
+						}
+						else
+						{
+							progressBarSlToBe.Value += SlToBeAutomationProgressIncrementConstant;
+						}
+						break;
+					case SlTypeEnum.Half:
+						if (progressBarSlToHalf.Value == 100)
+						{
+							progressBarSlToHalf.Value = 0;
+						}
+						else
+						{
+							progressBarSlToHalf.Value += SlToBeAutomationProgressIncrementConstant;
+						}
+						break;
 				}
 
 				XtbApi xtbApi = new XtbApi(Symbol(), 0);
@@ -243,11 +274,27 @@ namespace Xtb
 								}
 							}
 
-							if (SlToBeAutomationMoveSlEnabled && (ordersByInstrument.Count > 0))
+							if (SlToBeAutomationType == SlTypeEnum.BreakEven && (ordersByInstrument.Count > 0))
 							{
 								foreach (var order in ordersByInstrument)
 								{
 									order.SL = order.OpenPrice;
+									xtbApi.SetPositionSlAndPt(order);
+								}
+							}
+
+							if (SlToBeAutomationType == SlTypeEnum.Half && (ordersByInstrument.Count > 0))
+							{
+								foreach (var order in ordersByInstrument)
+								{
+									if (order.Units > 0)
+									{
+										order.SL = order.OpenPrice - (order.OpenPrice - order.SL) / 2;
+									}
+									else
+									{
+										order.SL = order.OpenPrice + (order.SL - order.OpenPrice) / 2;
+									}
 									xtbApi.SetPositionSlAndPt(order);
 								}
 							}
