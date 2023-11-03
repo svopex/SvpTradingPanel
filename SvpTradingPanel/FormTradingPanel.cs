@@ -824,7 +824,17 @@ namespace SvpTradingPanel
 									else
 									{
 										order.SL = order.OpenPrice + (order.SL - order.OpenPrice) / 2;
-									}									
+									}
+
+/*
+									// Nejde pouzit v pripade 3 obchodu, kdy pri druhem prodeji by se nastavil nesmyslny SL.
+									// Proto pouzivame polovicni SL.
+									if (result != null && result.Value.profit >= 2)
+									{
+										var symbolTradeTickValue = MetatraderInstance.Instance.SymbolTradeTickValue();
+										double distance = ((result.Value.profit / MetatraderInstance.Instance.SymbolTradeTickValue()) * MetatraderInstance.Instance.SymbolPoint()) / ordersByInstrument.Sum(x => Math.Abs(x.Units));
+*/
+
 									try
 									{
 										MetatraderInstance.Instance.SetPositionSlAndPt(order);
