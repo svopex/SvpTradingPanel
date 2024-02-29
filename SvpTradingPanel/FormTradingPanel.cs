@@ -793,7 +793,7 @@ namespace SvpTradingPanel
 							{
 								if (checkBoxBlink.Checked)
 								{
-									CallHue(result.Value.profit >= 2);
+									CallHue(result.Value.profit >= 1);
 								}
 							}
 
