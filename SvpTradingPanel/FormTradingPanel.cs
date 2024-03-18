@@ -133,7 +133,7 @@ namespace SvpTradingPanel
 			}
 		}
 
-		private void BuySell603010(bool buy)
+		private void BuySell403030(bool buy)
 		{
 			double? positionSize = GetPositionSize(buy);
 			double? price = GetPrice(buy);
@@ -141,15 +141,15 @@ namespace SvpTradingPanel
 			{
 				if (checkBoxPendingOrder.Checked)
 				{
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.6), 1, GetTpDistanceByOrderSize(60));
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(30));
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.1), 1, GetTpDistanceByOrderSize(10));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.4), 1, GetTpDistanceByOrderSize(50));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(35));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(20));
 				}
 				else
 				{
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.6), 1, GetTpDistanceByOrderSize(60));
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(30));
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.1), 1, GetTpDistanceByOrderSize(10));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.4), 1, GetTpDistanceByOrderSize(50));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(35));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(20));
 				}
 				JoinSl();
 			}
@@ -550,12 +550,12 @@ namespace SvpTradingPanel
 
 		private void buttonOrderBuy1_Click(object sender, EventArgs e)
 		{
-			BuySell603010(true);
+			BuySell403030(true);
 		}
 
 		private void buttonOrderSell1_Click(object sender, EventArgs e)
 		{
-			BuySell603010(false);
+			BuySell403030(false);
 		}
 
 		private void buttonOrderBuy2_Click(object sender, EventArgs e)
@@ -793,7 +793,7 @@ namespace SvpTradingPanel
 							{
 								if (checkBoxBlink.Checked)
 								{
-									CallHue(result.Value.profit >= 1);
+									CallHue(result.Value.profit >= 0);
 								}
 							}
 
