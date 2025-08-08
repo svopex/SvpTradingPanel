@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection.Emit;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using System.Text;
@@ -57,6 +58,8 @@ namespace SvpTradingPanel
 			labelRrr.Text = "RRR: " + Math.Round(rrr, 2);
 			labelLoss.Text = "Loss: " + Math.Round(loss, 2) + " " + currency;
 			labelProfit.Text = "Profit: " + Math.Round(profit, 2) + " " + currency;
+			double ps = GetPositionSize(true) ?? 0;
+			labelPs.Text = "Position size: " + Math.Round(ps, 2);
 			RefreshLabelSlLoss();
 			labelSymbol.Text = MetatraderInstance.Instance.Symbol;
 		}
@@ -120,7 +123,7 @@ namespace SvpTradingPanel
 				// tick size misto velikosti pozice				
 				var symbolTradeTickValue = MetatraderInstance.Instance.SymbolTradeTickValue();
 				positionSize = RiskValue() / (positionSize * symbolTradeTickValue);
-				
+
 				if (!buy)
 				{
 					positionSize = -positionSize;
