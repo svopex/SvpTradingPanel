@@ -133,7 +133,7 @@ namespace SvpTradingPanel
 			}
 		}
 
-		private void BuySell403030(bool buy)
+		private void BuySell403525(bool buy)
 		{
 			double? positionSize = GetPositionSize(buy);
 			double? price = GetPrice(buy);
@@ -142,14 +142,14 @@ namespace SvpTradingPanel
 				if (checkBoxPendingOrder.Checked)
 				{
 					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.4), 1, GetTpDistanceByOrderSize(50));
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(35));
-					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(20));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.35), 1, GetTpDistanceByOrderSize(35));
+					MetatraderInstance.Instance.CreatePendingOrderSlPtPercent(price.Value, CalculatePosition(positionSize.Value, 0.25), 1, GetTpDistanceByOrderSize(20));
 				}
 				else
 				{
 					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.4), 1, GetTpDistanceByOrderSize(50));
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(35));
-					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.3), 1, GetTpDistanceByOrderSize(20));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.35), 1, GetTpDistanceByOrderSize(35));
+					MetatraderInstance.Instance.CreateMarketOrderSlPtPercent(CalculatePosition(positionSize.Value, 0.25), 1, GetTpDistanceByOrderSize(20));
 				}
 				JoinSl();
 			}
@@ -550,12 +550,12 @@ namespace SvpTradingPanel
 
 		private void buttonOrderBuy1_Click(object sender, EventArgs e)
 		{
-			BuySell403030(true);
+			BuySell403525(true);
 		}
 
 		private void buttonOrderSell1_Click(object sender, EventArgs e)
 		{
-			BuySell403030(false);
+			BuySell403525(false);
 		}
 
 		private void buttonOrderBuy2_Click(object sender, EventArgs e)
@@ -975,6 +975,11 @@ namespace SvpTradingPanel
 			FormEquity formEquity = new FormEquity();
 			formEquity.MainWindowTopMost = checkBoxAlwaysOnTop.Checked;
 			formEquity.ShowDialog();
+		}
+
+		private void buttonCallHueTest_Click(object sender, EventArgs e)
+		{
+			CallHue(true);
 		}
 	}
 }
