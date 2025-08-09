@@ -71,6 +71,28 @@ namespace Mt5Api
 			return false;
 		}
 
+		public double ContractSize(string symbol = null)
+		{
+			return apiClient.SymbolInfoDouble(symbol ?? Symbol, ENUM_SYMBOL_INFO_DOUBLE.SYMBOL_TRADE_CONTRACT_SIZE);
+		}
+
+		public string UsdCzkSymbolName()
+		{
+			// Získání všech symbolù, které zaèínají na "USDCZK"
+			int total = apiClient.SymbolsTotal(false); // false = všechny symboly, true = pouze vybrané
+			List<string> usdczkSymbols = new List<string>();
+			for (int i = 0; i < total; i++)
+			{
+				string symbol = apiClient.SymbolName(i, false);
+				var clean = symbol.ToUpper().Replace("/", "").Replace(".", "");
+				if (clean != null && clean.StartsWith("USDCZK", StringComparison.OrdinalIgnoreCase))
+				{
+					return symbol;
+				}
+			}
+			return null;
+		}
+
 		private string TransformInstrument(string symbol)
 		{
 			if (symbol.ToLower() == "eurusd")
@@ -135,9 +157,9 @@ namespace Mt5Api
 			return (int)apiClient.SymbolInfoInteger(Symbol, ENUM_SYMBOL_INFO_INTEGER.SYMBOL_DIGITS);
 		}
 
-		public double GetActualPrice()
+		public double GetActualPrice(string symbol = null)
 		{
-			apiClient.SymbolInfoTick(Symbol, out MtApi5.MqlTick tick);
+			apiClient.SymbolInfoTick(symbol ?? Symbol, out MtApi5.MqlTick tick);
 			return tick.ask;
 		}
 

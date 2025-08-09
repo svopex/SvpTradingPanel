@@ -9,11 +9,13 @@ namespace Mt5Api
 	public interface ISvpMt
 	{
 		string Symbol { get; set; }
+		double ContractSize(string symbol = null);
+		string UsdCzkSymbolName();
 		string AccountCurrency();
 		double AccountEquity();
 		double SymbolPoint();
 		double SymbolTradeTickValue();
-		double GetActualPrice();
+		double GetActualPrice(string symbol = null);
 		double SymbolMinLot();
 		double SymbolLotStep();
 		int SymbolLotStepDigits();

@@ -44,7 +44,27 @@ namespace SvpTradingPanel
 			string currency = MetatraderInstance.Instance?.AccountCurrency();
 			if (currency != null)
 			{
-				labelSlLoss.Text = "Full SL loss: " + Math.Round(RiskValue() * GetTrackBarPositionUsingPercent() / 100, 2) + " " + currency;
+				// labelSlLoss.Text = "Full SL loss: " + Math.Round(RiskValue() * GetTrackBarPositionUsingPercent() / 100, 2) + " " + currency;
+				double ps = GetPositionSize(true) ?? 0;
+				double tv = MetatraderInstance.Instance.SymbolTradeTickValue();
+				bool result;
+				double slPtDistance;
+				(result, slPtDistance) = GetSlPtDistance(true);
+				if (result)
+				{
+					if (IsForex(MetatraderInstance.Instance.Symbol))
+					{
+						labelSlLoss.Text = "Full SL loss: " + Math.Round(slPtDistance * ps * tv, 2) + " " + currency;
+					}
+					else
+					{
+						labelSlLoss.Text = "Full SL loss: " + Math.Round(slPtDistance * ps * tv * UsdCzkCourse(), 2) + " " + currency;
+					}
+				}
+				else
+				{
+					labelSlLoss.Text = "Full SL loss: 0 " + currency;
+				}
 			}
 		}
 
@@ -60,6 +80,10 @@ namespace SvpTradingPanel
 			labelProfit.Text = "Profit: " + Math.Round(profit, 2) + " " + currency;
 			double ps = GetPositionSize(true) ?? 0;
 			labelPs.Text = "Position size: " + Math.Round(ps, 2);
+			double tv = MetatraderInstance.Instance.SymbolTradeTickValue();
+			labelTickValue.Text = "Tick value: " + Math.Round(tv, 2);
+			labelUsdCzk.Text = "USD/CZK: " + Math.Round(UsdCzkCourse(), 2);
+			labelContractSize.Text = "Contract size: " + MetatraderInstance.Instance.ContractSize();
 			RefreshLabelSlLoss();
 			labelSymbol.Text = MetatraderInstance.Instance.Symbol;
 		}
@@ -109,7 +133,7 @@ namespace SvpTradingPanel
 			return accountEquity * Utilities.BrokerMarginEquityCoefficient * Utilities.RiskToTrade;
 		}
 
-		private double? GetPositionSize(bool buy)
+		private (bool, double) GetSlPtDistance(bool buy)
 		{
 			Orders marketOrders = MetatraderInstance.Instance.GetMarketOrders();
 			Orders pendingOrders = MetatraderInstance.Instance.GetPendingOrders();
@@ -118,11 +142,72 @@ namespace SvpTradingPanel
 				&& (positionSize * 0.1 > 0) // Je validni velikost pozice v textboxu?
 				&& ((IsPossibleBuy(marketOrders, pendingOrders) && buy) || (IsPossibleSell(marketOrders, pendingOrders) && !buy)) // Pokud je jiz otevrena pozice, nova pozice musi byt stejnejo typu (buy/sell).
 				);
+			return (result, positionSize);
+		}
+
+		bool IsForex(string symbol)
+		{
+			if (string.IsNullOrWhiteSpace(symbol))
+				return false;
+
+			// Odstraní oddělovače
+			var clean = symbol.ToUpper().Replace("/", "").Replace(".", "");
+
+			// Ořízne na prvních 6 znaků (pokud je delší)
+			if (clean.Length > 6)
+				clean = clean.Substring(0, 6);
+
+			// Pokud po oříznutí není 6 znaků, není to platné
+			if (clean.Length != 6)
+				return false;
+
+			// Kontrola, zda jsou všechny znaky písmena A-Z
+			foreach (char c in clean)
+			{
+				if (c < 'A' || c > 'Z')
+					return false;
+			}
+
+			// ISO 4217 kódy měn
+			string[] iso4217 = {
+				"USD","EUR","JPY","GBP","AUD","CAD","CHF","NZD",
+				"SEK","NOK","DKK","PLN","CZK","HUF","ZAR","SGD","HKD"
+			};
+
+			string baseCurrency = clean.Substring(0, 3);
+			string quoteCurrency = clean.Substring(3, 3);
+
+			return iso4217.Contains(baseCurrency) && iso4217.Contains(quoteCurrency);
+		}
+
+		private double UsdCzkCourse()
+		{
+			return MetatraderInstance.Instance.GetActualPrice(MetatraderInstance.Instance.UsdCzkSymbolName());
+		}
+
+		private double? GetPositionSize(bool buy)
+		{
+			Orders marketOrders = MetatraderInstance.Instance.GetMarketOrders();
+			Orders pendingOrders = MetatraderInstance.Instance.GetPendingOrders();
+			bool result;
+			double slPtDistance;
+			(result, slPtDistance) = GetSlPtDistance(buy);
 			if (result)
 			{
 				// tick size misto velikosti pozice				
 				var symbolTradeTickValue = MetatraderInstance.Instance.SymbolTradeTickValue();
-				positionSize = RiskValue() / (positionSize * symbolTradeTickValue);
+
+				double positionSize;
+				if (IsForex(MetatraderInstance.Instance.Symbol))
+				{
+					positionSize = RiskValue() / (slPtDistance * symbolTradeTickValue);
+				}
+				else
+				{
+					// pro akcie, komodity a indexy
+					positionSize = RiskValue() / (slPtDistance * symbolTradeTickValue * UsdCzkCourse());
+				}
+
 
 				if (!buy)
 				{
@@ -890,6 +975,10 @@ namespace SvpTradingPanel
 			bool connected = MetatraderInstance.IsConnected();
 			if (connected)
 			{
+				if (MetatraderInstance.Instance.UsdCzkSymbolName() == null)
+				{
+					Environment.Exit(1);
+				}
 				connected = MetatraderInstance.Instance.IsConnected();
 				if (connected)
 				{

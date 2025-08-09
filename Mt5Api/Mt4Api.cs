@@ -79,6 +79,29 @@ namespace Mt4Api
 			return false;
 		}
 
+		public double ContractSize(string symbol = null)
+		{
+			
+			return apiClient.MarketInfo("EURUSD", MarketInfoModeType.MODE_LOTSIZE);
+		}
+
+		public string UsdCzkSymbolName()
+		{
+			// Získání všech symbolů, které začínají na "USDCZK"
+			int total = apiClient.SymbolsTotal(false); // false = všechny symboly, true = pouze vybrané
+			List<string> usdczkSymbols = new List<string>();
+			for (int i = 0; i < total; i++)
+			{
+				string symbol = apiClient.SymbolName(i, false);
+				var clean = symbol.ToUpper().Replace("/", "").Replace(".", "");
+				if (clean != null && clean.StartsWith("USDCZK", StringComparison.OrdinalIgnoreCase))
+				{
+					return symbol;
+				}
+			}
+			return null;
+		}
+
 		public double SymbolMinLot()
 		{
 			return apiClient.MarketInfo(Symbol, MarketInfoModeType.MODE_MINLOT);
@@ -109,7 +132,7 @@ namespace Mt4Api
 			return (int)apiClient.SymbolInfoInteger(Symbol, EnumSymbolInfoInteger.SYMBOL_DIGITS);
 		}
 
-		public double GetActualPrice()
+		public double GetActualPrice(string symbol = null)
 		{
 			var tick = apiClient.SymbolInfoTick(Symbol);
 			return tick.Ask;
