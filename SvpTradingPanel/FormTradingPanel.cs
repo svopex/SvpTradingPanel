@@ -80,7 +80,7 @@ namespace SvpTradingPanel
 			labelRrr.Text = "RRR: " + Math.Round(rrr, 2);
 			labelLoss.Text = "Loss: " + Math.Round(loss, 2) + " " + currency;
 			labelProfit.Text = "Profit: " + Math.Round(profit, 2) + " " + currency;
-			double ps = GetPositionSize(true) ?? 0;
+			double ps = CalculatePosition(GetPositionSize(true) ?? 0, 1);
 			labelPs.Text = "Position size: " + Math.Round(ps, 2);
 			double tv = MetatraderInstance.Instance.SymbolTradeTickValue();
 			labelTickValue.Text = "Tick value: " + Math.Round(tv, 2);

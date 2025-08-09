@@ -426,15 +426,15 @@
 			// 
 			// trackBarPositionUsing
 			// 
-			this.trackBarPositionUsing.LargeChange = 10;
+			this.trackBarPositionUsing.LargeChange = 50;
 			this.trackBarPositionUsing.Location = new System.Drawing.Point(135, 172);
 			this.trackBarPositionUsing.Maximum = 300;
 			this.trackBarPositionUsing.Minimum = 10;
 			this.trackBarPositionUsing.Name = "trackBarPositionUsing";
 			this.trackBarPositionUsing.Size = new System.Drawing.Size(768, 90);
-			this.trackBarPositionUsing.SmallChange = 5;
+			this.trackBarPositionUsing.SmallChange = 10;
 			this.trackBarPositionUsing.TabIndex = 6;
-			this.trackBarPositionUsing.Value = 10;
+			this.trackBarPositionUsing.Value = 100;
 			this.trackBarPositionUsing.ValueChanged += new System.EventHandler(this.trackBarPositionUsing_ValueChanged);
 			// 
 			// labelPositionUsing
@@ -549,7 +549,7 @@
 			// buttonCallHueTest
 			// 
 			this.buttonCallHueTest.Location = new System.Drawing.Point(26, 749);
-			this.buttonCallHueTest.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.buttonCallHueTest.Margin = new System.Windows.Forms.Padding(2);
 			this.buttonCallHueTest.Name = "buttonCallHueTest";
 			this.buttonCallHueTest.Size = new System.Drawing.Size(208, 58);
 			this.buttonCallHueTest.TabIndex = 94;
