@@ -220,7 +220,8 @@ namespace SvpTradingPanel
 				else
 				{
 					// pro akcie, komodity a indexy
-					positionSize = RiskValue() / (slPtDistance * symbolTradeTickValue * MainAccountCourse());
+					double course = Utilities.TickValueCompensation ? MainAccountCourse() : 1;
+					positionSize = RiskValue() / (slPtDistance * symbolTradeTickValue * course);
 				}
 
 

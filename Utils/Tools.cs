@@ -10,7 +10,39 @@ namespace Utils
 {
 	public class Utilities
 	{
-		private const int Parameters = 7;		
+		private const int Parameters = 8;
+
+		/*
+		MT5 8228 SvpTradingPanel 0 0.01 1 100 0
+
+		MT5/MT4 - verze Metatraderu
+		8228 - port pluginu
+		SvpTradingPanel - strategy name
+		0 - account equity, pokud je 0, tak se bere equity value od brokera
+		0.01 - risk to trade, pokud je 0, tak se bere 1% equity, 0.01 = 1%
+		1 - broker margin equity coefficient, pokud je 1, tak se bere realna hodnota equity, jinak se vynasobi s hodnotou equity, pouziva se, pokud chi velkou paku a u brokera mit mene penez
+		100 - track bar position using, kolik beru z pozice, 100 = 100%, 50 = 50%, 2000 = 200%
+		0 - tick value compensation, pokud je 1, pozice se nasobi kurzem USDCZK, protoze vypocet pak napriklad u PurpleTrading chodi spatne
+			Doporucene hodnoty:
+				PurpleTrading = 1
+				FTMO = 0
+		*/
+
+		public static bool TickValueCompensation
+		{
+			get
+			{
+				string[] args = Environment.GetCommandLineArgs();
+				if (args.Length > Parameters)
+				{
+					return Int32.Parse(args[8]) == 1;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
 
 		public static int TrackBarPositionUsing
 		{
