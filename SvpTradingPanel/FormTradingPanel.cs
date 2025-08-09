@@ -45,7 +45,8 @@ namespace SvpTradingPanel
 			if (currency != null)
 			{
 				// labelSlLoss.Text = "Full SL loss: " + Math.Round(RiskValue() * GetTrackBarPositionUsingPercent() / 100, 2) + " " + currency;
-				double ps = GetPositionSize(true) ?? 0;
+
+				double ps = CalculatePosition(GetPositionSize(true) ?? 0, 1);
 				double tv = MetatraderInstance.Instance.SymbolTradeTickValue();
 				bool result;
 				double slPtDistance;
