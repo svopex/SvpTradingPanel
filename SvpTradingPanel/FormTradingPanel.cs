@@ -58,7 +58,8 @@ namespace SvpTradingPanel
 					}
 					else
 					{
-						labelSlLoss.Text = "Full SL loss: " + Math.Round(slPtDistance * ps * tv * MainAccountCourse(), 2) + " " + currency;
+						double course = Utilities.TickValueCompensation ? MainAccountCourse() : 1;
+						labelSlLoss.Text = "Full SL loss: " + Math.Round(slPtDistance * ps * tv * course, 2) + " " + currency;
 					}
 				}
 				else
