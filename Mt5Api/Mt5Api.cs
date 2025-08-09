@@ -76,7 +76,7 @@ namespace Mt5Api
 			return apiClient.SymbolInfoDouble(symbol ?? Symbol, ENUM_SYMBOL_INFO_DOUBLE.SYMBOL_TRADE_CONTRACT_SIZE);
 		}
 
-		public string UsdCzkSymbolName()
+		public string SymbolName(string symbolname)
 		{
 			// Získání všech symbolù, které zaèínají na "USDCZK"
 			int total = apiClient.SymbolsTotal(false); // false = všechny symboly, true = pouze vybrané
@@ -85,7 +85,7 @@ namespace Mt5Api
 			{
 				string symbol = apiClient.SymbolName(i, false);
 				var clean = symbol.ToUpper().Replace("/", "").Replace(".", "");
-				if (clean != null && clean.StartsWith("USDCZK", StringComparison.OrdinalIgnoreCase))
+				if (clean != null && clean.StartsWith(symbolname, StringComparison.OrdinalIgnoreCase))
 				{
 					return symbol;
 				}

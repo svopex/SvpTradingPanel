@@ -58,7 +58,7 @@ namespace SvpTradingPanel
 					}
 					else
 					{
-						labelSlLoss.Text = "Full SL loss: " + Math.Round(slPtDistance * ps * tv * UsdCzkCourse(), 2) + " " + currency;
+						labelSlLoss.Text = "Full SL loss: " + Math.Round(slPtDistance * ps * tv * MainAccountCourse(), 2) + " " + currency;
 					}
 				}
 				else
@@ -82,7 +82,14 @@ namespace SvpTradingPanel
 			labelPs.Text = "Position size: " + Math.Round(ps, 2);
 			double tv = MetatraderInstance.Instance.SymbolTradeTickValue();
 			labelTickValue.Text = "Tick value: " + Math.Round(tv, 2);
-			labelUsdCzk.Text = "USD/CZK: " + Math.Round(UsdCzkCourse(), 2);
+			if (MetatraderInstance.Instance.AccountCurrency().ToUpper() == "CZK")
+			{
+				labelUsdCzk.Text = "USD/CZK: " + Math.Round(MainAccountCourse(), 2);
+			}
+			else
+			{
+				labelUsdCzk.Text = "USD/USD: " + Math.Round(MainAccountCourse(), 2);
+			}
 			labelContractSize.Text = "Contract size: " + MetatraderInstance.Instance.ContractSize();
 			RefreshLabelSlLoss();
 			labelSymbol.Text = MetatraderInstance.Instance.Symbol;
@@ -180,9 +187,17 @@ namespace SvpTradingPanel
 			return iso4217.Contains(baseCurrency) && iso4217.Contains(quoteCurrency);
 		}
 
-		private double UsdCzkCourse()
+		private double MainAccountCourse()
 		{
-			return MetatraderInstance.Instance.GetActualPrice(MetatraderInstance.Instance.UsdCzkSymbolName());
+			if (MetatraderInstance.Instance.AccountCurrency().ToUpper() == "CZK")
+			{
+				return MetatraderInstance.Instance.GetActualPrice(MetatraderInstance.Instance.SymbolName("USDCZK"));
+			}
+			else
+			{
+				return 1;
+			}
+			
 		}
 
 		private double? GetPositionSize(bool buy)
@@ -205,7 +220,7 @@ namespace SvpTradingPanel
 				else
 				{
 					// pro akcie, komodity a indexy
-					positionSize = RiskValue() / (slPtDistance * symbolTradeTickValue * UsdCzkCourse());
+					positionSize = RiskValue() / (slPtDistance * symbolTradeTickValue * MainAccountCourse());
 				}
 
 
@@ -975,7 +990,7 @@ namespace SvpTradingPanel
 			bool connected = MetatraderInstance.IsConnected();
 			if (connected)
 			{
-				if (MetatraderInstance.Instance.UsdCzkSymbolName() == null)
+				if (MetatraderInstance.Instance.SymbolName("USDCZK") == null)
 				{
 					Environment.Exit(1);
 				}

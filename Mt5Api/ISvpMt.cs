@@ -10,7 +10,7 @@ namespace Mt5Api
 	{
 		string Symbol { get; set; }
 		double ContractSize(string symbol = null);
-		string UsdCzkSymbolName();
+		string SymbolName(string symbolname);
 		string AccountCurrency();
 		double AccountEquity();
 		double SymbolPoint();

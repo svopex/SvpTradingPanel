@@ -85,7 +85,7 @@ namespace Mt4Api
 			return apiClient.MarketInfo("EURUSD", MarketInfoModeType.MODE_LOTSIZE);
 		}
 
-		public string UsdCzkSymbolName()
+		public string SymbolName(string symbolname)
 		{
 			// Získání všech symbolů, které začínají na "USDCZK"
 			int total = apiClient.SymbolsTotal(false); // false = všechny symboly, true = pouze vybrané
@@ -94,7 +94,7 @@ namespace Mt4Api
 			{
 				string symbol = apiClient.SymbolName(i, false);
 				var clean = symbol.ToUpper().Replace("/", "").Replace(".", "");
-				if (clean != null && clean.StartsWith("USDCZK", StringComparison.OrdinalIgnoreCase))
+				if (clean != null && clean.StartsWith(symbolname, StringComparison.OrdinalIgnoreCase))
 				{
 					return symbol;
 				}
