@@ -129,11 +129,19 @@ namespace SvpTradingPanel
 
 		private double RoundPrice(double number)
 		{
-			//int digits = MetatraderInstance.Instance.SymbolDigits();
 			int digits = MetatraderInstance.Instance.SymbolLotStepDigits();
-			double value = Math.Round(number, digits);
+			double factor = Math.Pow(10, digits);
+			double value = Math.Floor(number * factor) / factor;
 			return value;
 		}
+
+		//private double RoundPrice(double number)
+		//{
+		//	//int digits = MetatraderInstance.Instance.SymbolDigits();
+		//	int digits = MetatraderInstance.Instance.SymbolLotStepDigits();
+		//	double value = Math.Round(number, digits);
+		//	return value;
+		//}
 
 		private double RiskValue()
 		{
