@@ -81,7 +81,11 @@ namespace SvpTradingPanel
 			labelLoss.Text = "Loss: " + Math.Round(loss, 2) + " " + currency;
 			labelProfit.Text = "Profit: " + Math.Round(profit, 2) + " " + currency;
 			double ps = CalculatePosition(GetPositionSize(true) ?? 0, 1);
-			labelPs.Text = "Position size: " + Math.Round(ps, 2);
+			if (ps == 0)
+			{
+				ps = CalculatePosition(GetPositionSize(false) ?? 0, 1);
+			}
+			labelPs.Text = "Position size: " + Math.Round(Math.Abs(ps), 2);
 			double tv = MetatraderInstance.Instance.SymbolTradeTickValue();
 			labelTickValue.Text = "Tick value: " + Math.Round(tv, 2);
 			if (MetatraderInstance.Instance.AccountCurrency().ToUpper() == "CZK")
