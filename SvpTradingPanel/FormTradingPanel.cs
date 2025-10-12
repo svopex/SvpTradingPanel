@@ -778,21 +778,26 @@ namespace SvpTradingPanel
 
 		private void buttonSetTp_Click(object sender, EventArgs e)
 		{
+			int counter;
 			Orders orders = MetatraderInstance.Instance.GetMarketOrders();
 			if (orders.Any())
 			{
+				counter = 1;
 				foreach (var order in orders)
 				{
-					MetatraderInstance.Instance.SetPositionSlAndPtPercent(order, 0, GetTpDistanceByUnit(orders, Math.Abs(order.Units)));
+					MetatraderInstance.Instance.SetPendingOrderSlAndPtRelative/*.SetPositionSlAndPtPercent*/(order, 0, counter * Math.Abs(order.OpenPrice - order.SL) /*GetTpDistanceByUnit(orders, Math.Abs(order.Units))*/);
+					counter++;
 				}
 				RefreshData(orders);
 			}
 			else
 			{
+				counter = 1;
 				orders = MetatraderInstance.Instance.GetPendingOrders();
 				foreach (var order in orders)
 				{
-					MetatraderInstance.Instance.SetPendingOrderSlAndPtPercent(order, 0, GetTpDistanceByUnit(orders, Math.Abs(order.Units)));
+					MetatraderInstance.Instance.SetPendingOrderSlAndPtRelative/*.SetPendingOrderSlAndPtPercent*/(order, 0, counter * Math.Abs(order.OpenPrice - order.SL) /*GetTpDistanceByUnit(orders, Math.Abs(order.Units))*/);
+					counter++;
 				}
 				RefreshData(orders);
 			}
