@@ -14,6 +14,7 @@ namespace Xtb
 {
 	public partial class FormEquity : Form
 	{
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public string? Symbol { get; set; }
 
 		public FormEquity()
