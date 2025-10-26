@@ -762,17 +762,67 @@ namespace SvpTradingPanel
 			BuySellPercent(false, 10);
 		}
 
+		//public void ShowLabelConnected(bool connected)
+		//{
+		//	if (connected)
+		//	{
+		//		labelConnected.Text = "**********";
+		//		labelConnected.ForeColor = Color.Green;
+		//	}
+		//	else
+		//	{
+		//		labelConnected.Text = "-----------";
+		//		labelConnected.ForeColor = Color.Red;
+		//	}
+		//}
+
+		// Add these fields to your FormTradingPanel class:
+		private Timer timerLabelConnected;
+		private int labelConnectedPos = 0;
+		private int labelConnectedDir = 1;
+		private const int labelConnectedMax = 12; // Adjust for the width you want
+
 		public void ShowLabelConnected(bool connected)
 		{
 			if (connected)
 			{
-				labelConnected.Text = "**********";
-				labelConnected.ForeColor = Color.Green;
+				// Start animation
+				if (timerLabelConnected == null)
+				{
+					timerLabelConnected = new Timer();
+					timerLabelConnected.Interval = 500; // Animation speed in ms
+					timerLabelConnected.Tick += TimerLabelConnected_Tick;
+					labelConnectedPos = 0;
+					labelConnectedDir = 1;
+					timerLabelConnected.Start();
+					labelConnected.ForeColor = Color.Green;
+				}
 			}
 			else
 			{
-				labelConnected.Text = "-----------";
+				// Stop animation and show static disconnected state
+				timerLabelConnected?.Stop();
+				timerLabelConnected = null;
+				labelConnected.Text = "[-----------]";
 				labelConnected.ForeColor = Color.Red;
+			}
+		}
+
+		private void TimerLabelConnected_Tick(object sender, EventArgs e)
+		{
+			// Build the string with spaces and one asterisk
+			labelConnected.Text = "[" + new string(' ', labelConnectedPos) + "-" + new string(' ', labelConnectedMax - labelConnectedPos) + "]";
+			// Move position
+			labelConnectedPos += labelConnectedDir;
+			if (labelConnectedPos >= labelConnectedMax)
+			{
+				labelConnectedDir = -1;
+				labelConnectedPos = labelConnectedMax;
+			}
+			else if (labelConnectedPos <= 0)
+			{
+				labelConnectedDir = 1;
+				labelConnectedPos = 0;
 			}
 		}
 
@@ -857,7 +907,16 @@ namespace SvpTradingPanel
 
 			timerRefreshLabels.Interval = 1000;
 
-			this.Text = "SvpTradingPanel - " + (String.IsNullOrWhiteSpace(Utilities.StrategyName) ? "strategy name not defined" : Utilities.StrategyName) + ", " + (Utilities.AccountEquity == 0 ? String.Empty : Utilities.AccountEquity + ", ") + Utilities.RiskToTrade * 100 + "%, " + Utilities.BrokerMarginEquityCoefficient + "x";
+			//string currency = MetatraderInstance.Instance.AccountCurrency();
+			//this.Text = "SvpTradingPanel: "
+			//	+ ((Utilities.MetatraderType == MetatraderType.Mt4) ? "MT4" : "MT5")
+			//	+ ", " + ((Utilities.MetatraderType == MetatraderType.Mt4) ? Utilities.PortMt4 : Utilities.PortMt5)
+			//	+ ", " + (String.IsNullOrWhiteSpace(Utilities.StrategyName) ? "strategy name not defined" : Utilities.StrategyName) 
+			//	+ ", " + (Utilities.AccountEquity == 0 ? String.Empty : Utilities.AccountEquity + currency + ", ") 
+			//	+ Utilities.RiskToTrade * 100 + "%, " 
+			//	+ Utilities.BrokerMarginEquityCoefficient + "x, "
+			//	+ Utilities.TrackBarPositionUsing + "%, "
+			//	+ (Utilities.TickValueCompensation ? "Ano" : "Ne");
 		}
 
 		private void CallHue(bool Pt)
@@ -1036,15 +1095,15 @@ namespace SvpTradingPanel
 			bool connected = MetatraderInstance.IsConnected();
 			if (connected)
 			{
-				if (MetatraderInstance.Instance.SymbolName("USDCZK") == null)
-				{
-					Environment.Exit(1);
-				}
 				connected = MetatraderInstance.Instance.IsConnected();
 				if (connected)
 				{
 					try
 					{
+						if (MetatraderInstance.Instance.SymbolName("USDCZK") == null)
+						{
+							Environment.Exit(1);
+						}
 						Orders orders = MetatraderInstance.Instance.GetMarketOrders();
 						if (!orders.Any())
 						{
@@ -1053,6 +1112,20 @@ namespace SvpTradingPanel
 						RefreshData(orders);
 
 						SlAutomation();
+
+						if (this.Text == "SvpTradingPanel")
+						{
+							string currency = MetatraderInstance.Instance.AccountCurrency();
+							this.Text = "SvpTradingPanel: "
+								+ ((Utilities.MetatraderType == MetatraderType.Mt4) ? "MT4" : "MT5")
+								+ ", " + ((Utilities.MetatraderType == MetatraderType.Mt4) ? Utilities.PortMt4 : Utilities.PortMt5)
+								+ ", " + (String.IsNullOrWhiteSpace(Utilities.StrategyName) ? "strategy name not defined" : Utilities.StrategyName)
+								+ ", " + (Utilities.AccountEquity == 0 ? String.Empty : Utilities.AccountEquity + " " + currency + ", ")
+								+ Utilities.RiskToTrade * 100 + "%, "
+								+ Utilities.BrokerMarginEquityCoefficient + "x, "
+								+ Utilities.TrackBarPositionUsing + "%, "
+								+ (Utilities.TickValueCompensation ? "Ano" : "Ne");
+						}
 					}
 					catch (Exception ex)
 					{

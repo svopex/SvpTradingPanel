@@ -131,7 +131,7 @@ namespace SvpTradingPanel
 
 			RefreshData();
 
-			this.Text = "SvpTradingPanel - " + Utilities.StrategyName;
+			this.Text = "SvpTradingPanel - strategy " + Utilities.StrategyName;
 		}
 
 		private void textBoxYear_Leave(object sender, EventArgs e)
