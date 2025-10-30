@@ -131,19 +131,20 @@ namespace SvpTradingPanel
 			}
 		}
 
+		// Zaokrouhleni matematicky.
 		private double RoundPrice(double number)
 		{
 			int digits = MetatraderInstance.Instance.SymbolLotStepDigits();
-			double factor = Math.Pow(10, digits);
-			double value = Math.Floor(number * factor) / factor;
+			double value = Math.Round(number, digits, MidpointRounding.AwayFromZero);
 			return value;
 		}
 
+		// Zaokrouhleni dolu - nepouzivam.
 		//private double RoundPrice(double number)
 		//{
-		//	//int digits = MetatraderInstance.Instance.SymbolDigits();
 		//	int digits = MetatraderInstance.Instance.SymbolLotStepDigits();
-		//	double value = Math.Round(number, digits);
+		//	double factor = Math.Pow(10, digits);
+		//	double value = Math.Floor(number * factor) / factor;
 		//	return value;
 		//}
 
